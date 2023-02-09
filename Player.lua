@@ -17,7 +17,7 @@ Player = {
         end
     end,
 
-    render = function ()
+    render = function()
         love.graphics.draw(playerImage, playerX, playerY)
     end
 

@@ -9,6 +9,42 @@ VIRTUAL_HEIGHT = 243
 
 require 'Player'
 
+timer = 0
+
+Cat = {
+    load = function()
+        catImage = love.graphics.newImage('images/white-cat.png')
+        catWidth = catImage:getWidth()
+        catHeight = catImage:getHeight()
+        catX = VIRTUAL_WIDTH / 2 - catWidth / 2
+        catY = 20
+        catLateralMovement = 5
+        catVerticalMovent = 15
+    end,
+
+    update = function(dt)
+        timer = timer + dt
+        if timer > 0.2 then
+            catX = catX + catLateralMovement
+            timer = 0
+        end
+
+        if catX >= VIRTUAL_WIDTH - catWidth then
+            catLateralMovement = catLateralMovement * -1
+            catX = VIRTUAL_WIDTH - catWidth -5
+            catY = catY + catVerticalMovent
+        elseif catX <= 0 then
+            catLateralMovement = catLateralMovement * -1
+            catX = 5
+            catY = catY + catVerticalMovent
+        end
+    end,
+
+    render = function()
+        love.graphics.draw(catImage, catX, catY)
+    end
+  }
+
 
 
 
@@ -24,6 +60,7 @@ function love.load()
     })
 
     Player:load()
+    Cat:load()
 
     love.window.setTitle('Cats Invaders')
 
@@ -41,6 +78,7 @@ end
 function love.update(dt)
 
     Player.update(dt)
+    Cat.update(dt)
 
 end
 
@@ -64,6 +102,7 @@ function love.draw()
     love.graphics.print("HELLO", 10, 10)
 
     Player.render()
+    Cat.render()
 
     push:finish()
 end
