@@ -8,7 +8,8 @@ VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
 
 require 'Player'
-require 'Invader'
+require 'Cat'
+require 'Invaders'
 
 function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -22,7 +23,7 @@ function love.load()
     })
 
     Player:load()
-    Invader:load()
+    Invaders:load()
 
     love.window.setTitle('Cats Invaders')
 
@@ -39,7 +40,7 @@ end
 function love.update(dt)
 
     Player.update(dt)
---   Invader.update(dt)
+    Invaders:update(dt)
 
 end
 
@@ -66,7 +67,7 @@ function love.draw()
     --love.graphics.print("HELLO", 10, 10)
 
     Player.render()
-    Invader.render()
+    Invaders.render()
 
 
     push:finish()
