@@ -102,8 +102,6 @@ Invaders = {
         for index,cat in ipairs(invaders) do
             cat:render()
         end
-
-        -- also: render bullets
     end
 
 }

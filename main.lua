@@ -10,6 +10,8 @@ VIRTUAL_HEIGHT = 243
 require 'Player'
 require 'Cat'
 require 'Invaders'
+require 'Bullet'
+require 'Bullets'
 
 function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -24,6 +26,7 @@ function love.load()
 
     Player:load()
     Invaders:load()
+    Bullets.load()
 
     love.window.setTitle('Cats Invaders')
 
@@ -41,6 +44,7 @@ function love.update(dt)
 
     Player.update(dt)
     Invaders:update(dt)
+    Bullets.update(dt)
 
 end
 
@@ -51,6 +55,10 @@ function love.keypressed(key)
 
     if key == 'escape' then
         love.event.quit()
+    end
+
+    if key == 'space' then
+        Player.shoot()
     end
 
 end
@@ -68,6 +76,7 @@ function love.draw()
 
     Player.render()
     Invaders.render()
+    Bullets.render()
 
 
     push:finish()

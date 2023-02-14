@@ -7,6 +7,7 @@ Player = {
         playerX = VIRTUAL_WIDTH / 2 - playerWidth / 2
         playerY = VIRTUAL_HEIGHT - playerHeight - 20
         PLAYER_SPEED = 200
+        PlayerBulletImage = love.graphics.newImage('images/daikon.png') -- size: 13x25px
     end,
 
     update = function(dt)
@@ -15,6 +16,10 @@ Player = {
         elseif love.keyboard.isDown('right') then
             playerX = math.min(VIRTUAL_WIDTH - playerWidth, playerX + PLAYER_SPEED * dt)
         end
+    end,
+
+    shoot = function()
+        table.insert(bullets, Bullet.create(PlayerBulletImage, playerX, playerY, -1))
     end,
 
     render = function()
