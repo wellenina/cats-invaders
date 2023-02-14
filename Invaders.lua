@@ -5,14 +5,14 @@ Invaders = {
         catWidth = 18
         catHeight = 18
         
-        rowsCount = 5
-        columnsCount = 12
+        rows = 5
+        columns = 12
     
-        rowY = 94 -- bottom row position
-        columnX = 100 -- first column on the left position
+        bottomRowY = 80 -- bottom row position
+        firstColumnX = 100 -- first column on the left position
       
-        rowGap = 10
-        columnGap = 6
+        rowGap = 8
+        columnGap = 7
     
         horizontalTile = catWidth + columnGap
         verticalTile = catHeight + rowGap
@@ -39,17 +39,19 @@ Invaders = {
         movementInterval = 0.6 -- in seconds
         catLateralMovement = 10
         catVerticalMovement = 9
+
+        rowNum = rows
     end,
 
 
     initialiseFirstInvaders = function()
         local firstInvaders = {}
       
-        for i = 1, rowsCount, 1 do -- for every row
-            for j = 1, columnsCount, 1 do -- for every column
-                table.insert(firstInvaders, Cat.create(catImages[i], catScores[i], columnX + horizontalTile * (j-1), rowY - verticalTile * (i-1)))
+        for i = 1, rows, 1 do -- for every row
+            for j = 1, columns, 1 do -- for every column
+                table.insert(firstInvaders, Cat.create(catImages[i], catScores[i], firstColumnX + horizontalTile * (j-1), bottomRowY - verticalTile * (i-1)))
                 --[[    make the cats of the first (bottom) row able to shoot (?)
-                if #invaders < columnsCount then
+                if #invaders < columns then
                     table.insert(shooters, invaders[j])
                     invaders[j]canShoot = true
                 end]]
@@ -74,10 +76,12 @@ Invaders = {
             for index,cat in ipairs(invaders) do
                 cat.x = cat.x + catLateralMovement -- move all the cats laterally
             end
+
+            if invaders[#invaders].y > 0 then
+                __self.addNewInvadersRow()
+            end
+
             timeSinceLastMovement = 0                      -- reset timer
-
-
-
         end
 
         -- also: make invaders shoot & detect collisions
@@ -94,12 +98,17 @@ Invaders = {
         return false
     end,
 
-
-
-
-
-      
-
+    addNewInvadersRow = function()
+        rowNum = rowNum + 1
+        if rowNum > #catImages then
+            rowNum = 1
+        end
+        local x = invaders[#invaders-columns+1].x
+        local y = invaders[#invaders].y - verticalTile
+        for i = 1, columns, 1 do
+            table.insert(invaders, Cat.create(catImages[rowNum], catScores[rowNum], x + horizontalTile * (i-1), y))
+        end
+    end,
 
     render = function()
         for index,cat in ipairs(invaders) do
