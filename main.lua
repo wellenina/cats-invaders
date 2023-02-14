@@ -44,7 +44,7 @@ function love.update(dt)
 
     Player.update(dt)
     Invaders:update(dt)
-    Bullets.update(dt)
+    Bullets:update(dt)
 
 end
 
@@ -68,8 +68,8 @@ end
 function love.draw()
     push:start()
 
-
-    love.graphics.setBackgroundColor(0,0,0)
+    love.graphics.clear(0.4,0.4,0.4)
+    
 
     --love.graphics.setFont(largeFont)
     --love.graphics.print("HELLO", 10, 10)

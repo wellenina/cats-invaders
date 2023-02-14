@@ -5,7 +5,7 @@ Bullets = {
         BULLET_SPEED = 200
     end,
 
-    update = function(dt)
+    update = function(__self, dt)
         if #bullets == 0 then
             return
         end
@@ -14,8 +14,29 @@ Bullets = {
             bullet:move(dt)
             if bullet:isOffScreen() then
                 table.remove(bullets, index)
+            elseif bullet.direction == 1 then -- invaders' bullet
+                if __self.checkCollision(bullet, playerX, playerY, playerWidth, playerHeight) then
+                    print('The Player has Been Hit!')
+                end
+            else --bullet.direction == -1 then -- player's bullet
+                for index,cat in ipairs(bottomInvaders) do
+                    if __self.checkCollision(bullet, cat.x, cat.y, catWidth, catHeight) then
+                        print('A Cat has Been Hit!')
+                    end
+                end
             end
         end
+    end,
+
+    checkCollision = function(bullet, targetX, targetY, targetWidth, targetHeight)
+        return
+            bullet.y + bullet.height > targetY
+            and
+            bullet.y < targetY + targetHeight
+            and
+            bullet.x + bullet.width > targetX
+            and
+            bullet.x < targetX + targetWidth
     end,
 
     render = function()

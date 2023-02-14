@@ -4,6 +4,8 @@ Bullet.__index = Bullet
 function Bullet.create(image, x, y, direction)
   local instance = setmetatable({}, Bullet)
   instance.image = image
+  instance.width = image:getWidth()
+  instance.height = image:getHeight()
   instance.x = x
   instance.y = y
   instance.direction = direction

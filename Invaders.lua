@@ -22,18 +22,22 @@ Invaders = {
             love.graphics.newImage('images/brown-cat.png'),
             love.graphics.newImage('images/black-white-cat.png'),
             love.graphics.newImage('images/calico-cat.png'),
-            love.graphics.newImage('images/white-kitten.png')
+            love.graphics.newImage('images/white-kitten1.png')
+        }
+
+        bulletImages = {
+            love.graphics.newImage('images/exlamation.png'),
+            love.graphics.newImage('images/grass.png'),
+            love.graphics.newImage('images/lightning.png'),
+            love.graphics.newImage('images/meow.png'),
+            love.graphics.newImage('images/poop.png')
         }
 
         catScores = { 10, 20, 30, 40, 50 }
 
         invaders = __self.initialiseFirstInvaders()
 
-        --[[ for later, maybe?
-            shooters = {} -- bottom row cats, able to shoot
-            bullets = {}
-            timeSinceLastBullet = 0
-        ]]
+        bottomInvaders = __self.getBottomInvaders()
 
         timeSinceLastMovement = 0
         movementInterval = 0.6 -- in seconds
@@ -41,6 +45,9 @@ Invaders = {
         catVerticalMovement = 9
 
         rowNum = rows
+
+        timeSinceLastBullet = 0
+        bulletInterval = 1.6 -- in seconds
     end,
 
 
@@ -49,20 +56,32 @@ Invaders = {
       
         for i = 1, rows, 1 do -- for every row
             for j = 1, columns, 1 do -- for every column
-                table.insert(firstInvaders, Cat.create(catImages[i], catScores[i], firstColumnX + horizontalTile * (j-1), bottomRowY - verticalTile * (i-1)))
-                --[[    make the cats of the first (bottom) row able to shoot (?)
-                if #invaders < columns then
-                    table.insert(shooters, invaders[j])
-                    invaders[j]canShoot = true
-                end]]
+                table.insert(firstInvaders, Cat.create(catImages[i], bulletImages[i], catScores[i], j, firstColumnX + horizontalTile * (j-1), bottomRowY - verticalTile * (i-1)))
             end
         end
 
         return firstInvaders
     end,
 
+    getBottomInvaders = function()
+        local bottomInvaders = {}
+
+        for index,cat in ipairs(invaders) do
+            for i = 1, columns, 1 do -- for every column
+                if cat.columnNum == i then
+                    table.insert(bottomInvaders, cat)
+                    i = i+1 --esci da questa iterazione del loop
+                end
+            end
+        end
+
+        return bottomInvaders
+    end,
+
 
     update = function(__self, dt)
+
+        -- make invaders move
         timeSinceLastMovement = timeSinceLastMovement + dt
         if timeSinceLastMovement > movementInterval then
 
@@ -84,7 +103,14 @@ Invaders = {
             timeSinceLastMovement = 0                      -- reset timer
         end
 
-        -- also: make invaders shoot & detect collisions
+        -- make invaders shoot
+        timeSinceLastBullet = timeSinceLastBullet + dt
+        if timeSinceLastBullet > bulletInterval then
+            bottomInvaders[math.random(columns)]:shoot()
+            timeSinceLastBullet = 0
+        end
+
+        -- also: detect collisions
     end,
 
     hasChangedDirection = function()
@@ -106,7 +132,7 @@ Invaders = {
         local x = invaders[#invaders-columns+1].x
         local y = invaders[#invaders].y - verticalTile
         for i = 1, columns, 1 do
-            table.insert(invaders, Cat.create(catImages[rowNum], catScores[rowNum], x + horizontalTile * (i-1), y))
+            table.insert(invaders, Cat.create(catImages[rowNum], bulletImages[rowNum], catScores[rowNum], i, x + horizontalTile * (i-1), y))
         end
     end,
 
