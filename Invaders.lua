@@ -2,17 +2,17 @@ Invaders = {
 
     load = function(__self)
 
-        catWidth = 28
-        catHeight = 28
+        catWidth = 18
+        catHeight = 18
         
-        rowsCount = 4
-        columnsCount = 6
+        rowsCount = 5
+        columnsCount = 12
     
-        rowY = 130 -- bottom row position
+        rowY = 94 -- bottom row position
         columnX = 100 -- first column on the left position
       
         rowGap = 10
-        columnGap = 10
+        columnGap = 6
     
         horizontalTile = catWidth + columnGap
         verticalTile = catHeight + rowGap
@@ -36,9 +36,9 @@ Invaders = {
         ]]
 
         timeSinceLastMovement = 0
-        movementInterval = 0.2 -- in seconds
-        catLateralMovement = 5
-        catVerticalMovement = 15
+        movementInterval = 0.6 -- in seconds
+        catLateralMovement = 10
+        catVerticalMovement = 9
     end,
 
 
@@ -63,10 +63,6 @@ Invaders = {
     update = function(__self, dt)
         timeSinceLastMovement = timeSinceLastMovement + dt
         if timeSinceLastMovement > movementInterval then
-            for index,cat in ipairs(invaders) do
-                cat.x = cat.x + catLateralMovement -- move all the cats laterally
-            end
-            timeSinceLastMovement = 0                      -- reset timer
 
             if __self.hasChangedDirection() then           -- if a cat reached a side
                 catLateralMovement = catLateralMovement * -1    -- invert direction
@@ -74,6 +70,13 @@ Invaders = {
                     cat.y = cat.y + catVerticalMovement     -- and move all the cats down
                 end
             end
+
+            for index,cat in ipairs(invaders) do
+                cat.x = cat.x + catLateralMovement -- move all the cats laterally
+            end
+            timeSinceLastMovement = 0                      -- reset timer
+
+
 
         end
 
