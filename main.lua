@@ -12,6 +12,7 @@ require 'Cat'
 require 'Invaders'
 require 'Bullet'
 require 'Bullets'
+require 'Explosion'
 
 function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -27,6 +28,7 @@ function love.load()
     Player:load()
     Invaders:load()
     Bullets.load()
+    Explosion.load()
 
     love.window.setTitle('Cats Invaders')
 
@@ -45,6 +47,7 @@ function love.update(dt)
     Player.update(dt)
     Invaders:update(dt)
     Bullets:update(dt)
+    Explosion.update(dt)
 
 end
 
@@ -77,7 +80,7 @@ function love.draw()
     Player.render()
     Invaders.render()
     Bullets.render()
-
+    Explosion.render()
 
     push:finish()
 end

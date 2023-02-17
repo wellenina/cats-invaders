@@ -10,18 +10,22 @@ Bullets = {
             return
         end
 
-        for index,bullet in ipairs(bullets) do
+        for bulletIndex,bullet in ipairs(bullets) do
             bullet:move(dt)
             if bullet:isOffScreen() then
-                table.remove(bullets, index)
+                table.remove(bullets, bulletIndex)
             elseif bullet.direction == 1 then -- invaders' bullet
                 if __self.checkCollision(bullet, playerX, playerY, playerWidth, playerHeight) then
-                    print('The Player has Been Hit!')
+                    --print('The Player has Been Hit!')
                 end
             else --bullet.direction == -1 then -- player's bullet
-                for index,cat in ipairs(bottomInvaders) do
+                for catIndex,cat in ipairs(bottomInvaders) do
                     if __self.checkCollision(bullet, cat.x, cat.y, catWidth, catHeight) then
-                        print('A Cat has Been Hit!')
+                        table.remove(bullets, bulletIndex) -- il proiettile sparisce
+                        table.remove(invaders, cat.index) -- il gatto sparisce
+                        Explosion.explode(cat.x, cat.y, catWidth, catHeight) -- il gatto che esplode
+                        bottomInvaders = Invaders.getBottomInvaders()
+                        -- incremento il punteggio
                     end
                 end
             end

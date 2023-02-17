@@ -48,6 +48,7 @@ Invaders = {
 
         timeSinceLastBullet = 0
         bulletInterval = 1.6 -- in seconds
+        
     end,
 
 
@@ -66,14 +67,16 @@ Invaders = {
     getBottomInvaders = function()
         local bottomInvaders = {}
 
-        for index,cat in ipairs(invaders) do
-            for i = 1, columns, 1 do -- for every column
+        for i = 1, columns, 1 do
+            for catIndex,cat in ipairs(invaders) do
                 if cat.columnNum == i then
+                    cat.index = catIndex
                     table.insert(bottomInvaders, cat)
-                    i = i+1 --esci da questa iterazione del loop
+                    break
                 end
             end
         end
+
 
         return bottomInvaders
     end,
