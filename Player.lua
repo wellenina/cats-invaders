@@ -7,14 +7,18 @@ Player = {
         playerX = VIRTUAL_WIDTH / 2 - playerWidth / 2
         playerY = VIRTUAL_HEIGHT - playerHeight - 20
         PLAYER_SPEED = 200
-        PlayerBulletImage = love.graphics.newImage('images/daikon.png') -- size: 13x25px
+        PlayerBulletImage = love.graphics.newImage('images/daikon.png')
     end,
 
-    update = function(dt)
+    update = function(__self, dt)
         if love.keyboard.isDown('left') then
             playerX = math.max(0, playerX + -PLAYER_SPEED * dt)
         elseif love.keyboard.isDown('right') then
             playerX = math.min(VIRTUAL_WIDTH - playerWidth, playerX + PLAYER_SPEED * dt)
+        end
+
+        if love.keyboard.wasPressed('space') then
+            __self.shoot()
         end
     end,
 

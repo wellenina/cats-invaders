@@ -13,6 +13,8 @@ require 'Invaders'
 require 'Bullet'
 require 'Bullets'
 require 'Explosion'
+require 'StateMachine'
+
 
 function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -25,15 +27,19 @@ function love.load()
         canvas = false
     })
 
-    Player:load()
-    Invaders:load()
-    Bullets.load()
-    Explosion.load()
-
     love.window.setTitle('Cats Invaders')
 
-    --largeFont = love.graphics.newFont('font.ttf', 40)
+    -- input table
+    love.keyboard.keysPressed = {}
 
+    groundLine = {0, VIRTUAL_HEIGHT - 17, VIRTUAL_WIDTH, VIRTUAL_HEIGHT - 17}
+
+    smallFont = love.graphics.newFont('font.ttf', 8)
+    mediumFont = love.graphics.newFont('font.ttf', 20)
+    hugeFont = love.graphics.newFont('font.ttf', 52)
+
+    StateMachine:changeState(TitleScreenState)
+    StateMachine:load()
 end
 
 
@@ -42,45 +48,34 @@ function love.resize(w, h)
 end
 
 
-function love.update(dt)
-
-    Player.update(dt)
-    Invaders:update(dt)
-    Bullets:update(dt)
-    Explosion.update(dt)
-
-end
-
-
-
-
 function love.keypressed(key)
+    love.keyboard.keysPressed[key] = true
 
     if key == 'escape' then
         love.event.quit()
     end
-
-    if key == 'space' then
-        Player.shoot()
-    end
-
 end
 
+function love.keyboard.wasPressed(key)
+    return love.keyboard.keysPressed[key]
+end
+
+
+function love.update(dt)
+    StateMachine:update(dt)
+    love.keyboard.keysPressed = {}
+end
 
 
 function love.draw()
     push:start()
 
     love.graphics.clear(0.4,0.4,0.4)
-    
 
-    --love.graphics.setFont(largeFont)
-    --love.graphics.print("HELLO", 10, 10)
+    -- love.graphics.setColor()
+    love.graphics.line(groundLine)
 
-    Player.render()
-    Invaders.render()
-    Bullets.render()
-    Explosion.render()
+    StateMachine:render()
 
     push:finish()
 end

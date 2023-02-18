@@ -113,7 +113,6 @@ Invaders = {
             timeSinceLastBullet = 0
         end
 
-        -- also: detect collisions
     end,
 
     hasChangedDirection = function()
