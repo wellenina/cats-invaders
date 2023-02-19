@@ -36,7 +36,7 @@ function love.load()
 
     smallFont = love.graphics.newFont('font.ttf', 8)
     mediumFont = love.graphics.newFont('font.ttf', 20)
-    hugeFont = love.graphics.newFont('font.ttf', 52)
+    hugeFont = love.graphics.newFont('font.ttf', 48)
 
     score = 0
     lives = 3

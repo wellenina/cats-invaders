@@ -98,7 +98,7 @@ Invaders = {
                 cat.x = cat.x + catLateralMovement -- move all the cats laterally
             end
 
-            if invaders[#invaders].y > 0 then
+            if invaders[#invaders].y + catHeight > 0 then
                 __self.addNewInvadersRow()
             end
 
@@ -108,7 +108,7 @@ Invaders = {
         -- make invaders shoot
         timeSinceLastBullet = timeSinceLastBullet + dt
         if timeSinceLastBullet > bulletInterval then
-            bottomInvaders[math.random(columns)]:shoot()
+            bottomInvaders[math.random(#bottomInvaders)]:shoot()
             timeSinceLastBullet = 0
         end
 

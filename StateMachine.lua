@@ -29,12 +29,20 @@ TitleScreenState = {
 
     render = function()
         love.graphics.setFont(hugeFont)
-        love.graphics.printf('CATS INVADERS', 20, 20, VIRTUAL_WIDTH, center)
+        love.graphics.printf('CATS INVADERS', 0, 30, VIRTUAL_WIDTH, 'center')
 
         love.graphics.setFont(mediumFont)
-        love.graphics.printf('Press Enter to play', 100, VIRTUAL_HEIGHT * 0.5, VIRTUAL_WIDTH, center)
+        love.graphics.printf('Press Enter to play', 0, VIRTUAL_HEIGHT * 0.5, VIRTUAL_WIDTH, 'center')
     end
 }
+
+function drawLives(livesNum, img)
+    local margin = 60
+    for i = 1, livesNum, 1 do
+        love.graphics.draw(img, VIRTUAL_WIDTH - margin, VIRTUAL_HEIGHT - 13)
+        margin = margin + 15
+    end
+end
 
 CountDownState = {
     load = function()
@@ -42,6 +50,8 @@ CountDownState = {
         Invaders:load()
         Bullets.load()
         Explosion.load()
+
+        heart = love.graphics.newImage('images/heart.png')
 
         totalTime = 3 -- seconds
         timePassed = 0
@@ -60,8 +70,9 @@ CountDownState = {
         Invaders.render()
         -- SCORE AND LIVES:
         love.graphics.setFont(smallFont)
-        love.graphics.printf('SCORE: 0', 20, VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, left)
-        love.graphics.printf('LIVES: 3', 350, VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, left)
+        love.graphics.printf('SCORE  ' .. tostring(score), 20, VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, 'left')
+        love.graphics.printf('LIVES', VIRTUAL_WIDTH-20-smallFont:getWidth('LIVES'), VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, 'left')
+        drawLives(lives, heart)
     end
 }
 
@@ -83,8 +94,9 @@ PlayState = {
         Bullets.render()
         Explosion.render()
 
-        love.graphics.printf('SCORE: ' .. tostring(score), 20, VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, left)
-        love.graphics.printf('LIVES: ' .. tostring(lives), 350, VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, left)
+        love.graphics.printf('SCORE  ' .. tostring(score), 20, VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, 'left')
+        love.graphics.printf('LIVES', VIRTUAL_WIDTH-20-smallFont:getWidth('LIVES'), VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, 'left')
+        drawLives(lives, heart)
     end
 }
 
@@ -104,8 +116,8 @@ GameOverState = {
 
     render = function()
         love.graphics.setFont(mediumFont)
-        love.graphics.printf('Oof! Those cats are tough!', 50, 30, VIRTUAL_WIDTH, center)
-        love.graphics.printf('Your score is: ' .. displayScore, 50, 100, VIRTUAL_WIDTH, center)
-        love.graphics.printf('Press Enter to play again', 50, VIRTUAL_HEIGHT - 70, VIRTUAL_WIDTH, center)
+        love.graphics.printf('Oof! Those cats are tough!', 0, 30, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Your score is: ' .. displayScore, 0, 100, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Press Enter to play again', 0, VIRTUAL_HEIGHT - 70, VIRTUAL_WIDTH, 'center')
     end
 }
