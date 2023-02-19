@@ -9,7 +9,6 @@ function Cat.create(image, bulletImage, score, columnNum, x, y)
   instance.columnNum = columnNum
   instance.x = x
   instance.y = y
-  instance.index = 0
   return instance
 end
 

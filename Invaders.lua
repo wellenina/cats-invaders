@@ -68,9 +68,8 @@ Invaders = {
         local bottomInvaders = {}
 
         for i = 1, columns, 1 do
-            for catIndex,cat in ipairs(invaders) do
+            for index,cat in ipairs(invaders) do
                 if cat.columnNum == i then
-                    cat.index = catIndex
                     table.insert(bottomInvaders, cat)
                     break
                 end

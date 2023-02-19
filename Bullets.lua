@@ -16,16 +16,17 @@ Bullets = {
                 table.remove(bullets, bulletIndex)
             elseif bullet.direction == 1 then -- invaders' bullet
                 if __self.checkCollision(bullet, playerX, playerY, playerWidth, playerHeight) then
-                    --print('The Player has Been Hit!')
+                    table.remove(bullets, bulletIndex)
+                    if lives > 1 then lives = lives - 1 else StateMachine:changeState(GameOverState) end
                 end
             else --bullet.direction == -1 then -- player's bullet
-                for catIndex,cat in ipairs(bottomInvaders) do
+                for catIndex,cat in ipairs(invaders) do
                     if __self.checkCollision(bullet, cat.x, cat.y, catWidth, catHeight) then
                         table.remove(bullets, bulletIndex) -- il proiettile sparisce
-                        table.remove(invaders, cat.index) -- il gatto sparisce
+                        table.remove(invaders, catIndex) -- il gatto sparisce
                         Explosion.explode(cat.x, cat.y, catWidth, catHeight) -- il gatto che esplode
                         bottomInvaders = Invaders.getBottomInvaders()
-                        -- incremento il punteggio
+                        score = score + cat.score
                     end
                 end
             end

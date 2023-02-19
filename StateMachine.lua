@@ -7,10 +7,6 @@ function StateMachine:changeState(newState)
     self.currentState:load()
 end
 
-function StateMachine:load()
-    self.currentState:load()
-end
-
 function StateMachine:update(dt)
     self.currentState:update(dt)
 end
@@ -72,14 +68,12 @@ CountDownState = {
 PlayState = {
 
     load = function()
-        score = 0
-        lives = 3
     end,
 
     update = function(__self, dt)
         Player:update(dt)
         Invaders:update(dt)
-        Bullets:update(dt) -- aggiungere funzione che aumenta il punteggio, verifica se ci sono vite, se è game over CAMBIA STATO
+        Bullets:update(dt) -- aggiungere funzione che verifica se ci sono vite, se è game over CAMBIA STATO
         Explosion.update(dt)
     end,
 
@@ -90,6 +84,28 @@ PlayState = {
         Explosion.render()
 
         love.graphics.printf('SCORE: ' .. tostring(score), 20, VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, left)
-        love.graphics.printf('LIVES: 3', 350, VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, left)
+        love.graphics.printf('LIVES: ' .. tostring(lives), 350, VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, left)
+    end
+}
+
+GameOverState = {
+
+    load = function()
+        displayScore = tostring(score)
+    end,
+
+    update = function(dt)
+        if love.keyboard.wasPressed('return') then
+            score = 0 -- reset score
+            lives = 3 -- reset lives
+            StateMachine:changeState(CountDownState)
+        end
+    end,
+
+    render = function()
+        love.graphics.setFont(mediumFont)
+        love.graphics.printf('Oof! Those cats are tough!', 50, 30, VIRTUAL_WIDTH, center)
+        love.graphics.printf('Your score is: ' .. displayScore, 50, 100, VIRTUAL_WIDTH, center)
+        love.graphics.printf('Press Enter to play again', 50, VIRTUAL_HEIGHT - 70, VIRTUAL_WIDTH, center)
     end
 }

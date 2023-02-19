@@ -38,8 +38,10 @@ function love.load()
     mediumFont = love.graphics.newFont('font.ttf', 20)
     hugeFont = love.graphics.newFont('font.ttf', 52)
 
+    score = 0
+    lives = 3
+
     StateMachine:changeState(TitleScreenState)
-    StateMachine:load()
 end
 
 
