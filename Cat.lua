@@ -1,9 +1,9 @@
 Cat = {}
 Cat.__index = Cat
 
-function Cat.create(image, bulletImage, score, columnNum, x, y)
+function Cat.create(quads, bulletImage, score, columnNum, x, y)
   local instance = setmetatable({}, Cat)
-  instance.image = image
+  instance.quads = quads
   instance.bulletImage = bulletImage
   instance.score = score
   instance.columnNum = columnNum
@@ -13,7 +13,7 @@ function Cat.create(image, bulletImage, score, columnNum, x, y)
 end
 
 function Cat:render()
-  love.graphics.draw(self.image, self.x, self.y)
+  love.graphics.draw(sprite, self.quads[frame], self.x, self.y)
 end
 
 function Cat:shoot()
@@ -21,5 +21,9 @@ function Cat:shoot()
   local x = self.x
   local y = self.y
   table.insert(bullets, Bullet.create(bulletImage, x, y, 1))
-  ---- SISTEMARE LE COORDINATE DEI PROIETTILI per centrarli
+    ---- SISTEMARE LE COORDINATE DEI PROIETTILI per centrarli:
+    --[[
+        local x = self.x + (catWidth - bulletWidth) * 0.5
+        local y = self.y + (catHeight) - bulletHeight * 0.5
+    ]]
 end

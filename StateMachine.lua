@@ -68,7 +68,7 @@ CountDownState = {
     render = function()
         Player.render()
         Invaders.render()
-        -- SCORE AND LIVES:
+
         love.graphics.setFont(smallFont)
         love.graphics.printf('SCORE  ' .. tostring(score), 20, VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, 'left')
         love.graphics.printf('LIVES', VIRTUAL_WIDTH-20-smallFont:getWidth('LIVES'), VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, 'left')
@@ -84,7 +84,7 @@ PlayState = {
     update = function(__self, dt)
         Player:update(dt)
         Invaders:update(dt)
-        Bullets:update(dt) -- aggiungere funzione che verifica se ci sono vite, se è game over CAMBIA STATO
+        Bullets:update(dt)
         Explosion.update(dt)
     end,
 

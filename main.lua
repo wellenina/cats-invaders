@@ -72,9 +72,8 @@ end
 function love.draw()
     push:start()
 
-    love.graphics.clear(0.4,0.4,0.4)
+    love.graphics.clear(185/255, 244/255, 171/255)
 
-    -- love.graphics.setColor()
     love.graphics.line(groundLine)
 
     StateMachine:render()

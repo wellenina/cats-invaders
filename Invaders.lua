@@ -1,28 +1,49 @@
+local ROWS, COLUMNS = 5, 12
+local BOTTOM_ROW_Y, FIRST_COLUMN_X = 80, 48
+local ROW_GAP, COLUMN_GAP = 8, 8
+
+local SPRITE_WIDTH, SPRITE_HEIGHT = 120, 160
+local QUAD_WIDTH, QUAD_HEIGHT = 20, 20
+
+local CAT_MOVE_DELAY = 0.6 -- seconds
+local CAT_LATERAL_MOVE, CAT_VERTICAL_MOVE = 10, 9
+
+local SHOOT_DELAY = 1.6 -- seconds
+
+
 Invaders = {
 
     load = function(__self)
 
-        catWidth = 18
-        catHeight = 18
-        
-        rows = 5
-        columns = 12
+        catWidth, catHeight = QUAD_WIDTH, QUAD_HEIGHT
     
-        bottomRowY = 80 -- bottom row position
-        firstColumnX = 100 -- first column on the left position
-      
-        rowGap = 8
-        columnGap = 7
+        horizontalTile = catWidth + COLUMN_GAP
+        verticalTile = catHeight + ROW_GAP
     
-        horizontalTile = catWidth + columnGap
-        verticalTile = catHeight + rowGap
-    
-        catImages = {
-            love.graphics.newImage('images/white-cat.png'),
-            love.graphics.newImage('images/brown-cat.png'),
-            love.graphics.newImage('images/black-white-cat.png'),
-            love.graphics.newImage('images/calico-cat.png'),
-            love.graphics.newImage('images/white-kitten1.png')
+        frame = 1
+
+        sprite = love.graphics.newImage("images/cats-spritesheet.png")
+
+        catsQuads = {
+        --PRIMA RIGA, 3 GATTI:
+        {love.graphics.newQuad(0, 0, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT),
+        love.graphics.newQuad(20, 0, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT)},
+
+        {love.graphics.newQuad(40, 0, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT),
+        love.graphics.newQuad(60, 0, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT)},
+
+        {love.graphics.newQuad(80, 0, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT),
+        love.graphics.newQuad(100, 0, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT)},
+
+        --SECONDA RIGA, 3 GATTI:
+        {love.graphics.newQuad(0, 20, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT),
+        love.graphics.newQuad(20, 20, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT)},
+
+        {love.graphics.newQuad(40, 20, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT),
+        love.graphics.newQuad(60, 20, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT)},
+
+        {love.graphics.newQuad(80, 20, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT),
+        love.graphics.newQuad(100, 20, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT)}
         }
 
         bulletImages = {
@@ -30,34 +51,33 @@ Invaders = {
             love.graphics.newImage('images/grass.png'),
             love.graphics.newImage('images/lightning.png'),
             love.graphics.newImage('images/meow.png'),
+            love.graphics.newImage('images/poop.png'),
             love.graphics.newImage('images/poop.png')
         }
 
-        catScores = { 10, 20, 30, 40, 50 }
+        catScores = { 10, 20, 30, 40, 50, 60 }
 
         invaders = __self.initialiseFirstInvaders()
-
         bottomInvaders = __self.getBottomInvaders()
 
-        timeSinceLastMovement = 0
-        movementInterval = 0.6 -- in seconds
-        catLateralMovement = 10
-        catVerticalMovement = 9
-
-        rowNum = rows
-
+        timeSinceLastMove = 0
+        moveDelay = CAT_MOVE_DELAY -- to be increased as the game progresses
+        catLateralMove = CAT_LATERAL_MOVE
         timeSinceLastBullet = 0
-        bulletInterval = 1.6 -- in seconds
-        
+        shootDelay = SHOOT_DELAY -- to be increased as the game progresses
+
+        rowNum = ROWS -- serve solo come contatore per aggiungere nuova riga di invaders (addNewInvadersRow), DA MODIFICARE
+
+        hasChangedDirection = false
     end,
 
 
     initialiseFirstInvaders = function()
         local firstInvaders = {}
       
-        for i = 1, rows, 1 do -- for every row
-            for j = 1, columns, 1 do -- for every column
-                table.insert(firstInvaders, Cat.create(catImages[i], bulletImages[i], catScores[i], j, firstColumnX + horizontalTile * (j-1), bottomRowY - verticalTile * (i-1)))
+        for i = 1, ROWS, 1 do -- for every row
+            for j = 1, COLUMNS, 1 do -- for every column
+                table.insert(firstInvaders, Cat.create(catsQuads[i], bulletImages[i], catScores[i], j, FIRST_COLUMN_X + horizontalTile * (j-1), BOTTOM_ROW_Y - verticalTile * (i-1)))
             end
         end
 
@@ -67,7 +87,7 @@ Invaders = {
     getBottomInvaders = function()
         local bottomInvaders = {}
 
-        for i = 1, columns, 1 do
+        for i = 1, COLUMNS, 1 do
             for index,cat in ipairs(invaders) do
                 if cat.columnNum == i then
                     table.insert(bottomInvaders, cat)
@@ -76,7 +96,6 @@ Invaders = {
             end
         end
 
-
         return bottomInvaders
     end,
 
@@ -84,37 +103,46 @@ Invaders = {
     update = function(__self, dt)
 
         -- make invaders move
-        timeSinceLastMovement = timeSinceLastMovement + dt
-        if timeSinceLastMovement > movementInterval then
+        timeSinceLastMove = timeSinceLastMove + dt
+        if timeSinceLastMove > moveDelay then
 
-            if __self.hasChangedDirection() then           -- if a cat reached a side
-                catLateralMovement = catLateralMovement * -1    -- invert direction
+            frame = frame == 1 and 2 or 1
+
+            if __self.hasReachedEdge() then
+                catLateralMove = catLateralMove * -1 -- invert direction
+                hasChangedDirection = true
                 for index,cat in ipairs(invaders) do
-                    cat.y = cat.y + catVerticalMovement     -- and move all the cats down
+                    cat.y = cat.y + CAT_VERTICAL_MOVE -- move all the cats down
                 end
-            end
-
-            for index,cat in ipairs(invaders) do
-                cat.x = cat.x + catLateralMovement -- move all the cats laterally
+            else
+                for index,cat in ipairs(invaders) do
+                    cat.x = cat.x + catLateralMove -- move all the cats laterally
+                end
             end
 
             if invaders[#invaders].y + catHeight > 0 then
                 __self.addNewInvadersRow()
             end
 
-            timeSinceLastMovement = 0                      -- reset timer
+            timeSinceLastMove = 0 -- reset timer
         end
 
         -- make invaders shoot
         timeSinceLastBullet = timeSinceLastBullet + dt
-        if timeSinceLastBullet > bulletInterval then
-            bottomInvaders[math.random(#bottomInvaders)]:shoot()
+        if timeSinceLastBullet > shootDelay then
             timeSinceLastBullet = 0
+            local shooter = bottomInvaders[math.random(#bottomInvaders)]
+            if shooter.y + catHeight < 0 then return end
+            shooter:shoot()
         end
 
     end,
 
-    hasChangedDirection = function()
+    hasReachedEdge = function()
+        if hasChangedDirection then
+            hasChangedDirection = false
+            return false
+        end
         for index,cat in ipairs(invaders) do
             if cat.x >= (VIRTUAL_WIDTH - catWidth) then
                 return true
@@ -127,13 +155,13 @@ Invaders = {
 
     addNewInvadersRow = function()
         rowNum = rowNum + 1
-        if rowNum > #catImages then
+        if rowNum > #catsQuads then
             rowNum = 1
         end
-        local x = invaders[#invaders-columns+1].x
+        local x = invaders[#invaders - COLUMNS + 1].x
         local y = invaders[#invaders].y - verticalTile
-        for i = 1, columns, 1 do
-            table.insert(invaders, Cat.create(catImages[rowNum], bulletImages[rowNum], catScores[rowNum], i, x + horizontalTile * (i-1), y))
+        for i = 1, COLUMNS, 1 do
+            table.insert(invaders, Cat.create(catsQuads[rowNum], bulletImages[rowNum], catScores[rowNum], i, x + horizontalTile * (i-1), y))
         end
     end,
 
@@ -142,5 +170,4 @@ Invaders = {
             cat:render()
         end
     end
-
 }

@@ -27,7 +27,7 @@ Bullets = {
                         if cat.y + catHeight <= 0 then return end
                         table.remove(bullets, bulletIndex) -- il proiettile sparisce
                         table.remove(invaders, catIndex) -- il gatto sparisce
-                        Explosion.explode(cat.x, cat.y, catWidth, catHeight) -- il gatto che esplode
+                        Explosion.explode(cat.x, cat.y, catWidth, catHeight) -- il gatto esplode
                         bottomInvaders = Invaders.getBottomInvaders()
                         score = score + cat.score
                     end
