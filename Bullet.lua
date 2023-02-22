@@ -1,11 +1,10 @@
 Bullet = {}
 Bullet.__index = Bullet
 
-function Bullet.create(image, x, y, direction)
+function Bullet.create(sprite, quad, x, y, direction)
   local instance = setmetatable({}, Bullet)
-  instance.image = image
-  instance.width = image:getWidth()
-  instance.height = image:getHeight()
+  instance.sprite = sprite
+  instance.quad = quad
   instance.x = x
   instance.y = y
   instance.direction = direction
@@ -13,7 +12,7 @@ function Bullet.create(image, x, y, direction)
 end
 
 function Bullet:render()
-  love.graphics.draw(self.image, self.x, self.y)
+  love.graphics.draw(self.sprite, self.quad, self.x, self.y)
 end
 
 function Bullet:move(dt)
@@ -23,8 +22,7 @@ end
 function Bullet:isOffScreen()
     if self.direction == 1 then -- invaders' bullet
         return self.y > VIRTUAL_HEIGHT
-    end
-    if self.direction == -1 then -- player's bullet
-        return self.y + 50 < 0 -- 30 == approximate height of a bullet
+    else -- player's bullet
+        return self.y + BULLET_HEIGHT < 0
     end
 end

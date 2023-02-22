@@ -89,9 +89,9 @@ PlayState = {
     end,
 
     render = function()
+        Bullets.render()
         Player.render()
         Invaders.render()
-        Bullets.render()
         Explosion.render()
 
         love.graphics.printf('SCORE  ' .. tostring(score), 20, VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, 'left')

@@ -2,14 +2,12 @@ Bullets = {
 
     load = function()
         bullets =  {}
+        BULLET_WIDTH = 6
+        BULLET_HEIGHT = 10
         BULLET_SPEED = 200
     end,
 
     update = function(__self, dt)
-        if #bullets == 0 then
-            return
-        end
-
         for bulletIndex,bullet in ipairs(bullets) do
             bullet:move(dt)
             if bullet:isOffScreen() then
@@ -20,14 +18,15 @@ Bullets = {
                     table.remove(bullets, bulletIndex)
                     if lives > 1 then lives = lives - 1 else StateMachine:changeState(GameOverState) end
                 end
-            else -- player's bullet (bullet.direction == -1)
+            else -- player's bullet
                 for catIndex,cat in ipairs(invaders) do
-                    if __self.checkCollision(bullet, cat.x, cat.y, catWidth, catHeight) then
+                    if cat.y + catHeight <= 0 then
+                        return
+                    elseif __self.checkCollision(bullet, cat.x, cat.y, catWidth, catHeight) then
                         -- a cat has been hit
-                        if cat.y + catHeight <= 0 then return end
-                        table.remove(bullets, bulletIndex) -- il proiettile sparisce
-                        table.remove(invaders, catIndex) -- il gatto sparisce
-                        Explosion.explode(cat.x, cat.y, catWidth, catHeight) -- il gatto esplode
+                        table.remove(bullets, bulletIndex)
+                        table.remove(invaders, catIndex)
+                        Explosion.explode(cat.x, cat.y, catWidth, catHeight)
                         bottomInvaders = Invaders.getBottomInvaders()
                         score = score + cat.score
                     end
@@ -38,20 +37,16 @@ Bullets = {
 
     checkCollision = function(bullet, targetX, targetY, targetWidth, targetHeight)
         return
-            bullet.y + bullet.height > targetY
+            bullet.y + BULLET_HEIGHT > targetY
             and
             bullet.y < targetY + targetHeight
             and
-            bullet.x + bullet.width > targetX
+            bullet.x + BULLET_WIDTH > targetX
             and
             bullet.x < targetX + targetWidth
     end,
 
     render = function()
-        if #bullets == 0 then
-            return
-        end
-
         for index,bullet in ipairs(bullets) do
             bullet:render()
         end

@@ -2,71 +2,55 @@ local ROWS, COLUMNS = 5, 12
 local BOTTOM_ROW_Y, FIRST_COLUMN_X = 80, 48
 local ROW_GAP, COLUMN_GAP = 8, 8
 
-local SPRITE_WIDTH, SPRITE_HEIGHT = 120, 160
-local QUAD_WIDTH, QUAD_HEIGHT = 20, 20
+local CAT_SPRITE_WIDTH, CAT_SPRITE_HEIGHT = 120, 160
+local CAT_QUAD_WIDTH, CAT_QUAD_HEIGHT = 20, 20
 
 local CAT_MOVE_DELAY = 0.6 -- seconds
 local CAT_LATERAL_MOVE, CAT_VERTICAL_MOVE = 10, 9
+local CAT_WAVE = 3
 
-local SHOOT_DELAY = 1.6 -- seconds
+local SHOOT_DELAY = 1.6
+
+local CAT_BULLET_SPRITE_WIDTH, CAT_BULLET_SPRITE_HEIGHT = 96, 10
+local BULLET_QUAD_WIDTH, BULLET_QUAD_HEIGHT = 6, 10
 
 
 Invaders = {
 
     load = function(__self)
 
-        catWidth, catHeight = QUAD_WIDTH, QUAD_HEIGHT
-    
-        horizontalTile = catWidth + COLUMN_GAP
-        verticalTile = catHeight + ROW_GAP
-    
+        catWidth, catHeight = CAT_QUAD_WIDTH, CAT_QUAD_HEIGHT
+        horizontalTile, verticalTile = catWidth + COLUMN_GAP, catHeight + ROW_GAP
         frame = 1
 
-        sprite = love.graphics.newImage("images/cats-spritesheet.png")
+        catSprite = love.graphics.newImage('images/cats-spritesheet.png')
+        catsQuads = {} -- 24 cats, 2 frames each
+        for i = 1, CAT_SPRITE_HEIGHT / CAT_QUAD_HEIGHT, 1 do
+            for j = 1, CAT_SPRITE_WIDTH / CAT_QUAD_WIDTH, 2 do
+                table.insert(catsQuads, 
+                    {love.graphics.newQuad(CAT_QUAD_WIDTH * (j-1), CAT_QUAD_HEIGHT * (i-1), CAT_QUAD_WIDTH, CAT_QUAD_HEIGHT, CAT_SPRITE_WIDTH, CAT_SPRITE_HEIGHT),
+                    love.graphics.newQuad(CAT_QUAD_WIDTH * (j), CAT_QUAD_HEIGHT * (i-1), CAT_QUAD_WIDTH, CAT_QUAD_HEIGHT, CAT_SPRITE_WIDTH, CAT_SPRITE_HEIGHT)})
+            end
+        end
 
-        catsQuads = {
-        --PRIMA RIGA, 3 GATTI:
-        {love.graphics.newQuad(0, 0, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT),
-        love.graphics.newQuad(20, 0, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT)},
+        catBulletSprite = love.graphics.newImage('images/cats-bullets-spritesheet.png')
+        catBulletQuads = {} -- 16 bullets
+        for i = 1, CAT_BULLET_SPRITE_WIDTH / BULLET_QUAD_WIDTH, 1 do
+            table.insert(catBulletQuads, 
+                love.graphics.newQuad(BULLET_QUAD_WIDTH * (i-1), 0, BULLET_QUAD_WIDTH, BULLET_QUAD_HEIGHT, CAT_BULLET_SPRITE_WIDTH, CAT_BULLET_SPRITE_HEIGHT))
+        end
 
-        {love.graphics.newQuad(40, 0, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT),
-        love.graphics.newQuad(60, 0, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT)},
-
-        {love.graphics.newQuad(80, 0, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT),
-        love.graphics.newQuad(100, 0, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT)},
-
-        --SECONDA RIGA, 3 GATTI:
-        {love.graphics.newQuad(0, 20, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT),
-        love.graphics.newQuad(20, 20, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT)},
-
-        {love.graphics.newQuad(40, 20, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT),
-        love.graphics.newQuad(60, 20, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT)},
-
-        {love.graphics.newQuad(80, 20, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT),
-        love.graphics.newQuad(100, 20, QUAD_WIDTH, QUAD_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT)}
-        }
-
-        bulletImages = {
-            love.graphics.newImage('images/exlamation.png'),
-            love.graphics.newImage('images/grass.png'),
-            love.graphics.newImage('images/lightning.png'),
-            love.graphics.newImage('images/meow.png'),
-            love.graphics.newImage('images/poop.png'),
-            love.graphics.newImage('images/poop.png')
-        }
-
-        catScores = { 10, 20, 30, 40, 50, 60 }
+        catScores = {5, 15, 25, 40, 55, 75, 95, 120}
 
         invaders = __self.initialiseFirstInvaders()
         bottomInvaders = __self.getBottomInvaders()
 
         timeSinceLastMove = 0
-        moveDelay = CAT_MOVE_DELAY -- to be increased as the game progresses
+        moveDelay = CAT_MOVE_DELAY -- to be DECREASED as the game progresses
         catLateralMove = CAT_LATERAL_MOVE
         timeSinceLastBullet = 0
-        shootDelay = SHOOT_DELAY -- to be increased as the game progresses
-
-        rowNum = ROWS -- serve solo come contatore per aggiungere nuova riga di invaders (addNewInvadersRow), DA MODIFICARE
+        shootDelay = SHOOT_DELAY -- to be DECREASED as the game progresses
+        catLimit = CAT_WAVE -- to be increased as the game progresses
 
         hasChangedDirection = false
     end,
@@ -76,8 +60,10 @@ Invaders = {
         local firstInvaders = {}
       
         for i = 1, ROWS, 1 do -- for every row
+            local randomCat = math.random(3)
+            local randomBullet = math.random(2)
             for j = 1, COLUMNS, 1 do -- for every column
-                table.insert(firstInvaders, Cat.create(catsQuads[i], bulletImages[i], catScores[i], j, FIRST_COLUMN_X + horizontalTile * (j-1), BOTTOM_ROW_Y - verticalTile * (i-1)))
+                table.insert(firstInvaders, Cat.create(catsQuads[randomCat], catBulletQuads[randomBullet], catScores[1], j, FIRST_COLUMN_X + horizontalTile * (j-1), BOTTOM_ROW_Y - verticalTile * (i-1)))
             end
         end
 
@@ -154,14 +140,13 @@ Invaders = {
     end,
 
     addNewInvadersRow = function()
-        rowNum = rowNum + 1
-        if rowNum > #catsQuads then
-            rowNum = 1
-        end
         local x = invaders[#invaders - COLUMNS + 1].x
         local y = invaders[#invaders].y - verticalTile
+        local randomCat = love.math.random(catLimit)
+        local scoreIndex = math.floor((randomCat - 1) / 3) + 1
+        local bulletIndex = math.random((scoreIndex * 2) -1, scoreIndex * 2)
         for i = 1, COLUMNS, 1 do
-            table.insert(invaders, Cat.create(catsQuads[rowNum], bulletImages[rowNum], catScores[rowNum], i, x + horizontalTile * (i-1), y))
+            table.insert(invaders, Cat.create(catsQuads[randomCat], catBulletQuads[bulletIndex], catScores[scoreIndex], i, x + horizontalTile * (i-1), y))
         end
     end,
 
