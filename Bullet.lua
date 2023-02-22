@@ -16,7 +16,7 @@ function Bullet:render()
 end
 
 function Bullet:move(dt)
-    self.y = self.y + BULLET_SPEED * dt * self.direction
+    self.y = self.y + bulletSpeed * dt * self.direction
 end
 
 function Bullet:isOffScreen()

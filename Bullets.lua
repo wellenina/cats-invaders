@@ -1,10 +1,12 @@
+local BULLET_SPEED = 200
+
 Bullets = {
 
     load = function()
         bullets =  {}
         BULLET_WIDTH = 6
         BULLET_HEIGHT = 10
-        BULLET_SPEED = 200
+        bulletSpeed = BULLET_SPEED
     end,
 
     update = function(__self, dt)
@@ -29,6 +31,10 @@ Bullets = {
                         Explosion.explode(cat.x, cat.y, catWidth, catHeight)
                         bottomInvaders = Invaders.getBottomInvaders()
                         score = score + cat.score
+                        defeatedCats = defeatedCats + 1
+                        if defeatedCats >= (80 * level) then
+                            Invaders:increaseDifficulty()
+                        end
                     end
                 end
             end

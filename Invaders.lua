@@ -14,6 +14,9 @@ local SHOOT_DELAY = 1.6
 local CAT_BULLET_SPRITE_WIDTH, CAT_BULLET_SPRITE_HEIGHT = 96, 10
 local BULLET_QUAD_WIDTH, BULLET_QUAD_HEIGHT = 6, 10
 
+local MOVE_ACCELERATION, SHOOT_ACCELERATION = 0.06, 0.08
+local MAX_LEVEL = 8
+
 
 Invaders = {
 
@@ -51,6 +54,9 @@ Invaders = {
         timeSinceLastBullet = 0
         shootDelay = SHOOT_DELAY -- to be DECREASED as the game progresses
         catLimit = CAT_WAVE -- to be increased as the game progresses
+
+        defeatedCats = 0
+        level = 1
 
         hasChangedDirection = false
     end,
@@ -148,6 +154,16 @@ Invaders = {
         for i = 1, COLUMNS, 1 do
             table.insert(invaders, Cat.create(catsQuads[randomCat], catBulletQuads[bulletIndex], catScores[scoreIndex], i, x + horizontalTile * (i-1), y))
         end
+    end,
+
+    increaseDifficulty = function()
+        if level > MAX_LEVEL then return end
+        moveDelay = moveDelay - MOVE_ACCELERATION
+        shootDelay = shootDelay - SHOOT_ACCELERATION
+        catLimit = catLimit + CAT_WAVE
+        bulletSpeed = bulletSpeed * 1.1
+        level = level + 1
+        print('level: ' .. level .. ', move: ' .. moveDelay .. ', shoot: ' .. shootDelay .. ', cats: ' .. catLimit)
     end,
 
     render = function()

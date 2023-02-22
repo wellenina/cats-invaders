@@ -1,15 +1,14 @@
+local COLORS = {
+    {1, 227/255, 250/255, 1, 1, 227/255, 250/255, 0},
+    {190/255, 1, 223/255, 1, 190/255, 1, 223/255, 0},
+    {189/255, 219/255, 1, 1, 189/255, 219/255, 1, 0},
+    {1, 251/255, 190/255, 1, 1, 251/255, 190/255, 0},
+    {1, 188/255, 1, 1, 1, 188/255, 1, 0}
+}
+
 Explosion = {
 
     load = function()
-
-        colors = {
-            {1, 227/255, 250/255, 1, 1, 227/255, 250/255, 0},
-            {190/255, 1, 223/255, 1, 190/255, 1, 223/255, 0},
-            {189/255, 219/255, 1, 1, 189/255, 219/255, 1, 0},
-            {1, 251/255, 190/255, 1, 1, 251/255, 190/255, 0},
-            {1, 188/255, 1, 1, 1, 188/255, 1, 0}
-        }
-
         local blast = love.graphics.newCanvas(2, 2)
         love.graphics.setCanvas(blast)
         love.graphics.rectangle("fill", 0, 0, 2, 2)
@@ -28,7 +27,7 @@ Explosion = {
 
     explode = function(x, y, width, height)
         local explosion = psystem:clone()
-        explosion:setColors(colors[math.random(#colors)])
+        explosion:setColors(COLORS[math.random(#COLORS)])
         explosion:setPosition(x + width * 0.5, y + height * 0.5)
         explosion:emit(50)
         table.insert(activeExplosions, explosion)
