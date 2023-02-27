@@ -17,6 +17,8 @@ local BULLET_QUAD_WIDTH, BULLET_QUAD_HEIGHT = 6, 10
 local MOVE_ACCELERATION, SHOOT_ACCELERATION = 0.06, 0.08
 local MAX_LEVEL = 8
 
+local sxValues = {-1, 1}
+
 
 Invaders = {
 
@@ -68,8 +70,10 @@ Invaders = {
         for i = 1, ROWS, 1 do -- for every row
             local randomCat = math.random(3)
             local randomBullet = math.random(2)
+            local sx = sxValues[math.random(2)]
+            local ox = sx > 0 and 0 or catWidth
             for j = 1, COLUMNS, 1 do -- for every column
-                table.insert(firstInvaders, Cat.create(catsQuads[randomCat], catBulletQuads[randomBullet], catScores[1], j, FIRST_COLUMN_X + horizontalTile * (j-1), BOTTOM_ROW_Y - verticalTile * (i-1)))
+                table.insert(firstInvaders, Cat.create(catsQuads[randomCat], catBulletQuads[randomBullet], catScores[1], j, FIRST_COLUMN_X + horizontalTile * (j-1), BOTTOM_ROW_Y - verticalTile * (i-1), sx, ox))
             end
         end
 
@@ -151,8 +155,10 @@ Invaders = {
         local randomCat = love.math.random(catLimit)
         local scoreIndex = math.floor((randomCat - 1) / 3) + 1
         local bulletIndex = math.random((scoreIndex * 2) -1, scoreIndex * 2)
+        local sx = sxValues[math.random(2)]
+        local ox = sx > 0 and 0 or catWidth
         for i = 1, COLUMNS, 1 do
-            table.insert(invaders, Cat.create(catsQuads[randomCat], catBulletQuads[bulletIndex], catScores[scoreIndex], i, x + horizontalTile * (i-1), y))
+            table.insert(invaders, Cat.create(catsQuads[randomCat], catBulletQuads[bulletIndex], catScores[scoreIndex], i, x + horizontalTile * (i-1), y, sx, ox))
         end
     end,
 
@@ -163,7 +169,6 @@ Invaders = {
         catLimit = catLimit + CAT_WAVE
         bulletSpeed = bulletSpeed * 1.1
         level = level + 1
-        print('level: ' .. level .. ', move: ' .. moveDelay .. ', shoot: ' .. shootDelay .. ', cats: ' .. catLimit)
     end,
 
     render = function()

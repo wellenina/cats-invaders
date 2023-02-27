@@ -1,7 +1,7 @@
 Cat = {}
 Cat.__index = Cat
 
-function Cat.create(quads, bulletQuad, score, columnNum, x, y)
+function Cat.create(quads, bulletQuad, score, columnNum, x, y, sx, ox)
   local instance = setmetatable({}, Cat)
   instance.quads = quads
   instance.bulletQuad = bulletQuad
@@ -9,11 +9,13 @@ function Cat.create(quads, bulletQuad, score, columnNum, x, y)
   instance.columnNum = columnNum
   instance.x = x
   instance.y = y
+  instance.sx = sx
+  instance.ox = ox
   return instance
 end
 
 function Cat:render()
-  love.graphics.draw(catSprite, self.quads[frame], self.x, self.y)
+  love.graphics.draw(catSprite, self.quads[frame], self.x, self.y, 0, self.sx, 1, self.ox, 0)
 end
 
 function Cat:shoot()
