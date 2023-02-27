@@ -32,6 +32,14 @@ Player = {
         end
     end,
 
+    countDownUpdate = function(__self, dt)
+        if love.keyboard.isDown('left') then
+            playerX = math.max(0, playerX + -PLAYER_SPEED * dt)
+        elseif love.keyboard.isDown('right') then
+            playerX = math.min(VIRTUAL_WIDTH - playerWidth, playerX + PLAYER_SPEED * dt)
+        end
+    end,
+
     shoot = function()
         table.insert(bullets, Bullet.create(playerBulletSprite, playerBulletQuads[1], playerX, playerY, -1))
     end,

@@ -175,5 +175,19 @@ Invaders = {
         for index,cat in ipairs(invaders) do
             cat:render()
         end
+    end,
+
+    countDownUpdate = function(__self, dt)
+        timeSinceLastMove = timeSinceLastMove + dt
+        if timeSinceLastMove > moveDelay / 10 then
+            renderedCats = renderedCats < #invaders and renderedCats + 1 or #invaders
+            timeSinceLastMove = 0
+        end
+    end,
+
+    countDownRender = function()
+        for i = 1, renderedCats, 1 do
+            invaders[i]:render()
+        end
     end
 }

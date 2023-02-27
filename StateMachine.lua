@@ -55,9 +55,15 @@ CountDownState = {
 
         totalTime = 3 -- seconds
         timePassed = 0
+
+        renderedCats = 1
     end,
 
     update = function(__self, dt)
+
+        Player:countDownUpdate(dt)
+        Invaders:countDownUpdate(dt)
+
         timePassed = timePassed + dt
         if timePassed >= totalTime then
             StateMachine:changeState(PlayState)
@@ -67,7 +73,7 @@ CountDownState = {
 
     render = function()
         Player.render()
-        Invaders.render()
+        Invaders.countDownRender()
 
         love.graphics.setFont(smallFont)
         love.graphics.printf('SCORE  ' .. tostring(score), 20, VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, 'left')
