@@ -16,10 +16,10 @@ Bullets = {
             bullet:move(dt)
             if bullet:isOffScreen() then
                 table.remove(invadersBullets, index)
-            elseif __self.checkCollision(bullet, playerX, playerY, playerWidth, playerHeight) then
+            elseif not isInvulnerable and __self.checkCollision(bullet, playerX, playerY, playerWidth, playerHeight) then
                 -- the player has been hit
                 table.remove(invadersBullets, index)
-                if lives > 1 then lives = lives - 1 else StateMachine:changeState(GameOverState) end
+                if lives > 1 then StateMachine:changeState(HurtState) else StateMachine:changeState(VeryHurtState) end
             end
         end
 
@@ -36,7 +36,7 @@ Bullets = {
                         -- a cat has been hit
                         table.remove(playerBullets, bulletIndex)
                         table.remove(invaders, catIndex)
-                        Explosion.explode(cat.x, cat.y, catWidth, catHeight)
+                        Explosion.explode(cat.x, cat.y, catWidth, catHeight, 50)
                         bottomInvaders = Invaders.getBottomInvaders()
                         score = score + cat.score
                         defeatedCats = defeatedCats + 1

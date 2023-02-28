@@ -177,7 +177,7 @@ Invaders = {
         end
     end,
 
-    countDownUpdate = function(__self, dt)
+    getReadyUpdate = function(__self, dt)
         timeSinceLastMove = timeSinceLastMove + dt
         if timeSinceLastMove > moveDelay / 10 then
             renderedCats = renderedCats < #invaders and renderedCats + 1 or #invaders
@@ -185,7 +185,7 @@ Invaders = {
         end
     end,
 
-    countDownRender = function()
+    getReadyRender = function()
         for i = 1, renderedCats, 1 do
             invaders[i]:render()
         end

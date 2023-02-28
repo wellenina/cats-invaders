@@ -25,11 +25,11 @@ Explosion = {
         activeExplosions = {}
     end,
 
-    explode = function(x, y, width, height)
+    explode = function(x, y, width, height, amount)
         local explosion = psystem:clone()
         explosion:setColors(COLORS[math.random(#COLORS)])
         explosion:setPosition(x + width * 0.5, y + height * 0.5)
-        explosion:emit(50)
+        explosion:emit(amount)
         table.insert(activeExplosions, explosion)
     end,
 

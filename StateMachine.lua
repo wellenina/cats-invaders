@@ -16,6 +16,14 @@ function StateMachine:render()
 end
 
 
+function drawLives(livesNum, img)
+    local margin = 60
+    for i = 1, livesNum, 1 do
+        love.graphics.draw(img, VIRTUAL_WIDTH - margin, VIRTUAL_HEIGHT - 13)
+        margin = margin + 15
+    end
+end
+
 
 TitleScreenState = {
     load = function()
@@ -23,7 +31,7 @@ TitleScreenState = {
 
     update = function(dt)
         if love.keyboard.wasPressed('return') then
-            StateMachine:changeState(CountDownState)
+            StateMachine:changeState(GetReadyState)
         end
     end,
 
@@ -36,15 +44,8 @@ TitleScreenState = {
     end
 }
 
-function drawLives(livesNum, img)
-    local margin = 60
-    for i = 1, livesNum, 1 do
-        love.graphics.draw(img, VIRTUAL_WIDTH - margin, VIRTUAL_HEIGHT - 13)
-        margin = margin + 15
-    end
-end
 
-CountDownState = {
+GetReadyState = {
     load = function()
         Player:load()
         Invaders:load()
@@ -53,27 +54,29 @@ CountDownState = {
 
         heart = love.graphics.newImage('images/heart.png')
 
-        totalTime = 3 -- seconds
-        timePassed = 0
+        getReadyDuration = 3 -- seconds
+        getReadyTimer = 0
 
         renderedCats = 1
     end,
 
     update = function(__self, dt)
 
-        Player:move(dt)
-        Invaders:countDownUpdate(dt)
+        Player:flicker(dt)
+        Player:walk(dt)
+        Invaders:getReadyUpdate(dt)
 
-        timePassed = timePassed + dt
-        if timePassed >= totalTime then
+        getReadyTimer = getReadyTimer + dt
+        if getReadyTimer >= getReadyDuration then
             StateMachine:changeState(PlayState)
-            timePassed = 0
+            playerScale = 1
+            getReadyTimer = 0
         end
     end,
 
     render = function()
         Player.render()
-        Invaders.countDownRender()
+        Invaders.getReadyRender()
 
         love.graphics.setFont(smallFont)
         love.graphics.printf('SCORE  ' .. tostring(score), 20, VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, 'left')
@@ -82,13 +85,14 @@ CountDownState = {
     end
 }
 
-PlayState = {
 
+PlayState = {
     load = function()
     end,
 
     update = function(__self, dt)
-        Player:update(dt)
+        Player:walk(dt)
+        Player:shoot(dt)
         Invaders:update(dt)
         Bullets:update(dt)
         Explosion.update(dt)
@@ -106,6 +110,82 @@ PlayState = {
     end
 }
 
+
+HurtState = {
+    load = function()
+        hurtDuration = 3
+        hurtTimer = 0
+        lives = lives - 1
+        isInvulnerable = true
+    end,
+    
+    update = function(__self, dt)
+        Player:flicker(dt)
+        Player:walk(dt)
+        Player:shoot(dt)
+        Invaders:update(dt)
+        Bullets:update(dt)
+        Explosion.update(dt)
+
+        hurtTimer = hurtTimer + dt
+        if hurtTimer >= hurtDuration then
+            StateMachine:changeState(PlayState)
+            isInvulnerable = false
+            playerScale = 1
+            hurtTimer = 0
+        end
+    end,
+    
+    render = function()
+        Bullets.render()
+        Player.render()
+        Invaders.render()
+        Explosion.render()
+
+        love.graphics.printf('SCORE  ' .. tostring(score), 20, VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, 'left')
+        love.graphics.printf('LIVES', VIRTUAL_WIDTH-20-smallFont:getWidth('LIVES'), VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, 'left')
+        drawLives(lives, heart)
+    end
+}
+
+
+VeryHurtState = {
+    load = function()
+        veryHurtDuration = 3
+        veryHurtTimer = 0
+        isInvulnerable = true
+        playerFrame = (playerFrame == 1 or playerFrame == 2) and 3 or 6
+    end,
+    
+    update = function(__self, dt)
+        Invaders:update(dt)
+        Bullets:update(dt)
+        Explosion.update(dt)
+
+        veryHurtTimer = veryHurtTimer + dt
+        if veryHurtTimer >= veryHurtDuration then
+            StateMachine:changeState(GameOverState)
+            hurtTimer = 0
+            playerScale = 1
+        elseif veryHurtTimer >= veryHurtDuration * 0.5 then
+            Explosion.explode(playerX, playerY, playerWidth, playerHeight, 50)
+            playerScale = 0
+        end
+    end,
+
+    render = function()
+        Bullets.render()
+        Player.render()
+        Invaders.render()
+        Explosion.render()
+
+        love.graphics.printf('SCORE  ' .. tostring(score), 20, VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, 'left')
+        love.graphics.printf('LIVES', VIRTUAL_WIDTH-20-smallFont:getWidth('LIVES'), VIRTUAL_HEIGHT - 13, VIRTUAL_WIDTH, 'left')
+        drawLives(lives, heart)
+    end
+}
+
+
 GameOverState = {
 
     load = function()
@@ -116,7 +196,7 @@ GameOverState = {
         if love.keyboard.wasPressed('return') then
             score = 0 -- reset score
             lives = 3 -- reset lives
-            StateMachine:changeState(CountDownState)
+            StateMachine:changeState(GetReadyState)
         end
     end,
 

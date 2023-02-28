@@ -2,8 +2,10 @@ local PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT = 180, 30
 local PLAYER_QUAD_WIDTH, PLAYER_QUAD_HEIGHT = 30, 30
 
 local FRAME_DURATION = 0.2
-local playerFrame = 1
 local frameTimer = 0
+
+local FLICKER_DURATION = 0.1
+local flickerTimer = 0
 
 local PLAYER_SPEED = 200
 
@@ -23,12 +25,14 @@ Player = {
                 love.graphics.newQuad(PLAYER_QUAD_WIDTH * (i-1), 0, PLAYER_QUAD_WIDTH, PLAYER_QUAD_HEIGHT, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT))
         end
 
---        playerFrame = 1
---        frameTimer = 0
-
         playerWidth, playerHeight = PLAYER_QUAD_WIDTH, PLAYER_QUAD_HEIGHT
         playerX = VIRTUAL_WIDTH / 2 - playerWidth / 2
         playerY = VIRTUAL_HEIGHT - playerHeight - 20
+
+        playerFrame = 1
+        playerScale = 1
+
+        isInvulnerable = false
 
         playerBulletSprite = love.graphics.newImage('images/player-bullets-spritesheet.png')
         playerBulletQuads = {} -- 14 bullets
@@ -38,15 +42,15 @@ Player = {
         end
     end,
 
-    update = function(__self, dt)
-        __self:move(dt)
-
-        if love.keyboard.wasPressed('space') then
-            __self.shoot()
+    flicker = function(__self, dt)
+        flickerTimer = flickerTimer + dt
+        if flickerTimer > FLICKER_DURATION then
+            playerScale = playerScale == 1 and 0 or 1
+            flickerTimer = 0
         end
     end,
 
-    move = function(__self, dt)
+    walk = function(__self, dt)
         if love.keyboard.isDown('left') then
             playerX = math.max(0, playerX + -PLAYER_SPEED * dt)
             frameTimer = frameTimer + dt
@@ -64,13 +68,15 @@ Player = {
         end
     end,
 
-    shoot = function()
-        if #playerBullets >= PLAYER_BULLETS_LIMIT then return end
-        table.insert(playerBullets, Bullet.create(playerBulletSprite, playerBulletQuads[1], playerX, playerY, -1))
+    shoot = function(__self, dt)
+        if love.keyboard.wasPressed('space') then
+            if #playerBullets >= PLAYER_BULLETS_LIMIT then return end
+            table.insert(playerBullets, Bullet.create(playerBulletSprite, playerBulletQuads[1], playerX, playerY, -1))
+        end
     end,
 
     render = function()
-        love.graphics.draw(playerSprite, playerQuads[playerFrame], playerX, playerY)
+        love.graphics.draw(playerSprite, playerQuads[playerFrame], playerX, playerY, 0, playerScale)
     end
 
 }
