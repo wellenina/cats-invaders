@@ -26,7 +26,7 @@ Invaders = {
 
         catWidth, catHeight = CAT_QUAD_WIDTH, CAT_QUAD_HEIGHT
         horizontalTile, verticalTile = catWidth + COLUMN_GAP, catHeight + ROW_GAP
-        frame = 1
+        catFrame = 1
 
         catSprite = love.graphics.newImage('images/cats-spritesheet.png')
         catsQuads = {} -- 24 cats, 2 frames each
@@ -102,7 +102,7 @@ Invaders = {
         timeSinceLastMove = timeSinceLastMove + dt
         if timeSinceLastMove > moveDelay then
 
-            frame = frame == 1 and 2 or 1
+            catFrame = catFrame == 1 and 2 or 1
 
             if __self.hasReachedEdge() then
                 catLateralMove = catLateralMove * -1 -- invert direction
