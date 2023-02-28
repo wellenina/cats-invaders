@@ -19,10 +19,10 @@ function Bullet:move(dt)
     self.y = self.y + bulletSpeed * dt * self.direction
 end
 
-function Bullet:isOffScreen()
-    if self.direction == 1 then -- invaders' bullet
-        return self.y > VIRTUAL_HEIGHT
-    else -- player's bullet
-        return self.y + BULLET_HEIGHT < 0
-    end
+function Bullet:isOffScreen() -- invaders' bullet
+  return self.y > VIRTUAL_HEIGHT
+end
+
+function Bullet:isOffScreenPl() -- player's bullet
+  return self.y + BULLET_HEIGHT < 0
 end

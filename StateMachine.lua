@@ -61,7 +61,7 @@ CountDownState = {
 
     update = function(__self, dt)
 
-        Player:countDownUpdate(dt)
+        Player:move(dt)
         Invaders:countDownUpdate(dt)
 
         timePassed = timePassed + dt

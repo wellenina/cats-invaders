@@ -3,6 +3,8 @@ local PLAYER_SPEED = 200
 local PLAYER_BULLET_SPRITE_WIDTH, PLAYER_BULLET_SPRITE_HEIGHT = 84, 10
 local BULLET_QUAD_WIDTH, BULLET_QUAD_HEIGHT = 6, 10
 
+local PLAYER_BULLETS_LIMIT = 1
+
 Player = {
 
     load = function()
@@ -21,18 +23,14 @@ Player = {
     end,
 
     update = function(__self, dt)
-        if love.keyboard.isDown('left') then
-            playerX = math.max(0, playerX + -PLAYER_SPEED * dt)
-        elseif love.keyboard.isDown('right') then
-            playerX = math.min(VIRTUAL_WIDTH - playerWidth, playerX + PLAYER_SPEED * dt)
-        end
+        __self:move(dt)
 
         if love.keyboard.wasPressed('space') then
             __self.shoot()
         end
     end,
 
-    countDownUpdate = function(__self, dt)
+    move = function(__self, dt)
         if love.keyboard.isDown('left') then
             playerX = math.max(0, playerX + -PLAYER_SPEED * dt)
         elseif love.keyboard.isDown('right') then
@@ -41,7 +39,8 @@ Player = {
     end,
 
     shoot = function()
-        table.insert(bullets, Bullet.create(playerBulletSprite, playerBulletQuads[1], playerX, playerY, -1))
+        if #playerBullets >= PLAYER_BULLETS_LIMIT then return end
+        table.insert(playerBullets, Bullet.create(playerBulletSprite, playerBulletQuads[1], playerX, playerY, -1))
     end,
 
     render = function()
