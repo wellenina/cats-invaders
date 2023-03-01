@@ -38,6 +38,15 @@ function love.load()
     mediumFont = love.graphics.newFont('font.ttf', 20)
     hugeFont = love.graphics.newFont('font.ttf', 48)
 
+    sounds = {
+        ['playerShoot'] = love.audio.newSource('sounds/player-shoot.wav', 'static'),
+        ['playerHurt'] = love.audio.newSource('sounds/player-hurt.wav', 'static'),
+        ['gameOver'] = love.audio.newSource('sounds/player-explosion.mp3', 'static'),
+        ['invaderShoot'] = love.audio.newSource('sounds/invader-shoot.wav', 'static'),
+        ['invaderExplosion'] = love.audio.newSource('sounds/invader-explosion.wav', 'static'),
+        ['invadersShiftDown'] = love.audio.newSource('sounds/ominously-shift-down.wav', 'static'),
+    }
+
     score = 0
     lives = 3
 

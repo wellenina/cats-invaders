@@ -109,6 +109,7 @@ Invaders = {
                 hasChangedDirection = true
                 for index,cat in ipairs(invaders) do
                     cat.y = cat.y + CAT_VERTICAL_MOVE -- move all the cats down
+                    sounds['invadersShiftDown']:play()
                 end
             else
                 for index,cat in ipairs(invaders) do

@@ -22,5 +22,6 @@ function Cat:shoot()
   local bullet = self.bulletQuad
   local x = self.x + (catWidth - BULLET_WIDTH) * 0.5
   local y = self.y + (catHeight - BULLET_HEIGHT) * 0.5
+  sounds['invaderShoot']:play()
   table.insert(invadersBullets, Bullet.create(catBulletSprite, bullet, x, y, 1))
 end

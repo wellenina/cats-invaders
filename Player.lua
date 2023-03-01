@@ -72,6 +72,7 @@ Player = {
         if love.keyboard.wasPressed('space') then
             if #playerBullets >= PLAYER_BULLETS_LIMIT then return end
             table.insert(playerBullets, Bullet.create(playerBulletSprite, playerBulletQuads[1], playerX, playerY, -1))
+            sounds['playerShoot']:play()
         end
     end,
 

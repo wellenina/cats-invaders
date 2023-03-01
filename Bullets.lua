@@ -36,6 +36,7 @@ Bullets = {
                         -- a cat has been hit
                         table.remove(playerBullets, bulletIndex)
                         table.remove(invaders, catIndex)
+                        sounds['invaderExplosion']:play()
                         Explosion.explode(cat.x, cat.y, catWidth, catHeight, 50)
                         bottomInvaders = Invaders.getBottomInvaders()
                         score = score + cat.score

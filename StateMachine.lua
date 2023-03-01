@@ -113,6 +113,7 @@ PlayState = {
 
 HurtState = {
     load = function()
+        sounds['playerHurt']:play()
         hurtDuration = 3
         hurtTimer = 0
         lives = lives - 1
@@ -153,6 +154,7 @@ VeryHurtState = {
     load = function()
         veryHurtDuration = 3
         veryHurtTimer = 0
+        lives = 0
         isInvulnerable = true
         playerFrame = (playerFrame == 1 or playerFrame == 2) and 3 or 6
     end,
@@ -167,8 +169,9 @@ VeryHurtState = {
             StateMachine:changeState(GameOverState)
             hurtTimer = 0
             playerScale = 1
-        elseif veryHurtTimer >= veryHurtDuration * 0.5 then
-            Explosion.explode(playerX, playerY, playerWidth, playerHeight, 50)
+        elseif veryHurtTimer >= 1.4 and veryHurtTimer <= 1.6 then
+            sounds['gameOver']:play()
+            Explosion.explode(playerX, playerY, playerWidth, playerHeight, 10)
             playerScale = 0
         end
     end,
