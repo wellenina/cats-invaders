@@ -103,13 +103,18 @@ Invaders = {
         if timeSinceLastMove > moveDelay then
 
             catFrame = catFrame == 1 and 2 or 1
+            timeSinceLastMove = 0 -- reset timer
 
             if __self.hasReachedEdge() then
                 catLateralMove = catLateralMove * -1 -- invert direction
                 hasChangedDirection = true
+                sounds['invadersShiftDown']:play()
                 for index,cat in ipairs(invaders) do
                     cat.y = cat.y + CAT_VERTICAL_MOVE -- move all the cats down
-                    sounds['invadersShiftDown']:play()
+                end
+                if __self.hasReachedGround() then
+                    StateMachine:changeState(VeryHurtState)
+                    return
                 end
             else
                 for index,cat in ipairs(invaders) do
@@ -120,8 +125,6 @@ Invaders = {
             if invaders[#invaders].y + catHeight > 0 then
                 __self.addNewInvadersRow()
             end
-
-            timeSinceLastMove = 0 -- reset timer
         end
 
         -- make invaders shoot
@@ -144,6 +147,15 @@ Invaders = {
             if cat.x >= (VIRTUAL_WIDTH - catWidth) then
                 return true
             elseif cat.x <= 0 then
+                return true
+            end
+        end
+        return false
+    end,
+
+    hasReachedGround = function()
+        for index,cat in ipairs(bottomInvaders) do
+            if cat.y + catHeight > playerY then
                 return true
             end
         end

@@ -169,7 +169,7 @@ VeryHurtState = {
             StateMachine:changeState(GameOverState)
             hurtTimer = 0
             playerScale = 1
-        elseif veryHurtTimer >= 1.4 and veryHurtTimer <= 1.6 then
+        elseif veryHurtTimer >= 1.2 and veryHurtTimer <= 1.4 then
             sounds['gameOver']:play()
             Explosion.explode(playerX, playerY, playerWidth, playerHeight, 10)
             playerScale = 0

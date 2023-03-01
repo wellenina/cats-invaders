@@ -35,7 +35,7 @@ function love.load()
     groundLine = {0, VIRTUAL_HEIGHT - 17, VIRTUAL_WIDTH, VIRTUAL_HEIGHT - 17}
 
     smallFont = love.graphics.newFont('font.ttf', 8)
-    mediumFont = love.graphics.newFont('font.ttf', 20)
+    mediumFont = love.graphics.newFont('font.ttf', 16)
     hugeFont = love.graphics.newFont('font.ttf', 48)
 
     sounds = {
