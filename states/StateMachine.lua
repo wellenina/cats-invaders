@@ -16,33 +16,9 @@ function StateMachine:render()
 end
 
 
-function drawLives(livesNum, img)
-    local margin = 60
-    for i = 1, livesNum, 1 do
-        love.graphics.draw(img, VIRTUAL_WIDTH - margin, VIRTUAL_HEIGHT - 13)
-        margin = margin + 15
-    end
-end
 
 
-TitleScreenState = {
-    load = function()
-    end,
 
-    update = function(dt)
-        if love.keyboard.wasPressed('return') then
-            StateMachine:changeState(GetReadyState)
-        end
-    end,
-
-    render = function()
-        love.graphics.setFont(hugeFont)
-        love.graphics.printf('CATS INVADERS', 0, 30, VIRTUAL_WIDTH, 'center')
-
-        love.graphics.setFont(mediumFont)
-        love.graphics.printf('Press Enter to play', 0, VIRTUAL_HEIGHT * 0.5, VIRTUAL_WIDTH, 'center')
-    end
-}
 
 
 GetReadyState = {

@@ -7,13 +7,15 @@ WINDOW_HEIGHT = 720
 VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
 
-require 'Player'
-require 'Cat'
-require 'Invaders'
-require 'Bullet'
-require 'Bullets'
-require 'Explosion'
-require 'StateMachine'
+require 'globals'
+require 'objects/Player'
+require 'objects/Cat'
+require 'objects/Invaders'
+require 'objects/Bullet'
+require 'objects/Bullets'
+require 'objects/Explosion'
+require 'states/StateMachine'
+require 'states/TitleScreenState'
 
 
 function love.load()
@@ -36,7 +38,7 @@ function love.load()
 
     smallFont = love.graphics.newFont('font.ttf', 8)
     mediumFont = love.graphics.newFont('font.ttf', 16)
-    hugeFont = love.graphics.newFont('font.ttf', 48)
+    hugeFont = love.graphics.newFont('font.ttf', 40)
 
     sounds = {
         ['playerShoot'] = love.audio.newSource('sounds/player-shoot.wav', 'static'),
@@ -81,10 +83,12 @@ end
 function love.draw()
     push:start()
 
-    love.graphics.clear(185/255, 244/255, 171/255)
+    love.graphics.clear(BACKGROUND_COLOR)
 
+    love.graphics.setColor(GREEN)
     love.graphics.line(groundLine)
 
+    love.graphics.setColor(WHITE)
     StateMachine:render()
 
     push:finish()
