@@ -16,6 +16,13 @@ require 'objects/Bullets'
 require 'objects/Explosion'
 require 'states/StateMachine'
 require 'states/TitleScreenState'
+require 'states/GetReadyState'
+require 'states/PlayState'
+require 'states/HurtState'
+require 'states/VeryHurtState'
+require 'states/GameOverState'
+--require 'states/TitleScreenState'
+
 
 
 function love.load()
@@ -38,6 +45,7 @@ function love.load()
 
     smallFont = love.graphics.newFont('font.ttf', 8)
     mediumFont = love.graphics.newFont('font.ttf', 16)
+    largeFont = love.graphics.newFont('font.ttf', 32)
     hugeFont = love.graphics.newFont('font.ttf', 40)
 
     sounds = {
@@ -48,9 +56,6 @@ function love.load()
         ['invaderExplosion'] = love.audio.newSource('sounds/invader-explosion.wav', 'static'),
         ['invadersShiftDown'] = love.audio.newSource('sounds/ominously-shift-down.wav', 'static'),
     }
-
-    score = 0
-    lives = 3
 
     StateMachine:changeState(TitleScreenState)
 end
