@@ -6,23 +6,18 @@ table.insert(titleScreenButtons, createButton(
         StateMachine:changeState(GetReadyState)
     end
 ))
-
 table.insert(titleScreenButtons, createButton(
     'High Scores',
     function()
-        print('high scores button')
-        --StateMachine:changeState(HighScoresState)
+        StateMachine:changeState(HighScoresState)
     end
 ))
-
 table.insert(titleScreenButtons, createButton(
     'Options',
     function()
-        print('options button')
-        --StateMachine:changeState(OptionsState)
+        StateMachine:changeState(OptionsState)
     end
 ))
-
 table.insert(titleScreenButtons, createButton(
     'Exit',
     function()

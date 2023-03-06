@@ -16,13 +16,13 @@ require 'objects/Bullets'
 require 'objects/Explosion'
 require 'states/StateMachine'
 require 'states/TitleScreenState'
+require 'states/HighScoresState'
+require 'states/OptionsState'
 require 'states/GetReadyState'
 require 'states/PlayState'
 require 'states/HurtState'
 require 'states/VeryHurtState'
 require 'states/GameOverState'
---require 'states/TitleScreenState'
-
 
 
 function love.load()
