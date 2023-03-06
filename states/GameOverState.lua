@@ -47,7 +47,7 @@ GameOverState = {
         love.graphics.setFont(mediumFont)
         love.graphics.printf('Oof! Those cats are tough!', 0, 80, VIRTUAL_WIDTH, 'center')
 
-        love.graphics.setColor(191/255, 112/255, 1)
+        love.graphics.setColor(PURPLE)
         love.graphics.printf('Your score is ' .. tostring(score), 0, 110, VIRTUAL_WIDTH, 'center')
 
         for index,button in ipairs(gameOverButtons) do
