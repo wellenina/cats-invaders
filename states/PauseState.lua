@@ -12,6 +12,12 @@ table.insert(pauseButtons, createButton(
         StateMachine:changeState(TitleScreenState)
     end
 ))
+table.insert(pauseButtons, createButton(
+    'Exit',
+    function()
+        love.event.quit()
+    end
+))
 
 local selectedButton = 1
 local buttonY = 100
@@ -45,7 +51,11 @@ PauseState = {
         drawScoreAndLives(score, lives, heart)
 
         love.graphics.setColor(0, 0, 0, 0.7)
-        love.graphics.rectangle('fill', 70, 10, VIRTUAL_WIDTH-140, VIRTUAL_HEIGHT-80)
+        love.graphics.rectangle('fill', 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
+
+        love.graphics.setColor(WHITE)
+        love.graphics.setLineWidth(4)
+        love.graphics.rectangle('line', 70, 10, VIRTUAL_WIDTH-140, VIRTUAL_HEIGHT-70)
 
         love.graphics.setFont(largeFont)
         love.graphics.setColor(GREEN)
