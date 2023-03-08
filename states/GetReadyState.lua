@@ -32,7 +32,6 @@ GetReadyState = {
         Player.render()
         Invaders.getReadyRender()
 
-        love.graphics.setFont(smallFont)
         drawScoreAndLives(score, lives, heart)
     end
 }

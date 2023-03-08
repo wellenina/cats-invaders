@@ -3,6 +3,11 @@ PlayState = {
     end,
 
     update = function(__self, dt)
+
+        if love.keyboard.wasPressed('escape') then
+            StateMachine:changeState(PauseState)
+        end
+
         Player:walk(dt)
         Player:shoot(dt)
         Invaders:update(dt)

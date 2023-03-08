@@ -1,4 +1,4 @@
-local highScores = { -- temporary values as example
+highScores = { -- temporary values as example
     123456,
     9678,
     788,

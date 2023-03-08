@@ -4,6 +4,7 @@ PURPLE = {191/255, 112/255, 1}
 BACKGROUND_COLOR = {29/255, 41/255, 81/255}
 
 function drawScoreAndLives(score, livesNum, img)
+    love.graphics.setFont(smallFont)
     local y = VIRTUAL_HEIGHT - 13
     love.graphics.printf('SCORE  ' .. tostring(score), 20, y, VIRTUAL_WIDTH, 'left')
     love.graphics.printf('LIVES', VIRTUAL_WIDTH-48, y, VIRTUAL_WIDTH, 'left')

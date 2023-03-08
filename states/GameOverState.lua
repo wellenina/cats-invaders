@@ -22,6 +22,14 @@ GameOverState = {
 
     load = function()
         selectedButton = 1
+
+        for index,hScore in ipairs(highScores) do
+            if score > hScore then
+                table.insert(highScores, index, score)
+                table.remove(highScores)
+                break
+            end
+        end
     end,
 
     update = function(dt)
