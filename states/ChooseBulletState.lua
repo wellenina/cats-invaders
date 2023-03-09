@@ -1,18 +1,18 @@
-local rows, columns = 2, 6
+local rows, columns = 2, 7
 local selectedRow, selectedColumn = 1, 1
 
-local currentPlayerRow = 1
-local currentPlayerColumn = 1
+local currentBulletRow = 1
+local currentBulletColumn = 1
 
-local playersNames = {'Our Hero', 'Suit guy', 'Tank top Guy', 'Girl', 'The Mailman', 'Rapper',
-    'Tuba Player', 'Fierce Ninja', 'Green Ranger', 'Pink Horse', 'Great Pumpkin', 'Santa'}
+local bulletsNames = {'Daikon', 'Broccoli', 'Carnation', 'Carrot', 'Lollipop', 'Radish', 'Trumpet',
+    'Pineapple', 'Apple\ncore', 'Avocado', 'Straw-\nberry', 'Chocolate bar', 'Aubergine', 'Pear'}
 
 
-ChoosePlayerState = {
+ChooseBulletState = {
 
     load = function()
-        currentPlayerRow = selectedPlayer <= columns and 1 or 2
-        currentPlayerColumn = selectedPlayer % columns
+        currentBulletRow = selectedBullet <= columns and 1 or 2
+        currentBulletColumn = selectedBullet % columns
     end,
 
     update = function(dt)
@@ -33,9 +33,9 @@ ChoosePlayerState = {
         end
 
         if love.keyboard.wasPressed('return') then
-            selectedPlayer = selectedColumn + columns * (selectedRow - 1)
-            currentPlayerRow = selectedPlayer <= columns and 1 or 2
-            currentPlayerColumn = selectedPlayer % columns == 0 and columns or selectedPlayer % columns
+            selectedBullet = selectedColumn + columns * (selectedRow - 1)
+            currentBulletRow = selectedBullet <= columns and 1 or 2
+            currentBulletColumn = selectedBullet % columns == 0 and columns or selectedBullet % columns
         end
 
         if love.keyboard.wasPressed('escape') then
@@ -48,24 +48,24 @@ ChoosePlayerState = {
 
         for row = 1, rows, 1 do
             for column = 1, columns, 1 do
-                -- currently selected player has a yellow background
-                if row == currentPlayerRow and column == currentPlayerColumn then
+                -- currently selected bullet has a yellow background
+                if row == currentBulletRow and column == currentBulletColumn then
                     love.graphics.setColor(YELLOW)
-                    love.graphics.rectangle('fill', 25 + 67 * (column-1), 16 + 77 * (row-1), 46, 46)
+                    love.graphics.rectangle('fill', 27 + 57 * (column-1), 16 + 77 * (row-1), 36, 46)
                 end
 
-                local playerIndex = column + columns * (row-1)
+                local bulletIndex = column + columns * (row-1)
                 love.graphics.setColor(WHITE)
-                love.graphics.draw(playersSprite, playersQuads[playerIndex][1], 32 + 67 * (column-1), 24 + 77 * (row-1))
+                love.graphics.draw(playerBulletSprite, playerBulletQuads[bulletIndex], 39 + 57 * (column-1), 34 + 77 * (row-1), 0, 2, 2)
 
                 if row == selectedRow and column == selectedColumn then
                     love.graphics.setColor(WHITE)
                 else
                     love.graphics.setColor(GREEN)
                 end
-                love.graphics.printf(playersNames[playerIndex], 24 + 67 * (column-1), 68 + 77 * (row-1), 48, 'center')
+                love.graphics.printf(bulletsNames[bulletIndex], 15 + 57 * (column-1), 68 + 77 * (row-1), 60, 'center')
                 love.graphics.setLineWidth(5)
-                love.graphics.rectangle('line', 24 + 67 * (column-1), 16 + 77 * (row-1), 48, 48)
+                love.graphics.rectangle('line', 26 + 57 * (column-1), 16 + 77 * (row-1), 38, 48)
             end
         end
 

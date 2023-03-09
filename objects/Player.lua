@@ -25,8 +25,8 @@ local flickerTimer = 0
 local PLAYER_SPEED = 200
 
 -- bullets
-local PLAYER_BULLET_SPRITE_WIDTH, PLAYER_BULLET_SPRITE_HEIGHT = 84, 10
-local BULLET_QUAD_WIDTH, BULLET_QUAD_HEIGHT = 6, 10
+local PLAYER_BULLET_SPRITE_WIDTH, PLAYER_BULLET_SPRITE_HEIGHT = 112, 10
+local BULLET_QUAD_WIDTH, BULLET_QUAD_HEIGHT = 8, 10
 
 playerBulletQuads = {} -- 14 bullets
 for i = 1, PLAYER_BULLET_SPRITE_WIDTH / BULLET_QUAD_WIDTH, 1 do
@@ -40,9 +40,6 @@ local PLAYER_BULLETS_LIMIT = 1
 Player = {
 
     load = function()
-        playersSprite = love.graphics.newImage('images/players-spritesheet.png')
-        playerBulletSprite = love.graphics.newImage('images/player-bullets-spritesheet.png')
-        
         playerX, playerY = VIRTUAL_WIDTH / 2 - playerWidth / 2, VIRTUAL_HEIGHT - playerHeight - 20
 
         playerFrame = 1
@@ -88,5 +85,5 @@ Player = {
     render = function()
         love.graphics.draw(playersSprite, playersQuads[selectedPlayer][playerFrame], playerX, playerY, 0, playerScale)
     end
-    
+
 }

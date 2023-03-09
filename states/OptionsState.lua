@@ -1,7 +1,6 @@
 local soundVolume = 1
 
 local optionsButtons = {}
-
 table.insert(optionsButtons, createButton(
     'Sound is on',
     function()
@@ -25,8 +24,7 @@ table.insert(optionsButtons, createButton(
 table.insert(optionsButtons, createButton(
     'Choose your weapon',
     function()
-        print('Choose your weapon')
-        --StateMachine:changeState( )
+        StateMachine:changeState(ChooseBulletState)
     end
 ))
 table.insert(optionsButtons, createButton(
@@ -40,11 +38,18 @@ local selectedButton = 1
 local buttonY = 100
 local buttonMargin = 26
 
+keysQuads = {}
+for i = 1, 3, 1 do
+    table.insert(keysQuads, love.graphics.newQuad(37 * (i-1), 0, 37, 21, 111, 21))
+end
+keysExplanationTexts = {'select', 'confirm', 'go back'}
+
 
 OptionsState = {
 
     load = function(__self, selection)
         selectedButton = selection or 1
+        keysSprite = love.graphics.newImage('images/keys.png')
     end,
 
     update = function(dt)

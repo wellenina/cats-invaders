@@ -19,6 +19,7 @@ require 'states/TitleScreenState'
 require 'states/HighScoresState'
 require 'states/OptionsState'
 require 'states/ChoosePlayerState'
+require 'states/ChooseBulletState'
 require 'states/GetReadyState'
 require 'states/PlayState'
 require 'states/PauseState'
@@ -42,6 +43,9 @@ function love.load()
 
     -- input table
     love.keyboard.keysPressed = {}
+
+    playersSprite = love.graphics.newImage('images/players-spritesheet.png')
+    playerBulletSprite = love.graphics.newImage('images/player-bullets-spritesheet.png')
 
     groundLine = {0, VIRTUAL_HEIGHT - 17, VIRTUAL_WIDTH, VIRTUAL_HEIGHT - 17}
 
