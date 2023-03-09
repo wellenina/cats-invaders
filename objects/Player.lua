@@ -4,7 +4,7 @@ local PLAYER_QUAD_WIDTH, PLAYER_QUAD_HEIGHT = 32, 32
 local PLAYERS = PLAYERS_SPRITE_HEIGHT / PLAYER_QUAD_HEIGHT
 local PLAYER_FRAMES = PLAYERS_SPRITE_WIDTH / PLAYER_QUAD_WIDTH
 
-local playersQuads = {}
+playersQuads = {}
 for i = 1, PLAYERS, 1 do
     local quads = {}
     for j = 1, PLAYER_FRAMES, 1 do
@@ -45,7 +45,6 @@ Player = {
         
         playerX, playerY = VIRTUAL_WIDTH / 2 - playerWidth / 2, VIRTUAL_HEIGHT - playerHeight - 20
 
-        selectedPlayer = 2
         playerFrame = 1
         playerScale = 1
 
@@ -81,7 +80,7 @@ Player = {
     shoot = function(__self, dt)
         if love.keyboard.wasPressed('space') then
             if #playerBullets >= PLAYER_BULLETS_LIMIT then return end
-            table.insert(playerBullets, Bullet.create(playerBulletSprite, playerBulletQuads[1], playerX, playerY, -1))
+            table.insert(playerBullets, Bullet.create(playerBulletSprite, playerBulletQuads[selectedBullet], playerX, playerY, -1))
             sounds['playerShoot']:play()
         end
     end,
@@ -89,5 +88,5 @@ Player = {
     render = function()
         love.graphics.draw(playersSprite, playersQuads[selectedPlayer][playerFrame], playerX, playerY, 0, playerScale)
     end
-
+    
 }

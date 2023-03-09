@@ -2,9 +2,9 @@ StateMachine = {}
 
 StateMachine.currentState = {}
 
-function StateMachine:changeState(newState)
+function StateMachine:changeState(newState, selection)
     self.currentState = newState
-    self.currentState:load()
+    self.currentState:load(selection)
 end
 
 function StateMachine:update(dt)

@@ -32,8 +32,8 @@ local buttonMargin = 26
 
 TitleScreenState = {
 
-    load = function()
-        selectedButton = 1
+    load = function(__self, selection)
+        selectedButton = selection or 1
     end,
 
     update = function(dt)

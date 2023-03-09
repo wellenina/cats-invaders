@@ -1,7 +1,12 @@
 WHITE = {1, 1, 1}
 GREEN = {50/255, 205/255, 50/255}
 PURPLE = {191/255, 112/255, 1}
+YELLOW = {1, 233/255, 0}
 BACKGROUND_COLOR = {29/255, 41/255, 81/255}
+
+selectedPlayer = 1
+selectedBullet = 1
+
 
 function drawScoreAndLives(score, livesNum, img)
     love.graphics.setFont(smallFont)

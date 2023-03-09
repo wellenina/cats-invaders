@@ -17,10 +17,9 @@ table.insert(optionsButtons, createButton(
     end
 ))
 table.insert(optionsButtons, createButton(
-    'Choose your character',
+    'Choose your fighter',
     function()
-        print('Choose your character')
-        --StateMachine:changeState( )
+        StateMachine:changeState(ChoosePlayerState)
     end
 ))
 table.insert(optionsButtons, createButton(
@@ -33,7 +32,7 @@ table.insert(optionsButtons, createButton(
 table.insert(optionsButtons, createButton(
     'Back',
     function()
-        StateMachine:changeState(TitleScreenState)
+        StateMachine:changeState(TitleScreenState, 3)
     end
 ))
 
@@ -44,8 +43,8 @@ local buttonMargin = 26
 
 OptionsState = {
 
-    load = function()
-        selectedButton = 1
+    load = function(__self, selection)
+        selectedButton = selection or 1
     end,
 
     update = function(dt)

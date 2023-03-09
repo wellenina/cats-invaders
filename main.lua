@@ -18,6 +18,7 @@ require 'states/StateMachine'
 require 'states/TitleScreenState'
 require 'states/HighScoresState'
 require 'states/OptionsState'
+require 'states/ChoosePlayerState'
 require 'states/GetReadyState'
 require 'states/PlayState'
 require 'states/PauseState'
@@ -88,6 +89,7 @@ function love.draw()
     love.graphics.clear(BACKGROUND_COLOR)
 
     love.graphics.setColor(GREEN)
+    love.graphics.setLineWidth(1)
     love.graphics.line(groundLine)
 
     love.graphics.setColor(WHITE)

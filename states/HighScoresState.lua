@@ -14,7 +14,7 @@ local margin = 24
 local backBtn = createButton(
     'Back',
     function()
-        StateMachine:changeState(TitleScreenState)
+        StateMachine:changeState(TitleScreenState, 2)
     end
 )
 
