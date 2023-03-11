@@ -1,8 +1,7 @@
 local rows, columns = 2, 6
 local selectedRow, selectedColumn = 1, 1
 
-local currentPlayerRow = 1
-local currentPlayerColumn = 1
+local currentPlayerRow, currentPlayerColumn = 1, 1
 
 local playersNames = {'Our Hero', 'Suit guy', 'Tank top Guy', 'Girl', 'The Mailman', 'Rapper',
     'Tuba Player', 'Fierce Ninja', 'Green Ranger', 'Pink Horse', 'Great Pumpkin', 'Santa'}
@@ -11,8 +10,9 @@ local playersNames = {'Our Hero', 'Suit guy', 'Tank top Guy', 'Girl', 'The Mailm
 ChoosePlayerState = {
 
     load = function()
-        currentPlayerRow = selectedPlayer <= columns and 1 or 2
-        currentPlayerColumn = selectedPlayer % columns
+        currentPlayerRow = gameData.selectedPlayer <= columns and 1 or 2
+        currentPlayerColumn = gameData.selectedPlayer % columns
+        selectedRow, selectedColumn = currentPlayerRow, currentPlayerColumn
     end,
 
     update = function(dt)
@@ -33,12 +33,13 @@ ChoosePlayerState = {
         end
 
         if love.keyboard.wasPressed('return') then
-            selectedPlayer = selectedColumn + columns * (selectedRow - 1)
-            currentPlayerRow = selectedPlayer <= columns and 1 or 2
-            currentPlayerColumn = selectedPlayer % columns == 0 and columns or selectedPlayer % columns
+            gameData.selectedPlayer = selectedColumn + columns * (selectedRow - 1)
+            currentPlayerRow = gameData.selectedPlayer <= columns and 1 or 2
+            currentPlayerColumn = gameData.selectedPlayer % columns == 0 and columns or gameData.selectedPlayer % columns
         end
 
         if love.keyboard.wasPressed('escape') then
+            saveGameData()
             StateMachine:changeState(OptionsState, 2)
         end        
     end,

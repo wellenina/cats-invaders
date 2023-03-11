@@ -1,18 +1,16 @@
-local soundVolume = 1
-
 local optionsButtons = {}
 table.insert(optionsButtons, createButton(
-    'Sound is on',
+    '',
     function()
-        if soundVolume == 1 then
+        if gameData.soundVolume == 1 then
             optionsButtons[1].text = 'Sound is off'
-            soundVolume = 0
+            gameData.soundVolume = 0
         else
             optionsButtons[1].text = 'Sound is on'
-            soundVolume = 1
+            gameData.soundVolume = 1
         end
-
-        love.audio.setVolume(soundVolume)
+        saveGameData()
+        love.audio.setVolume(gameData.soundVolume)
     end
 ))
 table.insert(optionsButtons, createButton(
@@ -49,6 +47,7 @@ OptionsState = {
 
     load = function(__self, selection)
         selectedButton = selection or 1
+        optionsButtons[1].text = gameData.soundVolume == 1 and 'Sound is on' or 'Sound is off'
         keysSprite = love.graphics.newImage('images/keys.png')
     end,
 

@@ -41,6 +41,8 @@ function love.load()
 
     love.window.setTitle('Cats Invaders')
 
+    loadGameData()
+
     -- input table
     love.keyboard.keysPressed = {}
 

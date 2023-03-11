@@ -77,13 +77,13 @@ Player = {
     shoot = function(__self, dt)
         if love.keyboard.wasPressed('space') then
             if #playerBullets >= PLAYER_BULLETS_LIMIT then return end
-            table.insert(playerBullets, Bullet.create(playerBulletSprite, playerBulletQuads[selectedBullet], playerX, playerY, -1))
+            table.insert(playerBullets, Bullet.create(playerBulletSprite, playerBulletQuads[gameData.selectedBullet], playerX, playerY, -1))
             sounds['playerShoot']:play()
         end
     end,
 
     render = function()
-        love.graphics.draw(playersSprite, playersQuads[selectedPlayer][playerFrame], playerX, playerY, 0, playerScale)
+        love.graphics.draw(playersSprite, playersQuads[gameData.selectedPlayer][playerFrame], playerX, playerY, 0, playerScale)
     end
 
 }

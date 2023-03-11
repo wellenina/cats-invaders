@@ -1,8 +1,7 @@
 local rows, columns = 2, 7
 local selectedRow, selectedColumn = 1, 1
 
-local currentBulletRow = 1
-local currentBulletColumn = 1
+local currentBulletRow, currentBulletColumn = 1, 1
 
 local bulletsNames = {'Daikon', 'Broccoli', 'Carnation', 'Carrot', 'Lollipop', 'Radish', 'Trumpet',
     'Pineapple', 'Apple\ncore', 'Avocado', 'Straw-\nberry', 'Chocolate bar', 'Aubergine', 'Pear'}
@@ -11,8 +10,9 @@ local bulletsNames = {'Daikon', 'Broccoli', 'Carnation', 'Carrot', 'Lollipop', '
 ChooseBulletState = {
 
     load = function()
-        currentBulletRow = selectedBullet <= columns and 1 or 2
-        currentBulletColumn = selectedBullet % columns
+        currentBulletRow = gameData.selectedBullet <= columns and 1 or 2
+        currentBulletColumn = gameData.selectedBullet % columns
+        selectedRow, selectedColumn = currentBulletRow, currentBulletColumn
     end,
 
     update = function(dt)
@@ -33,12 +33,13 @@ ChooseBulletState = {
         end
 
         if love.keyboard.wasPressed('return') then
-            selectedBullet = selectedColumn + columns * (selectedRow - 1)
-            currentBulletRow = selectedBullet <= columns and 1 or 2
-            currentBulletColumn = selectedBullet % columns == 0 and columns or selectedBullet % columns
+            gameData.selectedBullet = selectedColumn + columns * (selectedRow - 1)
+            currentBulletRow = gameData.selectedBullet <= columns and 1 or 2
+            currentBulletColumn = gameData.selectedBullet % columns == 0 and columns or gameData.selectedBullet % columns
         end
 
         if love.keyboard.wasPressed('escape') then
+            saveGameData()
             StateMachine:changeState(OptionsState, 2)
         end        
     end,

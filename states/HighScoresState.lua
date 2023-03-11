@@ -1,11 +1,3 @@
-highScores = { -- temporary values as example
-    123456,
-    9678,
-    788,
-    134,
-    34
-}
-
 local width = 140
 local x = (VIRTUAL_WIDTH - width) * 0.5
 local y = 70
@@ -37,7 +29,7 @@ HighScoresState = {
 
         love.graphics.setFont(mediumFont)
         love.graphics.setColor(PURPLE)
-        for index,hScore in ipairs(highScores) do
+        for index,hScore in ipairs(gameData.highScores) do
             love.graphics.printf(index .. '. ', x, y + (margin * (index-1)), width, 'left')
             love.graphics.printf(hScore, x, y + (margin * (index-1)), width, 'right')
         end
