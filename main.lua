@@ -39,7 +39,7 @@ function love.load()
         canvas = false
     })
 
-    love.window.setTitle('Cats Invaders')
+    --love.window.setTitle('Cats Invaders')
 
     loadGameData()
 
