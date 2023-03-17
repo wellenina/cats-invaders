@@ -7,6 +7,7 @@ WINDOW_HEIGHT = 720
 VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
 
+require 'languages'
 require 'globals'
 require 'objects/Player'
 require 'objects/Cat'
@@ -18,6 +19,7 @@ require 'states/StateMachine'
 require 'states/TitleScreenState'
 require 'states/HighScoresState'
 require 'states/OptionsState'
+require 'states/SelectLanguageState'
 require 'states/ChoosePlayerState'
 require 'states/ChooseBulletState'
 require 'states/GetReadyState'
@@ -38,8 +40,6 @@ function love.load()
         vsync = true,
         canvas = false
     })
-
-    --love.window.setTitle('Cats Invaders')
 
     loadGameData()
 

@@ -3,17 +3,18 @@ local x = (VIRTUAL_WIDTH - width) * 0.5
 local y = 70
 local margin = 24
 
-local backBtn = createButton(
-    'Back',
-    function()
-        StateMachine:changeState(TitleScreenState, 2)
-    end
-)
+local backBtn
 
 
 HighScoresState = {
 
     load = function()
+        backBtn = createButton(
+            texts.back,
+            function()
+                StateMachine:changeState(TitleScreenState, 2)
+            end
+        )
     end,
 
     update = function(dt)
@@ -25,7 +26,7 @@ HighScoresState = {
     render = function()
         love.graphics.setFont(largeFont)
         love.graphics.setColor(GREEN)
-        love.graphics.printf('High Scores', 0, 20, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf(texts.highScores, 0, 20, VIRTUAL_WIDTH, 'center')
 
         love.graphics.setFont(mediumFont)
         love.graphics.setColor(PURPLE)

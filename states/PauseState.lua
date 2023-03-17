@@ -1,23 +1,6 @@
 local pauseButtons = {}
 
-table.insert(pauseButtons, createButton(
-    'Resume',
-    function()
-        StateMachine:changeState(PlayState)
-    end
-))
-table.insert(pauseButtons, createButton(
-    'Abort mission',
-    function()
-        StateMachine:changeState(TitleScreenState)
-    end
-))
-table.insert(pauseButtons, createButton(
-    'Exit',
-    function()
-        love.event.quit()
-    end
-))
+
 
 local selectedButton = 1
 local buttonY = 100
@@ -25,6 +8,26 @@ local buttonMargin = 26
 
 PauseState = {
     load = function()
+        pauseButtons = {}
+        table.insert(pauseButtons, createButton(
+            texts.resume,
+            function()
+                StateMachine:changeState(PlayState)
+            end
+        ))
+        table.insert(pauseButtons, createButton(
+            texts.abort,
+            function()
+                StateMachine:changeState(TitleScreenState)
+            end
+        ))
+        table.insert(pauseButtons, createButton(
+            texts.exit,
+            function()
+                love.event.quit()
+            end
+        ))
+
         selectedButton = 1
     end,
 
@@ -59,7 +62,7 @@ PauseState = {
 
         love.graphics.setFont(largeFont)
         love.graphics.setColor(GREEN)
-        love.graphics.printf('Paused', 0, 20, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf(texts.paused, 0, 20, VIRTUAL_WIDTH, 'center')
 
         love.graphics.setFont(mediumFont)
 

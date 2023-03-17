@@ -3,9 +3,6 @@ local selectedRow, selectedColumn = 1, 1
 
 local currentPlayerRow, currentPlayerColumn = 1, 1
 
-local playersNames = {'Our Hero', 'Suit guy', 'Tank top Guy', 'Girl', 'The Mailman', 'Rapper',
-    'Tuba Player', 'Fierce Ninja', 'Green Ranger', 'Pink Horse', 'Great Pumpkin', 'Santa'}
-
 
 ChoosePlayerState = {
 
@@ -40,7 +37,7 @@ ChoosePlayerState = {
 
         if love.keyboard.wasPressed('escape') then
             saveGameData()
-            StateMachine:changeState(OptionsState, 2)
+            StateMachine:changeState(OptionsState, 3)
         end        
     end,
 
@@ -64,21 +61,12 @@ ChoosePlayerState = {
                 else
                     love.graphics.setColor(GREEN)
                 end
-                love.graphics.printf(playersNames[playerIndex], 24 + 67 * (column-1), 68 + 77 * (row-1), 48, 'center')
+                love.graphics.printf(texts.playersNames[playerIndex], 24 + 67 * (column-1), 68 + 77 * (row-1), 48, 'center')
                 love.graphics.setLineWidth(5)
                 love.graphics.rectangle('line', 24 + 67 * (column-1), 16 + 77 * (row-1), 48, 48)
             end
         end
 
-        love.graphics.setColor(GREEN)
-        for i = 1, 3, 1 do
-            love.graphics.setLineWidth(2)
-            love.graphics.rectangle('line', 23 + 134*(i-1), 180, 119, 35)
-
-            love.graphics.draw(keysSprite, keysQuads[i], 38 + 134*(i-1), 187)
-            love.graphics.printf(keysExplanationTexts[i], 77 + 134*(i-1), 193, 50, 'right')
-        end
-
-        love.graphics.setColor(WHITE)
+        drawKeysAndDescriptions()
     end
 }

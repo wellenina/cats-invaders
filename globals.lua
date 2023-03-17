@@ -8,8 +8,11 @@ gameData = {
     selectedPlayer = 1,
     selectedBullet = 1,
     soundVolume = 1,
+    language = 'ENG',
     highScores = {0, 0, 0, 0, 0}
 }
+
+texts = languages[gameData.language]
 
 function loadGameData()
 	if not love.filesystem.getInfo('gameData.txt') then
@@ -19,6 +22,7 @@ function loadGameData()
     local savedData = love.filesystem.load('gameData.txt')
     gameData = savedData()
     love.audio.setVolume(gameData.soundVolume)
+    texts = languages[gameData.language]
 end
 
 function saveGameData()
@@ -40,6 +44,8 @@ function tableToString(tabl)
         str = str .. ' = '
         if type(v) == 'table' then
             str = str .. tableToString(v) .. ', '
+        elseif type(v) == 'string' then
+            str = str .. '"' .. v .. '", '
         else
             str = str .. v .. ', '
         end
@@ -53,13 +59,26 @@ end
 function drawScoreAndLives(score, livesNum, img)
     love.graphics.setFont(smallFont)
     local y = VIRTUAL_HEIGHT - 13
-    love.graphics.printf('SCORE  ' .. tostring(score), 20, y, VIRTUAL_WIDTH, 'left')
-    love.graphics.printf('LIVES', VIRTUAL_WIDTH-48, y, VIRTUAL_WIDTH, 'left')
+    love.graphics.printf(texts.score .. '  ' .. tostring(score), 20, y, VIRTUAL_WIDTH, 'left')
+    love.graphics.printf(texts.lives, VIRTUAL_WIDTH-48, y, VIRTUAL_WIDTH, 'left')
     local margin = 65
     for i = 1, livesNum, 1 do
         love.graphics.draw(img, VIRTUAL_WIDTH - margin, y)
         margin = margin + 15
     end
+end
+
+function drawKeysAndDescriptions()
+    love.graphics.setColor(GREEN)
+    for i = 1, 3, 1 do
+        love.graphics.setLineWidth(2)
+        love.graphics.rectangle('line', 23 + 134*(i-1), 180, 119, 35)
+
+        love.graphics.draw(keysSprite, keysQuads[i], 38 + 134*(i-1), 187)
+        local y = string.find(texts.keyDescription[i], '\n') and 188 or 193
+        love.graphics.printf(texts.keyDescription[i], 77 + 134*(i-1), y, 50, 'right')
+    end
+    love.graphics.setColor(WHITE)
 end
 
 

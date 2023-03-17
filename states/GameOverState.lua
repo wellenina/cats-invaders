@@ -1,18 +1,5 @@
 local gameOverButtons = {}
 
-table.insert(gameOverButtons, createButton(
-    'Play again',
-    function()
-        StateMachine:changeState(GetReadyState)
-    end
-))
-table.insert(gameOverButtons, createButton(
-    'Menu',
-    function()
-        StateMachine:changeState(TitleScreenState)
-    end
-))
-
 local selectedButton = 1
 local buttonY = 150
 local buttonMargin = 26
@@ -21,6 +8,20 @@ local buttonMargin = 26
 GameOverState = {
 
     load = function()
+        gameOverButtons = {}
+        table.insert(gameOverButtons, createButton(
+            texts.playAgain,
+            function()
+                StateMachine:changeState(GetReadyState)
+            end
+        ))
+        table.insert(gameOverButtons, createButton(
+            texts.menu,
+            function()
+                StateMachine:changeState(TitleScreenState)
+            end
+        ))
+
         selectedButton = 1
 
         for index,hScore in ipairs(gameData.highScores) do
@@ -50,14 +51,14 @@ GameOverState = {
     render = function()
         love.graphics.setFont(largeFont)
         love.graphics.setColor(GREEN)
-        love.graphics.printf('GAME OVER', 0, 20, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf(texts.gameOver, 0, 20, VIRTUAL_WIDTH, 'center')
 
 
         love.graphics.setFont(mediumFont)
-        love.graphics.printf('Oof! Those cats are tough!', 0, 80, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf(texts.gameOverComment, 0, 80, VIRTUAL_WIDTH, 'center')
 
         love.graphics.setColor(PURPLE)
-        love.graphics.printf('Your score is ' .. tostring(score), 0, 110, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf(texts.scoreIs .. tostring(score), 0, 110, VIRTUAL_WIDTH, 'center')
 
         for index,button in ipairs(gameOverButtons) do
             if index == selectedButton then

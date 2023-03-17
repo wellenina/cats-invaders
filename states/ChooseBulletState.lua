@@ -3,9 +3,6 @@ local selectedRow, selectedColumn = 1, 1
 
 local currentBulletRow, currentBulletColumn = 1, 1
 
-local bulletsNames = {'Daikon', 'Broccoli', 'Carnation', 'Carrot', 'Lollipop', 'Radish', 'Trumpet',
-    'Pineapple', 'Apple\ncore', 'Avocado', 'Straw-\nberry', 'Chocolate bar', 'Aubergine', 'Pear'}
-
 
 ChooseBulletState = {
 
@@ -40,7 +37,7 @@ ChooseBulletState = {
 
         if love.keyboard.wasPressed('escape') then
             saveGameData()
-            StateMachine:changeState(OptionsState, 2)
+            StateMachine:changeState(OptionsState, 4)
         end        
     end,
 
@@ -64,21 +61,12 @@ ChooseBulletState = {
                 else
                     love.graphics.setColor(GREEN)
                 end
-                love.graphics.printf(bulletsNames[bulletIndex], 15 + 57 * (column-1), 68 + 77 * (row-1), 60, 'center')
+                love.graphics.printf(texts.bulletsNames[bulletIndex], 15 + 57 * (column-1), 68 + 77 * (row-1), 60, 'center')
                 love.graphics.setLineWidth(5)
                 love.graphics.rectangle('line', 26 + 57 * (column-1), 16 + 77 * (row-1), 38, 48)
             end
         end
 
-        love.graphics.setColor(GREEN)
-        for i = 1, 3, 1 do
-            love.graphics.setLineWidth(2)
-            love.graphics.rectangle('line', 23 + 134*(i-1), 180, 119, 35)
-
-            love.graphics.draw(keysSprite, keysQuads[i], 38 + 134*(i-1), 187)
-            love.graphics.printf(keysExplanationTexts[i], 77 + 134*(i-1), 193, 50, 'right')
-        end
-
-        love.graphics.setColor(WHITE)
+        drawKeysAndDescriptions()
     end
 }

@@ -1,30 +1,5 @@
 local titleScreenButtons = {}
 
-table.insert(titleScreenButtons, createButton(
-    'New Game',
-    function()
-        StateMachine:changeState(GetReadyState)
-    end
-))
-table.insert(titleScreenButtons, createButton(
-    'High Scores',
-    function()
-        StateMachine:changeState(HighScoresState)
-    end
-))
-table.insert(titleScreenButtons, createButton(
-    'Options',
-    function()
-        StateMachine:changeState(OptionsState)
-    end
-))
-table.insert(titleScreenButtons, createButton(
-    'Exit',
-    function()
-        love.event.quit()
-    end
-))
-
 local selectedButton = 1
 local buttonY = 100
 local buttonMargin = 26
@@ -33,6 +8,32 @@ local buttonMargin = 26
 TitleScreenState = {
 
     load = function(__self, selection)
+        titleScreenButtons = {}
+        table.insert(titleScreenButtons, createButton(
+            texts.newGame,
+            function()
+                StateMachine:changeState(GetReadyState)
+            end
+        ))
+        table.insert(titleScreenButtons, createButton(
+            texts.highScores,
+            function()
+                StateMachine:changeState(HighScoresState)
+            end
+        ))
+        table.insert(titleScreenButtons, createButton(
+            texts.options,
+            function()
+                StateMachine:changeState(OptionsState)
+            end
+        ))
+        table.insert(titleScreenButtons, createButton(
+            texts.exit,
+            function()
+                love.event.quit()
+            end
+        ))
+
         selectedButton = selection or 1
     end,
 
