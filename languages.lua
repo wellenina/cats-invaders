@@ -1,6 +1,7 @@
 languages = {
 
-    ENG = {
+    {
+        name = 'English',
         newGame = 'New Game',
         highScores = 'High Scores',
         options = 'Options',
@@ -30,7 +31,8 @@ languages = {
         'Pineapple', 'Apple\ncore', 'Avocado', 'Straw-\nberry', 'Chocolate bar', 'Aubergine', 'Pear'}
     },
 
-    ITA = {
+    {
+        name = 'Italiano',
         newGame = 'Nuova partita',
         highScores = 'Classifica',
         options = 'Opzioni',

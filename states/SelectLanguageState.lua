@@ -1,29 +1,16 @@
 local languageButtons = {}
 
-table.insert(languageButtons, createButton(
-    'English',
-    function()
-        gameData.language = 'ENG'
-        texts = languages[gameData.language]
-        languageButtons[#languageButtons].text = texts.back
-        saveGameData()
-    end
-))
-table.insert(languageButtons, createButton(
-    'Italiano',
-    function()
-        gameData.language = 'ITA'
-        texts = languages[gameData.language]
-        languageButtons[#languageButtons].text = texts.back
-        saveGameData()
-    end
-))
---[[table.insert(languageButtons, createButton(
-    '日本',
-    function()
-        
-    end
-))]]
+for index,language in ipairs(languages) do
+	table.insert(languageButtons, createButton(
+		language.name,
+        function()
+            gameData.language = index
+            texts = languages[index]
+            languageButtons[#languageButtons].text = texts.back
+            saveGameData()
+        end
+    ))
+end
 table.insert(languageButtons, createButton(
     '',
     function()
@@ -31,8 +18,7 @@ table.insert(languageButtons, createButton(
     end
 ))
 
-local selectedButton = 1
--- local currentLanguage = 
+local selectedButton = gameData.language
 local buttonY = 100
 local buttonMargin = 26
 
@@ -65,6 +51,12 @@ SelectLanguageState = {
         love.graphics.setFont(mediumFont)
 
         for index,button in ipairs(languageButtons) do
+            if index == gameData.language then
+                love.graphics.setColor(YELLOW)
+                local width = mediumFont:getWidth(button.text) + 10
+                love.graphics.rectangle('fill', (VIRTUAL_WIDTH - width) * 0.5, buttonY - 3 + (buttonMargin * (index-1)), width, mediumFont:getHeight() + 1)
+            end
+
             if index == selectedButton then
                 love.graphics.setColor(WHITE)
             else

@@ -8,7 +8,7 @@ gameData = {
     selectedPlayer = 1,
     selectedBullet = 1,
     soundVolume = 1,
-    language = 'ENG',
+    language = 1,
     highScores = {0, 0, 0, 0, 0}
 }
 
