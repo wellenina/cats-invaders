@@ -55,6 +55,39 @@ function tableToString(tabl)
 end
 
 
+function drawTitle(title, font)
+    local newFont = font or largeFont
+    love.graphics.setFont(newFont)
+    love.graphics.setColor(GREEN)
+    love.graphics.printf(title, 0, 20, RENDER_WIDTH, 'center')
+end
+
+function createButton(text, fn)
+    return {
+        text = text,
+        fn = fn,
+    }
+end
+
+function drawButtons(buttons, selectedButton, y)
+    local buttonY = y or 100
+    local buttonMargin = 26
+
+    love.graphics.setFont(mediumFont)
+
+    for index,button in ipairs(buttons) do
+        if index == selectedButton then
+            love.graphics.setColor(WHITE)
+            local pawX = (RENDER_WIDTH - mediumFont:getWidth(button.text)) * 0.5 - 20
+            local pawY = buttonY + (buttonMargin * (index-1)) + 6
+            love.graphics.draw(paw, pawX, pawY)
+        else
+            love.graphics.setColor(GREEN)
+        end
+        love.graphics.printf(button.text, 0, buttonY + (buttonMargin * (index-1)), RENDER_WIDTH, 'center')
+    end
+    love.graphics.setColor(WHITE)
+end
 
 function drawScoreAndLives(score, livesNum, img)
     love.graphics.setFont(smallFont)
@@ -79,12 +112,4 @@ function drawKeysAndDescriptions()
         love.graphics.printf(texts.keyDescription[i], 77 + 134*(i-1), y, 50, 'right')
     end
     love.graphics.setColor(WHITE)
-end
-
-
-function createButton(text, fn)
-    return {
-        text = text,
-        fn = fn,
-    }
 end

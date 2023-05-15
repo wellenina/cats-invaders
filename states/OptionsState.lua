@@ -1,8 +1,5 @@
 local optionsButtons = {}
-
 local selectedButton = 1
-local buttonY = 90
-local buttonMargin = 26
 
 keysQuads = {}
 for i = 1, 3, 1 do
@@ -72,20 +69,7 @@ OptionsState = {
     end,
 
     render = function()
-        love.graphics.setFont(largeFont)
-        love.graphics.setColor(GREEN)
-        love.graphics.printf(texts.options, 0, 20, RENDER_WIDTH, 'center')
-
-        love.graphics.setFont(mediumFont)
-
-        for index,button in ipairs(optionsButtons) do
-            if index == selectedButton then
-                love.graphics.setColor(WHITE)
-            else
-                love.graphics.setColor(GREEN)
-            end
-            love.graphics.printf(button.text, 0, buttonY + (buttonMargin * (index-1)), RENDER_WIDTH, 'center')
-        end
-        love.graphics.setColor(WHITE)
+        drawTitle(texts.options)
+        drawButtons(optionsButtons, selectedButton)
     end
 }

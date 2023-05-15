@@ -1,9 +1,5 @@
 local titleScreenButtons = {}
-
 local selectedButton = 1
-local buttonY = 100
-local buttonMargin = 26
-
 
 TitleScreenState = {
 
@@ -52,20 +48,7 @@ TitleScreenState = {
     end,
 
     render = function()
-        love.graphics.setFont(hugeFont)
-        love.graphics.setColor(GREEN)
-        love.graphics.printf('CATS INVADERS', 0, 20, RENDER_WIDTH, 'center')
-
-        love.graphics.setFont(mediumFont)
-
-        for index,button in ipairs(titleScreenButtons) do
-            if index == selectedButton then
-                love.graphics.setColor(WHITE)
-            else
-                love.graphics.setColor(GREEN)
-            end
-            love.graphics.printf(button.text, 0, buttonY + (buttonMargin * (index-1)), RENDER_WIDTH, 'center')
-        end
-        love.graphics.setColor(WHITE)
+        drawTitle('CATS INVADERS', hugeFont)
+        drawButtons(titleScreenButtons, selectedButton)
     end
 }

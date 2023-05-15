@@ -39,6 +39,8 @@ function love.load()
     -- input table
     love.keyboard.keysPressed = {}
 
+    paw = love.graphics.newImage('images/paw.png')
+
     playersSprite = love.graphics.newImage('images/players-spritesheet.png')
     playerBulletSprite = love.graphics.newImage('images/player-bullets-spritesheet.png')
 
