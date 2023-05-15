@@ -54,15 +54,15 @@ PauseState = {
         drawScoreAndLives(score, lives, heart)
 
         love.graphics.setColor(0, 0, 0, 0.7)
-        love.graphics.rectangle('fill', 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
+        love.graphics.rectangle('fill', 0, 0, RENDER_WIDTH, RENDER_HEIGHT)
 
         love.graphics.setColor(WHITE)
         love.graphics.setLineWidth(4)
-        love.graphics.rectangle('line', 70, 10, VIRTUAL_WIDTH-140, VIRTUAL_HEIGHT-70)
+        love.graphics.rectangle('line', 70, 10, RENDER_WIDTH-140, RENDER_HEIGHT-70)
 
         love.graphics.setFont(largeFont)
         love.graphics.setColor(GREEN)
-        love.graphics.printf(texts.paused, 0, 20, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf(texts.paused, 0, 20, RENDER_WIDTH, 'center')
 
         love.graphics.setFont(mediumFont)
 
@@ -72,7 +72,7 @@ PauseState = {
             else
                 love.graphics.setColor(GREEN)
             end
-            love.graphics.printf(button.text, 0, buttonY + (buttonMargin * (index-1)), VIRTUAL_WIDTH, 'center')
+            love.graphics.printf(button.text, 0, buttonY + (buttonMargin * (index-1)), RENDER_WIDTH, 'center')
         end
         love.graphics.setColor(WHITE)
     end

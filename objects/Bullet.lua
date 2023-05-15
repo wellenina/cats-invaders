@@ -20,7 +20,7 @@ function Bullet:move(dt)
 end
 
 function Bullet:isOffScreen() -- invaders' bullet
-  return self.y > VIRTUAL_HEIGHT
+  return self.y > RENDER_HEIGHT
 end
 
 function Bullet:isOffScreenPl() -- player's bullet

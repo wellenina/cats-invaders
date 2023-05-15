@@ -54,7 +54,7 @@ TitleScreenState = {
     render = function()
         love.graphics.setFont(hugeFont)
         love.graphics.setColor(GREEN)
-        love.graphics.printf('CATS INVADERS', 0, 20, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('CATS INVADERS', 0, 20, RENDER_WIDTH, 'center')
 
         love.graphics.setFont(mediumFont)
 
@@ -64,7 +64,7 @@ TitleScreenState = {
             else
                 love.graphics.setColor(GREEN)
             end
-            love.graphics.printf(button.text, 0, buttonY + (buttonMargin * (index-1)), VIRTUAL_WIDTH, 'center')
+            love.graphics.printf(button.text, 0, buttonY + (buttonMargin * (index-1)), RENDER_WIDTH, 'center')
         end
         love.graphics.setColor(WHITE)
     end

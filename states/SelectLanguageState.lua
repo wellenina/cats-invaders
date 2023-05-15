@@ -46,7 +46,7 @@ SelectLanguageState = {
     render = function()
         love.graphics.setFont(largeFont)
         love.graphics.setColor(GREEN)
-        love.graphics.printf(texts.language, 0, 20, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf(texts.language, 0, 20, RENDER_WIDTH, 'center')
 
         love.graphics.setFont(mediumFont)
 
@@ -54,7 +54,7 @@ SelectLanguageState = {
             if index == gameData.language then
                 love.graphics.setColor(YELLOW)
                 local width = mediumFont:getWidth(button.text) + 10
-                love.graphics.rectangle('fill', (VIRTUAL_WIDTH - width) * 0.5, buttonY - 3 + (buttonMargin * (index-1)), width, mediumFont:getHeight() + 1)
+                love.graphics.rectangle('fill', (RENDER_WIDTH - width) * 0.5, buttonY - 3 + (buttonMargin * (index-1)), width, mediumFont:getHeight() + 1)
             end
 
             if index == selectedButton then
@@ -62,7 +62,7 @@ SelectLanguageState = {
             else
                 love.graphics.setColor(GREEN)
             end
-            love.graphics.printf(button.text, 0, buttonY + (buttonMargin * (index-1)), VIRTUAL_WIDTH, 'center')
+            love.graphics.printf(button.text, 0, buttonY + (buttonMargin * (index-1)), RENDER_WIDTH, 'center')
         end
         love.graphics.setColor(WHITE)
     end

@@ -58,12 +58,12 @@ end
 
 function drawScoreAndLives(score, livesNum, img)
     love.graphics.setFont(smallFont)
-    local y = VIRTUAL_HEIGHT - 13
-    love.graphics.printf(texts.score .. '  ' .. tostring(score), 20, y, VIRTUAL_WIDTH, 'left')
-    love.graphics.printf(texts.lives, VIRTUAL_WIDTH-48, y, VIRTUAL_WIDTH, 'left')
+    local y = RENDER_HEIGHT - 13
+    love.graphics.printf(texts.score .. '  ' .. tostring(score), 20, y, RENDER_WIDTH, 'left')
+    love.graphics.printf(texts.lives, RENDER_WIDTH-48, y, RENDER_WIDTH, 'left')
     local margin = 65
     for i = 1, livesNum, 1 do
-        love.graphics.draw(img, VIRTUAL_WIDTH - margin, y)
+        love.graphics.draw(img, RENDER_WIDTH - margin, y)
         margin = margin + 15
     end
 end

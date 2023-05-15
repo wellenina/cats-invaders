@@ -40,7 +40,7 @@ local PLAYER_BULLETS_LIMIT = 1
 Player = {
 
     load = function()
-        playerX, playerY = VIRTUAL_WIDTH / 2 - playerWidth / 2, VIRTUAL_HEIGHT - playerHeight - 20
+        playerX, playerY = RENDER_WIDTH / 2 - playerWidth / 2, RENDER_HEIGHT - playerHeight - 20
 
         playerFrame = 1
         playerScale = 1
@@ -65,7 +65,7 @@ Player = {
                 frameTimer = 0
             end
         elseif love.keyboard.isDown('right') then
-            playerX = math.min(VIRTUAL_WIDTH - playerWidth, playerX + PLAYER_SPEED * dt)
+            playerX = math.min(RENDER_WIDTH - playerWidth, playerX + PLAYER_SPEED * dt)
             frameTimer = frameTimer + dt
             if frameTimer > FRAME_DURATION then
                 playerFrame = playerFrame == 4 and 5 or 4

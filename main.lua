@@ -1,11 +1,11 @@
--- https://github.com/Ulydev/push
-push = require 'push'
+RENDER_WIDTH = 640
+RENDER_HEIGHT = 360
 
-WINDOW_WIDTH = 1280
-WINDOW_HEIGHT = 720
+local windowWidth, windowHeight = love.window.getDesktopDimensions() * 0.7
+local renderScale = windowWidth / RENDER_WIDTH
+windowHeight = RENDER_HEIGHT * renderScale
+local xPadding, yPadding = 0, 0
 
-VIRTUAL_WIDTH = 432
-VIRTUAL_HEIGHT = 243
 
 require 'languages'
 require 'globals'
@@ -32,14 +32,7 @@ require 'states/GameOverState'
 
 function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
-
-    -- initialize virtual resolution
-    push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
-        fullscreen = false,
-        resizable = true,
-        vsync = true,
-        canvas = false
-    })
+    love.window.setMode(windowWidth, windowHeight, {resizable=true, vsync=0, minwidth=RENDER_WIDTH, minheight=RENDER_HEIGHT})
 
     loadGameData()
 
@@ -49,7 +42,7 @@ function love.load()
     playersSprite = love.graphics.newImage('images/players-spritesheet.png')
     playerBulletSprite = love.graphics.newImage('images/player-bullets-spritesheet.png')
 
-    groundLine = {0, VIRTUAL_HEIGHT - 17, VIRTUAL_WIDTH, VIRTUAL_HEIGHT - 17}
+    groundLine = {0, RENDER_HEIGHT - 17, RENDER_WIDTH, RENDER_HEIGHT - 17}
 
     smallFont = love.graphics.newFont('font.ttf', 8)
     mediumFont = love.graphics.newFont('font.ttf', 16)
@@ -69,11 +62,6 @@ function love.load()
 end
 
 
-function love.resize(w, h)
-    push:resize(w, h)
-end
-
-
 function love.keypressed(key)
     love.keyboard.keysPressed[key] = true
 end
@@ -89,10 +77,31 @@ function love.update(dt)
 end
 
 
-function love.draw()
-    push:start()
+function love.resize(w, h)
+    windowWidth, windowHeight = w, h
+    local renderScaleX, renderScaleY = windowWidth / RENDER_WIDTH, windowHeight / RENDER_HEIGHT
 
-    love.graphics.clear(BACKGROUND_COLOR)
+    if renderScaleX == renderScaleY then
+        renderScale = renderScaleX
+        xPadding, yPadding = 0, 0
+    elseif renderScaleX < renderScaleY then
+        renderScale = renderScaleX
+        xPadding = 0
+        yPadding = (windowHeight - (RENDER_HEIGHT * renderScale)) * 0.5
+    else
+        renderScale = renderScaleY
+        xPadding = (windowWidth - (RENDER_WIDTH * renderScale)) * 0.5
+        yPadding = 0
+    end
+end
+
+
+function love.draw()
+    love.graphics.push()
+    love.graphics.translate(xPadding, yPadding)
+	love.graphics.scale(renderScale, renderScale)
+
+    love.graphics.setBackgroundColor(BACKGROUND_COLOR)
 
     love.graphics.setColor(GREEN)
     love.graphics.setLineWidth(1)
@@ -101,5 +110,11 @@ function love.draw()
     love.graphics.setColor(WHITE)
     StateMachine:render()
 
-    push:finish()
+    if yPadding > 0 then
+        love.graphics.setColor(BACKGROUND_COLOR)
+        love.graphics.rectangle('fill', 0, 0-yPadding, windowWidth, yPadding)
+        love.graphics.setColor(WHITE)
+    end
+
+    love.graphics.pop()
 end

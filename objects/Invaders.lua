@@ -144,7 +144,7 @@ Invaders = {
             return false
         end
         for index,cat in ipairs(invaders) do
-            if cat.x >= (VIRTUAL_WIDTH - catWidth) then
+            if cat.x >= (RENDER_WIDTH - catWidth) then
                 return true
             elseif cat.x <= 0 then
                 return true

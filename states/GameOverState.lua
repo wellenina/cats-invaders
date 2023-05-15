@@ -51,14 +51,14 @@ GameOverState = {
     render = function()
         love.graphics.setFont(largeFont)
         love.graphics.setColor(GREEN)
-        love.graphics.printf(texts.gameOver, 0, 20, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf(texts.gameOver, 0, 20, RENDER_WIDTH, 'center')
 
 
         love.graphics.setFont(mediumFont)
-        love.graphics.printf(texts.gameOverComment, 0, 80, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf(texts.gameOverComment, 0, 80, RENDER_WIDTH, 'center')
 
         love.graphics.setColor(PURPLE)
-        love.graphics.printf(texts.scoreIs .. tostring(score), 0, 110, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf(texts.scoreIs .. tostring(score), 0, 110, RENDER_WIDTH, 'center')
 
         for index,button in ipairs(gameOverButtons) do
             if index == selectedButton then
@@ -66,7 +66,7 @@ GameOverState = {
             else
                 love.graphics.setColor(GREEN)
             end
-            love.graphics.printf(button.text, 0, buttonY + (buttonMargin * (index-1)), VIRTUAL_WIDTH, 'center')
+            love.graphics.printf(button.text, 0, buttonY + (buttonMargin * (index-1)), RENDER_WIDTH, 'center')
         end
         love.graphics.setColor(WHITE)
     end

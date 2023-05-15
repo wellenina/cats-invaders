@@ -1,5 +1,5 @@
 local width = 140
-local x = (VIRTUAL_WIDTH - width) * 0.5
+local x = (RENDER_WIDTH - width) * 0.5
 local y = 70
 local margin = 24
 
@@ -26,7 +26,7 @@ HighScoresState = {
     render = function()
         love.graphics.setFont(largeFont)
         love.graphics.setColor(GREEN)
-        love.graphics.printf(texts.highScores, 0, 20, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf(texts.highScores, 0, 20, RENDER_WIDTH, 'center')
 
         love.graphics.setFont(mediumFont)
         love.graphics.setColor(PURPLE)
@@ -36,6 +36,6 @@ HighScoresState = {
         end
 
         love.graphics.setColor(WHITE)
-        love.graphics.printf(backBtn.text, 0, 200, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf(backBtn.text, 0, 200, RENDER_WIDTH, 'center')
     end
 }
