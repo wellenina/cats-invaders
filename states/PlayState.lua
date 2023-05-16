@@ -8,6 +8,10 @@ PlayState = {
             StateMachine:changeState(PauseState)
         end
 
+        if not love.window.hasFocus() then
+            StateMachine:changeState(PauseState)
+        end
+
         Player:walk(dt)
         Player:shoot(dt)
         Invaders:update(dt)
