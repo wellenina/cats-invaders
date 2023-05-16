@@ -54,8 +54,8 @@ languages = {
         back = 'INDIETRO',
         language = 'LINGUA',
         sound = {
-            [1] = 'EFFETTI SONORI:  ATTIVI',
-            [0] = 'EFFETTI SONORI:  DISATTIVATI'
+            [1] = 'SUONI: ATTIVI',
+            [0] = 'SUONI: DISATTIVATI'
         },
         choosePlayer = 'SCEGLI IL TUO GUERRIERO',
         chooseBullet = 'SCEGLI LA TUA ARMA',

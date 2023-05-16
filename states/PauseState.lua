@@ -17,6 +17,20 @@ PauseState = {
             end
         ))
         table.insert(pauseButtons, createButton(
+            texts.sound[gameData.soundVolume],
+            function()
+                if gameData.soundVolume == 1 then
+                    pauseButtons[3].text = texts.sound[0]
+                    gameData.soundVolume = 0
+                else
+                    pauseButtons[3].text = texts.sound[1]
+                    gameData.soundVolume = 1
+                end
+                saveGameData()
+                love.audio.setVolume(gameData.soundVolume)
+            end
+        ))
+        table.insert(pauseButtons, createButton(
             texts.exit,
             function()
                 love.event.quit()
@@ -56,13 +70,13 @@ PauseState = {
         drawScoreAndLives(score, lives, heart)
 
         love.graphics.setColor(0, 0, 0, 0.7)
-        love.graphics.rectangle('fill', 0, 0, RENDER_WIDTH, RENDER_HEIGHT)
+        love.graphics.rectangle('fill', -15, -15, RENDER_WIDTH + 30, RENDER_HEIGHT + 30)
 
         love.graphics.setColor(WHITE)
         love.graphics.setLineWidth(4)
-        love.graphics.rectangle('line', 70, 10, RENDER_WIDTH-140, RENDER_HEIGHT-70)
+        love.graphics.rectangle('line', 45, 24, RENDER_WIDTH-90, RENDER_HEIGHT-64)
 
-        drawTitle(texts.paused)
-        drawButtons(pauseButtons, selectedButton)
+        drawTitle(texts.paused, largeFont, 50)
+        drawButtons(pauseButtons, selectedButton, 110)
     end
 }
