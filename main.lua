@@ -1,5 +1,5 @@
-RENDER_WIDTH = 640
-RENDER_HEIGHT = 360
+RENDER_WIDTH = 480
+RENDER_HEIGHT = 270
 
 local windowWidth, windowHeight = love.window.getDesktopDimensions() * 0.7
 local renderScale = windowWidth / RENDER_WIDTH
@@ -40,10 +40,10 @@ function love.load()
     -- input table
     love.keyboard.keysPressed = {}
 
-    smallFont = love.graphics.newFont('font.ttf', 8)
-    mediumFont = love.graphics.newFont('font.ttf', 16)
-    largeFont = love.graphics.newFont('font.ttf', 32)
-    hugeFont = love.graphics.newFont('font.ttf', 40)
+    smallFont = love.graphics.newFont('Apple-II.otf', 8)
+    mediumFont = love.graphics.newFont('Apple-II.otf', 16)
+    largeFont = love.graphics.newFont('Apple-II.otf', 32)
+    hugeFont = love.graphics.newFont('Apple-II.otf', 40)
 
     paw = love.graphics.newImage('images/paw.png')
     playersSprite = love.graphics.newImage('images/players-spritesheet.png')
