@@ -52,6 +52,8 @@ function love.load()
     groundLine = {0, RENDER_HEIGHT - 17, RENDER_WIDTH, RENDER_HEIGHT - 17}
 
     sounds = {
+        ['menuSelect'] = love.audio.newSource('sounds/menuSelect.wav', 'static'),
+        ['menuEnter'] = love.audio.newSource('sounds/menuEnter.wav', 'static'),
         ['playerShoot'] = love.audio.newSource('sounds/player-shoot.wav', 'static'),
         ['playerHurt'] = love.audio.newSource('sounds/player-hurt.wav', 'static'),
         ['gameOver'] = love.audio.newSource('sounds/player-explosion.mp3', 'static'),

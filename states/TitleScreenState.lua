@@ -36,14 +36,20 @@ TitleScreenState = {
     update = function(__self, dt)
         if love.keyboard.wasPressed('down') then
             selectedButton = selectedButton < #titleScreenButtons and selectedButton + 1 or 1
+            sounds['menuSelect']:stop()
+            sounds['menuSelect']:play()
         end
 
         if love.keyboard.wasPressed('up') then
             selectedButton = selectedButton > 1 and selectedButton - 1 or #titleScreenButtons
+            sounds['menuSelect']:stop()
+            sounds['menuSelect']:play()
         end
 
         if love.keyboard.wasPressed('return') then
             titleScreenButtons[selectedButton].fn()
+            sounds['menuSelect']:stop()
+            sounds['menuEnter']:play()
         end
         Paw:updatePosition(dt)
     end,

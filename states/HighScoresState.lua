@@ -20,6 +20,7 @@ HighScoresState = {
     update = function(__self, dt)
         Paw:updatePosition(dt)
         if love.keyboard.wasPressed('return') then
+            sounds['menuEnter']:play()
             backBtn.fn()
         end
     end,

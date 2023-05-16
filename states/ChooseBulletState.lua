@@ -15,28 +15,40 @@ ChooseBulletState = {
     update = function(dt)
         if love.keyboard.wasPressed('down') then
             selectedRow = selectedRow < rows and selectedRow + 1 or 1
+            sounds['menuSelect']:stop()
+            sounds['menuSelect']:play()
         end
 
         if love.keyboard.wasPressed('up') then
             selectedRow = selectedRow > 1 and selectedRow - 1 or rows
+            sounds['menuSelect']:stop()
+            sounds['menuSelect']:play()
         end
 
         if love.keyboard.wasPressed('right') then
             selectedColumn = selectedColumn < columns and selectedColumn + 1 or 1
+            sounds['menuSelect']:stop()
+            sounds['menuSelect']:play()
         end
 
         if love.keyboard.wasPressed('left') then
             selectedColumn = selectedColumn > 1 and selectedColumn - 1 or columns
+            sounds['menuSelect']:stop()
+            sounds['menuSelect']:play()
         end
 
         if love.keyboard.wasPressed('return') then
             gameData.selectedBullet = selectedColumn + columns * (selectedRow - 1)
             currentBulletRow = gameData.selectedBullet <= columns and 1 or 2
             currentBulletColumn = gameData.selectedBullet % columns == 0 and columns or gameData.selectedBullet % columns
+            sounds['menuSelect']:stop()
+            sounds['menuEnter']:play()
         end
 
         if love.keyboard.wasPressed('escape') then
             saveGameData()
+            sounds['menuSelect']:stop()
+            sounds['menuEnter']:play()
             StateMachine:changeState(OptionsState, 4)
         end        
     end,
