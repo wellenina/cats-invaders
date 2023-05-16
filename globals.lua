@@ -78,9 +78,7 @@ function drawButtons(buttons, selectedButton, y)
     for index,button in ipairs(buttons) do
         if index == selectedButton then
             love.graphics.setColor(WHITE)
-            local pawX = (RENDER_WIDTH - mediumFont:getWidth(button.text)) * 0.5 - 20
-            local pawY = buttonY + (buttonMargin * (index-1)) + 6
-            love.graphics.draw(paw, pawX, pawY)
+            Paw.render((RENDER_WIDTH - mediumFont:getWidth(button.text)) * 0.5 - 20, buttonY + (buttonMargin * (index-1)) + 6)
         else
             love.graphics.setColor(GREEN)
         end

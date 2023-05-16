@@ -34,7 +34,7 @@ GameOverState = {
         saveGameData()
     end,
 
-    update = function(dt)
+    update = function(__self, dt)
         if love.keyboard.wasPressed('down') then
             selectedButton = selectedButton < #gameOverButtons and selectedButton + 1 or 1
         end
@@ -46,6 +46,7 @@ GameOverState = {
         if love.keyboard.wasPressed('return') then
             gameOverButtons[selectedButton].fn()
         end
+        Paw:updatePosition(dt)
     end,
 
     render = function()

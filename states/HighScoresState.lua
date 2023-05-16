@@ -17,16 +17,15 @@ HighScoresState = {
         )
     end,
 
-    update = function(dt)
+    update = function(__self, dt)
+        Paw:updatePosition(dt)
         if love.keyboard.wasPressed('return') then
             backBtn.fn()
         end
     end,
 
     render = function()
-        love.graphics.setFont(largeFont)
-        love.graphics.setColor(GREEN)
-        love.graphics.printf(texts.highScores, 0, 20, RENDER_WIDTH, 'center')
+        drawTitle(texts.highScores)
 
         love.graphics.setFont(mediumFont)
         love.graphics.setColor(PURPLE)
@@ -37,5 +36,6 @@ HighScoresState = {
 
         love.graphics.setColor(WHITE)
         love.graphics.printf(backBtn.text, 0, 200, RENDER_WIDTH, 'center')
+        Paw.render((RENDER_WIDTH - mediumFont:getWidth(backBtn.text)) * 0.5 - 20, 200 + 6)
     end
 }

@@ -15,6 +15,7 @@ require 'objects/Invaders'
 require 'objects/Bullet'
 require 'objects/Bullets'
 require 'objects/Explosion'
+require 'objects/Paw'
 require 'states/StateMachine'
 require 'states/TitleScreenState'
 require 'states/HighScoresState'
@@ -39,17 +40,16 @@ function love.load()
     -- input table
     love.keyboard.keysPressed = {}
 
-    paw = love.graphics.newImage('images/paw.png')
-
-    playersSprite = love.graphics.newImage('images/players-spritesheet.png')
-    playerBulletSprite = love.graphics.newImage('images/player-bullets-spritesheet.png')
-
-    groundLine = {0, RENDER_HEIGHT - 17, RENDER_WIDTH, RENDER_HEIGHT - 17}
-
     smallFont = love.graphics.newFont('font.ttf', 8)
     mediumFont = love.graphics.newFont('font.ttf', 16)
     largeFont = love.graphics.newFont('font.ttf', 32)
     hugeFont = love.graphics.newFont('font.ttf', 40)
+
+    paw = love.graphics.newImage('images/paw.png')
+    playersSprite = love.graphics.newImage('images/players-spritesheet.png')
+    playerBulletSprite = love.graphics.newImage('images/player-bullets-spritesheet.png')
+
+    groundLine = {0, RENDER_HEIGHT - 17, RENDER_WIDTH, RENDER_HEIGHT - 17}
 
     sounds = {
         ['playerShoot'] = love.audio.newSource('sounds/player-shoot.wav', 'static'),
