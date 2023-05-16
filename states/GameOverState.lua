@@ -4,6 +4,8 @@ local selectedButton = 1
 local buttonY = 150
 local buttonMargin = 26
 
+local comment = ''
+
 
 GameOverState = {
 
@@ -23,11 +25,13 @@ GameOverState = {
         ))
 
         selectedButton = 1
+        comment = texts.gameOverComment3
 
         for index,hScore in ipairs(gameData.highScores) do
             if score > hScore then
                 table.insert(gameData.highScores, index, score)
                 table.remove(gameData.highScores)
+                comment = (index == 1) and texts.gameOverComment1 or texts.gameOverComment2
                 break
             end
         end
@@ -59,9 +63,8 @@ GameOverState = {
         drawTitle(texts.gameOver)
 
         love.graphics.setFont(mediumFont)
-        love.graphics.printf(texts.gameOverComment, 0, 80, RENDER_WIDTH, 'center')
-
         love.graphics.setColor(PURPLE)
+        love.graphics.printf(comment, 0, 80, RENDER_WIDTH, 'center')
         love.graphics.printf(texts.scoreIs .. tostring(score), 0, 110, RENDER_WIDTH, 'center')
 
         drawButtons(gameOverButtons, selectedButton, 150)
