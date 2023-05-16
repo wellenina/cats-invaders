@@ -41,7 +41,7 @@ Bullets = {
                         bottomInvaders = Invaders.getBottomInvaders()
                         score = score + cat.score
                         defeatedCats = defeatedCats + 1
-                        if defeatedCats >= (80 * level) then
+                        if defeatedCats >= (70 * level) then
                             Invaders:increaseDifficulty()
                         end
                     end

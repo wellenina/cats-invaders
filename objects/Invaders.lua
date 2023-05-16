@@ -1,11 +1,13 @@
 local ROWS, COLUMNS = 5, 12
-local BOTTOM_ROW_Y, FIRST_COLUMN_X = 80, 48
+local BOTTOM_ROW_Y, FIRST_COLUMN_X = 80, 76
 local ROW_GAP, COLUMN_GAP = 8, 8
 
 local CAT_SPRITE_WIDTH, CAT_SPRITE_HEIGHT = 120, 160
 local CAT_QUAD_WIDTH, CAT_QUAD_HEIGHT = 20, 20
 
 local CAT_MOVE_DELAY = 0.6 -- seconds
+local catFrameDuration
+local catFrameTimer
 local CAT_LATERAL_MOVE, CAT_VERTICAL_MOVE = 10, 15
 local CAT_WAVE = 3
 
@@ -52,6 +54,8 @@ Invaders = {
 
         timeSinceLastMove = 0
         moveDelay = CAT_MOVE_DELAY -- to be DECREASED as the game progresses
+        catFrameDuration = moveDelay * 0.5
+        catFrameTimer = 0
         catLateralMove = CAT_LATERAL_MOVE
         timeSinceLastBullet = 0
         shootDelay = SHOOT_DELAY -- to be DECREASED as the game progresses
@@ -100,10 +104,12 @@ Invaders = {
 
         -- make invaders move
         timeSinceLastMove = timeSinceLastMove + dt
+        catFrameTimer = catFrameTimer + dt
         if timeSinceLastMove > moveDelay then
 
             catFrame = catFrame == 1 and 2 or 1
             timeSinceLastMove = 0 -- reset timer
+            catFrameTimer = 0
 
             if __self.hasReachedEdge() then
                 catLateralMove = catLateralMove * -1 -- invert direction
@@ -125,6 +131,9 @@ Invaders = {
             if invaders[#invaders].y + catHeight > 0 then
                 __self.addNewInvadersRow()
             end
+        elseif catFrameTimer > catFrameDuration then
+            catFrame = catFrame == 1 and 2 or 1
+            catFrameTimer = 0
         end
 
         -- make invaders shoot
@@ -178,6 +187,7 @@ Invaders = {
     increaseDifficulty = function()
         if level > MAX_LEVEL then return end
         moveDelay = moveDelay - MOVE_ACCELERATION
+        catFrameDuration = moveDelay * 0.5
         shootDelay = shootDelay - SHOOT_ACCELERATION
         catLimit = catLimit + CAT_WAVE
         bulletSpeed = bulletSpeed * 1.1
