@@ -3,26 +3,47 @@ local x = (RENDER_WIDTH - width) * 0.5
 local y = 70
 local margin = 24
 
-local backBtn
-
+local highScoresButtons = {}
+local selectedButton = 1
 
 HighScoresState = {
 
     load = function()
-        backBtn = createButton(
+        highScoresButtons = {}
+        table.insert(highScoresButtons, createButton(
             texts.back,
             function()
                 StateMachine:changeState(TitleScreenState, 3)
             end
-        )
+        ))
+        table.insert(highScoresButtons, createButton(
+            texts.reset,
+            function()
+                StateMachine:changeState(ResetScoreState)
+            end
+        ))
+        selectedButton = 1
     end,
 
     update = function(__self, dt)
-        Paw:updatePosition(dt)
-        if love.keyboard.wasPressed('return') then
-            sounds['menuEnter']:play()
-            backBtn.fn()
+        if love.keyboard.wasPressed('down') then
+            selectedButton = selectedButton < #highScoresButtons and selectedButton + 1 or 1
+            sounds['menuSelect']:stop()
+            sounds['menuSelect']:play()
         end
+
+        if love.keyboard.wasPressed('up') then
+            selectedButton = selectedButton > 1 and selectedButton - 1 or #highScoresButtons
+            sounds['menuSelect']:stop()
+            sounds['menuSelect']:play()
+        end
+
+        if love.keyboard.wasPressed('return') then
+            highScoresButtons[selectedButton].fn()
+            sounds['menuSelect']:stop()
+            sounds['menuEnter']:play()
+        end
+        Paw:updatePosition(dt)
     end,
 
     render = function()
@@ -35,8 +56,6 @@ HighScoresState = {
             love.graphics.printf(hScore, x, y + (margin * (index-1)), width, 'right')
         end
 
-        love.graphics.setColor(WHITE)
-        love.graphics.printf(backBtn.text, 0, 200, RENDER_WIDTH, 'center')
-        Paw.render((RENDER_WIDTH - mediumFont:getWidth(backBtn.text)) * 0.5 - 20, 200 + 6)
+        drawButtons(highScoresButtons, selectedButton, 200)
     end
 }
