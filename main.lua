@@ -18,8 +18,9 @@ require 'objects/Explosion'
 require 'objects/Paw'
 require 'states/StateMachine'
 require 'states/TitleScreenState'
-require 'states/HighScoresState'
 require 'states/OptionsState'
+require 'states/HighScoresState'
+require 'states/CreditsState'
 require 'states/SelectLanguageState'
 require 'states/ChoosePlayerState'
 require 'states/ChooseBulletState'
@@ -41,6 +42,7 @@ function love.load()
     love.keyboard.keysPressed = {}
 
     smallFont = love.graphics.newFont('Apple-II.otf', 8)
+    smallFont:setLineHeight(1.5)
     mediumFont = love.graphics.newFont('Apple-II.otf', 16)
     largeFont = love.graphics.newFont('Apple-II.otf', 32)
     hugeFont = love.graphics.newFont('Apple-II.otf', 40)

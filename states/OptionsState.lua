@@ -46,7 +46,7 @@ OptionsState = {
         table.insert(optionsButtons, createButton(
             texts.back,
             function()
-                StateMachine:changeState(TitleScreenState, 3)
+                StateMachine:changeState(TitleScreenState, 2)
             end
         ))
 

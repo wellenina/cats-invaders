@@ -12,15 +12,21 @@ TitleScreenState = {
             end
         ))
         table.insert(titleScreenButtons, createButton(
+            texts.options,
+            function()
+                StateMachine:changeState(OptionsState)
+            end
+        ))
+        table.insert(titleScreenButtons, createButton(
             texts.highScores,
             function()
                 StateMachine:changeState(HighScoresState)
             end
         ))
         table.insert(titleScreenButtons, createButton(
-            texts.options,
+            texts.credits,
             function()
-                StateMachine:changeState(OptionsState)
+                StateMachine:changeState(CreditsState)
             end
         ))
         table.insert(titleScreenButtons, createButton(

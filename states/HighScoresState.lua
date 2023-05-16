@@ -12,7 +12,7 @@ HighScoresState = {
         backBtn = createButton(
             texts.back,
             function()
-                StateMachine:changeState(TitleScreenState, 2)
+                StateMachine:changeState(TitleScreenState, 3)
             end
         )
     end,

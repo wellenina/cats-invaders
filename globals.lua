@@ -55,11 +55,12 @@ function tableToString(tabl)
 end
 
 
-function drawTitle(title, font)
+function drawTitle(title, font, y)
     local newFont = font or largeFont
+    local titleY = y or 20
     love.graphics.setFont(newFont)
     love.graphics.setColor(GREEN)
-    love.graphics.printf(title, 0, 20, RENDER_WIDTH, 'center')
+    love.graphics.printf(title, 0, titleY, RENDER_WIDTH, 'center')
 end
 
 function createButton(text, fn)
