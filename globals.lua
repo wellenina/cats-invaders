@@ -107,6 +107,18 @@ function drawScoreAndLives(score, livesNum, img)
     love.graphics.setColor(WHITE)
 end
 
+function drawOverlayBox()
+    love.graphics.setColor(0, 0, 0, 0.6)
+    love.graphics.rectangle('fill', -15, -15, RENDER_WIDTH + 30, RENDER_HEIGHT + 30)
+
+    love.graphics.setColor(SOFT_WHITE)
+    love.graphics.setLineWidth(3)
+    love.graphics.rectangle('line', 45, 24, RENDER_WIDTH-90, RENDER_HEIGHT-64)
+
+    love.graphics.setColor(184/255, 181/255, 185/255)
+    love.graphics.rectangle('line', 48, 27, RENDER_WIDTH-96, RENDER_HEIGHT-70)
+end
+
 function drawKeysAndDescriptions()
     love.graphics.setColor(GREEN)
     for i = 1, 3, 1 do

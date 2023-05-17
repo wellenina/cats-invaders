@@ -57,13 +57,7 @@ ResetScoreState = {
             love.graphics.printf(hScore, x, y + (margin * (index-1)), width, 'right')
         end
 
-        love.graphics.setColor(0, 0, 0, 0.6)
-        love.graphics.rectangle('fill', -15, -15, RENDER_WIDTH + 30, RENDER_HEIGHT + 30)
-
-        love.graphics.setColor(SOFT_WHITE)
-        love.graphics.setLineWidth(5)
-        love.graphics.rectangle('line', 45, 24, RENDER_WIDTH-90, RENDER_HEIGHT-64)
-
+        drawOverlayBox()
         drawTitle(texts.resetConfirmTitle, largeFont, 50)
         drawButtons(resetButtons, selectedButton, 150)
     end
