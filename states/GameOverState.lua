@@ -9,6 +9,8 @@ local comment = ''
 
 GameOverState = {
 
+    stateType = 'menu',
+
     load = function()
         gameOverButtons = {}
         table.insert(gameOverButtons, createButton(
@@ -38,7 +40,7 @@ GameOverState = {
         saveGameData()
     end,
 
-    update = function(__self, dt)
+    update = function(dt)
         if love.keyboard.wasPressed('down') then
             selectedButton = selectedButton < #gameOverButtons and selectedButton + 1 or 1
             sounds['menuSelect']:stop()
@@ -56,7 +58,6 @@ GameOverState = {
             sounds['menuSelect']:stop()
             sounds['menuEnter']:play()
         end
-        Paw:updatePosition(dt)
     end,
 
     render = function()

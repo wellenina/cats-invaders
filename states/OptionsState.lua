@@ -9,6 +9,8 @@ end
 
 OptionsState = {
 
+    stateType = 'menu',
+
     load = function(__self, selection)
         optionsButtons = {}
         table.insert(optionsButtons, createButton(
@@ -54,7 +56,7 @@ OptionsState = {
         keysSprite = love.graphics.newImage('images/keys.png')
     end,
 
-    update = function(__self, dt)
+    update = function(dt)
         if love.keyboard.wasPressed('down') then
             selectedButton = selectedButton < #optionsButtons and selectedButton + 1 or 1
             sounds['menuSelect']:stop()
@@ -72,7 +74,6 @@ OptionsState = {
             sounds['menuSelect']:stop()
             sounds['menuEnter']:play()
         end
-        Paw:updatePosition(dt)
     end,
 
     render = function()

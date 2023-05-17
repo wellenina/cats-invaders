@@ -8,6 +8,8 @@ local selectedButton = 1
 
 HighScoresState = {
 
+    stateType = 'menu',
+
     load = function()
         highScoresButtons = {}
         table.insert(highScoresButtons, createButton(
@@ -25,7 +27,7 @@ HighScoresState = {
         selectedButton = 1
     end,
 
-    update = function(__self, dt)
+    update = function(dt)
         if love.keyboard.wasPressed('down') then
             selectedButton = selectedButton < #highScoresButtons and selectedButton + 1 or 1
             sounds['menuSelect']:stop()
@@ -43,7 +45,6 @@ HighScoresState = {
             sounds['menuSelect']:stop()
             sounds['menuEnter']:play()
         end
-        Paw:updatePosition(dt)
     end,
 
     render = function()

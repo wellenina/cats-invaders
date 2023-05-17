@@ -13,8 +13,8 @@ local CAT_WAVE = 3
 
 local SHOOT_DELAY = 1.6
 
-local CAT_BULLET_SPRITE_WIDTH, CAT_BULLET_SPRITE_HEIGHT = 96, 10
-local BULLET_QUAD_WIDTH, BULLET_QUAD_HEIGHT = 6, 10
+local CAT_BULLET_SPRITE_WIDTH, CAT_BULLET_SPRITE_HEIGHT = 128, 10
+local BULLET_QUAD_WIDTH, BULLET_QUAD_HEIGHT = 8, 10
 
 local MOVE_ACCELERATION, SHOOT_ACCELERATION = 0.06, 0.08
 local MAX_LEVEL = 8
@@ -185,7 +185,7 @@ Invaders = {
     end,
 
     increaseDifficulty = function()
-        if level > MAX_LEVEL then return end
+        if level >= MAX_LEVEL then return end
         moveDelay = moveDelay - MOVE_ACCELERATION
         catFrameDuration = moveDelay * 0.5
         shootDelay = shootDelay - SHOOT_ACCELERATION

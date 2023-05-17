@@ -40,7 +40,7 @@ local PLAYER_BULLETS_LIMIT = 1
 Player = {
 
     load = function()
-        playerX, playerY = RENDER_WIDTH / 2 - playerWidth / 2, RENDER_HEIGHT - playerHeight - 20
+        playerX, playerY = RENDER_WIDTH / 2 - playerWidth / 2, RENDER_HEIGHT - playerHeight - 23
 
         playerFrame = 1
         playerScale = 1

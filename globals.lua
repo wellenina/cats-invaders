@@ -1,8 +1,13 @@
+RENDER_WIDTH = 480
+RENDER_HEIGHT = 270
+
 WHITE = {1, 1, 1}
-GREEN = {50/255, 205/255, 50/255}
-PURPLE = {191/255, 112/255, 1}
-YELLOW = {1, 233/255, 0}
-BACKGROUND_COLOR = {29/255, 41/255, 81/255}
+SOFT_WHITE = {242/255, 240/255, 229/255}
+GREEN = {193/255, 211/255, 104/255}
+PURPLE = {207/255, 138/255, 204/255}
+YELLOW = {211/255, 159/255, 104/255}
+BACKGROUND_COLOR = {58/255, 56/255, 88/255}
+
 
 gameData = {
     selectedPlayer = 1,
@@ -78,8 +83,8 @@ function drawButtons(buttons, selectedButton, y)
 
     for index,button in ipairs(buttons) do
         if index == selectedButton then
-            love.graphics.setColor(WHITE)
-            Paw.render((RENDER_WIDTH - mediumFont:getWidth(button.text)) * 0.5 - 20, buttonY + (buttonMargin * (index-1)) + 6)
+            love.graphics.setColor(SOFT_WHITE)
+            Paw.render((RENDER_WIDTH - mediumFont:getWidth(button.text)) * 0.5 - 25, buttonY + (buttonMargin * (index-1)) + 3)
         else
             love.graphics.setColor(GREEN)
         end
@@ -89,6 +94,7 @@ function drawButtons(buttons, selectedButton, y)
 end
 
 function drawScoreAndLives(score, livesNum, img)
+    love.graphics.setColor(SOFT_WHITE)
     love.graphics.setFont(smallFont)
     local y = RENDER_HEIGHT - 13
     love.graphics.printf(texts.score .. '  ' .. tostring(score), 20, y, RENDER_WIDTH, 'left')
@@ -98,6 +104,7 @@ function drawScoreAndLives(score, livesNum, img)
         love.graphics.draw(img, RENDER_WIDTH - margin, y)
         margin = margin + 15
     end
+    love.graphics.setColor(WHITE)
 end
 
 function drawKeysAndDescriptions()

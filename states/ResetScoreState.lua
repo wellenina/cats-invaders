@@ -7,12 +7,14 @@ local resetButtons = {}
 local selectedButton = 2
 
 ResetScoreState = {
+
+    stateType = 'menu',
+    
     load = function()
         resetButtons = {}
         table.insert(resetButtons, createButton(
             texts.resetConfirmYes,
             function()
-                --RESET SCORE
                 gameData.highScores = {0, 0, 0, 0, 0}
                 saveGameData()
                 StateMachine:changeState(HighScoresState)
@@ -27,7 +29,7 @@ ResetScoreState = {
         selectedButton = 2
     end,
 
-    update = function(__self, dt)
+    update = function(dt)
         if love.keyboard.wasPressed('down') then
             selectedButton = selectedButton < #resetButtons and selectedButton + 1 or 1
             sounds['menuSelect']:stop()
@@ -45,7 +47,6 @@ ResetScoreState = {
             sounds['menuSelect']:stop()
             sounds['menuEnter']:play()
         end
-        Paw:updatePosition(dt)
     end,
 
     render = function()
@@ -56,11 +57,11 @@ ResetScoreState = {
             love.graphics.printf(hScore, x, y + (margin * (index-1)), width, 'right')
         end
 
-        love.graphics.setColor(0, 0, 0, 0.7)
+        love.graphics.setColor(0, 0, 0, 0.6)
         love.graphics.rectangle('fill', -15, -15, RENDER_WIDTH + 30, RENDER_HEIGHT + 30)
 
-        love.graphics.setColor(WHITE)
-        love.graphics.setLineWidth(4)
+        love.graphics.setColor(SOFT_WHITE)
+        love.graphics.setLineWidth(5)
         love.graphics.rectangle('line', 45, 24, RENDER_WIDTH-90, RENDER_HEIGHT-64)
 
         drawTitle(texts.resetConfirmTitle, largeFont, 50)

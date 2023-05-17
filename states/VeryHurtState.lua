@@ -2,6 +2,9 @@ local veryHurtDuration = 3
 local veryHurtTimer = 0
 
 VeryHurtState = {
+
+    stateType = 'play',
+
     load = function()
         veryHurtTimer = 0
         lives = 0

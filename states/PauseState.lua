@@ -2,6 +2,9 @@ local pauseButtons = {}
 local selectedButton = 1
 
 PauseState = {
+
+    stateType = 'play',
+
     load = function()
         pauseButtons = {}
         table.insert(pauseButtons, createButton(
@@ -11,23 +14,23 @@ PauseState = {
             end
         ))
         table.insert(pauseButtons, createButton(
-            texts.abort,
-            function()
-                StateMachine:changeState(TitleScreenState)
-            end
-        ))
-        table.insert(pauseButtons, createButton(
             texts.sound[gameData.soundVolume],
             function()
                 if gameData.soundVolume == 1 then
-                    pauseButtons[3].text = texts.sound[0]
+                    pauseButtons[2].text = texts.sound[0]
                     gameData.soundVolume = 0
                 else
-                    pauseButtons[3].text = texts.sound[1]
+                    pauseButtons[2].text = texts.sound[1]
                     gameData.soundVolume = 1
                 end
                 saveGameData()
                 love.audio.setVolume(gameData.soundVolume)
+            end
+        ))
+        table.insert(pauseButtons, createButton(
+            texts.abort,
+            function()
+                StateMachine:changeState(TitleScreenState)
             end
         ))
         table.insert(pauseButtons, createButton(
@@ -69,11 +72,11 @@ PauseState = {
 
         drawScoreAndLives(score, lives, heart)
 
-        love.graphics.setColor(0, 0, 0, 0.7)
+        love.graphics.setColor(0, 0, 0, 0.6)
         love.graphics.rectangle('fill', -15, -15, RENDER_WIDTH + 30, RENDER_HEIGHT + 30)
 
-        love.graphics.setColor(WHITE)
-        love.graphics.setLineWidth(4)
+        love.graphics.setColor(SOFT_WHITE)
+        love.graphics.setLineWidth(5)
         love.graphics.rectangle('line', 45, 24, RENDER_WIDTH-90, RENDER_HEIGHT-64)
 
         drawTitle(texts.paused, largeFont, 50)

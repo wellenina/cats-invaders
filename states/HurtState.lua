@@ -2,6 +2,9 @@ local hurtDuration = 3
 local hurtTimer = 0
 
 HurtState = {
+
+    stateType = 'play',
+
     load = function()
         sounds['playerHurt']:play()
         hurtTimer = 0

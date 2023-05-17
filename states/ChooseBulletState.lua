@@ -6,6 +6,8 @@ local currentBulletRow, currentBulletColumn = 1, 1
 
 ChooseBulletState = {
 
+    stateType = 'menu',
+
     load = function()
         currentBulletRow = gameData.selectedBullet <= columns and 1 or 2
         currentBulletColumn = gameData.selectedBullet % columns

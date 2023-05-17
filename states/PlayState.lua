@@ -1,4 +1,7 @@
 PlayState = {
+
+    stateType = 'play',
+
     load = function()
     end,
 

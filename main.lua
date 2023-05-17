@@ -1,12 +1,3 @@
-RENDER_WIDTH = 480
-RENDER_HEIGHT = 270
-
-local windowWidth, windowHeight = love.window.getDesktopDimensions() * 0.7
-local renderScale = windowWidth / RENDER_WIDTH
-windowHeight = RENDER_HEIGHT * renderScale
-local xPadding, yPadding = 0, 0
-
-
 require 'languages'
 require 'globals'
 require 'objects/Player'
@@ -32,9 +23,15 @@ require 'states/HurtState'
 require 'states/VeryHurtState'
 require 'states/GameOverState'
 
+local windowWidth, windowHeight = love.window.getDesktopDimensions() * 0.7
+local renderScale = windowWidth / RENDER_WIDTH
+windowHeight = RENDER_HEIGHT * renderScale
+local xPadding, yPadding = 0, 0
+
 
 function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
+    love.graphics.setLineStyle('rough')
     love.window.setMode(windowWidth, windowHeight, {resizable=true, vsync=0, minwidth=RENDER_WIDTH, minheight=RENDER_HEIGHT})
 
     loadGameData()
@@ -49,10 +46,11 @@ function love.load()
     hugeFont = love.graphics.newFont('Apple-II.otf', 40)
 
     paw = love.graphics.newImage('images/paw.png')
+    background = love.graphics.newImage('images/background.png')
+    stars = love.graphics.newImage('images/stars.png')
     playersSprite = love.graphics.newImage('images/players-spritesheet.png')
     playerBulletSprite = love.graphics.newImage('images/player-bullets-spritesheet.png')
-
-    groundLine = {0, RENDER_HEIGHT - 17, RENDER_WIDTH, RENDER_HEIGHT - 17}
+    groundLine = {0, RENDER_HEIGHT - 20, RENDER_WIDTH, RENDER_HEIGHT - 20}
 
     sounds = {
         ['menuSelect'] = love.audio.newSource('sounds/menuSelect.wav', 'static'),
@@ -81,6 +79,9 @@ end
 function love.update(dt)
     StateMachine:update(dt)
     love.keyboard.keysPressed = {}
+    if StateMachine.currentState.stateType == 'menu' then
+        Paw:updatePosition(dt)
+    end
 end
 
 
@@ -109,15 +110,19 @@ function love.draw()
 	love.graphics.scale(renderScale, renderScale)
 
     love.graphics.setBackgroundColor(BACKGROUND_COLOR)
+    love.graphics.draw(background, 0, 0)
+    if StateMachine.currentState.stateType == 'menu' then
+        love.graphics.draw(stars, 0, 0)
+    end
 
     love.graphics.setColor(GREEN)
-    love.graphics.setLineWidth(1)
+    love.graphics.setLineWidth(3)
     love.graphics.line(groundLine)
 
     love.graphics.setColor(WHITE)
     StateMachine:render()
 
-    if yPadding > 0 then
+    if StateMachine.currentState.stateType == 'play' and yPadding > 0 then
         love.graphics.setColor(BACKGROUND_COLOR)
         love.graphics.rectangle('fill', 0, 0-yPadding, windowWidth, yPadding)
         love.graphics.setColor(WHITE)

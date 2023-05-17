@@ -3,6 +3,8 @@ local selectedButton = 1
 
 TitleScreenState = {
 
+    stateType = 'menu',
+
     load = function(__self, selection)
         titleScreenButtons = {}
         table.insert(titleScreenButtons, createButton(
@@ -39,7 +41,7 @@ TitleScreenState = {
         selectedButton = selection or 1
     end,
 
-    update = function(__self, dt)
+    update = function(dt)
         if love.keyboard.wasPressed('down') then
             selectedButton = selectedButton < #titleScreenButtons and selectedButton + 1 or 1
             sounds['menuSelect']:stop()
@@ -57,7 +59,6 @@ TitleScreenState = {
             sounds['menuSelect']:stop()
             sounds['menuEnter']:play()
         end
-        Paw:updatePosition(dt)
     end,
 
     render = function()

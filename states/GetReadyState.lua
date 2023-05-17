@@ -2,6 +2,9 @@ local getReadyDuration = 3 -- seconds
 local getReadyTimer = 0
 
 GetReadyState = {
+
+    stateType = 'play',
+
     load = function()
         Player:load()
         Invaders:load()

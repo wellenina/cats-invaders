@@ -6,6 +6,8 @@ local currentPlayerRow, currentPlayerColumn = 1, 1
 
 ChoosePlayerState = {
 
+    stateType = 'menu',
+
     load = function()
         currentPlayerRow = gameData.selectedPlayer <= columns and 1 or 2
         currentPlayerColumn = gameData.selectedPlayer % columns

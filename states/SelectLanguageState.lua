@@ -18,18 +18,21 @@ table.insert(languageButtons, createButton(
     end
 ))
 
-local selectedButton = gameData.language
+local selectedButton = 1
 local buttonY = 100
 local buttonMargin = 26
 
 
 SelectLanguageState = {
 
+    stateType = 'menu',
+
     load = function(__self, selection)
+        selectedButton = gameData.language
         languageButtons[#languageButtons].text = texts.back
     end,
 
-    update = function(__self, dt)
+    update = function(dt)
         if love.keyboard.wasPressed('down') then
             selectedButton = selectedButton < #languageButtons and selectedButton + 1 or 1
             sounds['menuSelect']:stop()
@@ -47,7 +50,6 @@ SelectLanguageState = {
             sounds['menuSelect']:stop()
             sounds['menuEnter']:play()
         end
-        Paw:updatePosition(dt)
     end,
 
     render = function()
