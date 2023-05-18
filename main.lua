@@ -7,8 +7,9 @@ require 'objects/Bullet'
 require 'objects/Bullets'
 require 'objects/Explosion'
 require 'objects/Paw'
+require 'objects/TitleScreenAnimation'
 require 'states/StateMachine'
-require 'states/TitleScreenState'
+require 'states/TitleScreenState' 
 require 'states/OptionsState'
 require 'states/HighScoresState'
 require 'states/ResetScoreState'
@@ -50,6 +51,7 @@ function love.load()
     stars = love.graphics.newImage('images/stars.png')
     playersSprite = love.graphics.newImage('images/players-spritesheet.png')
     playerBulletSprite = love.graphics.newImage('images/player-bullets-spritesheet.png')
+    catSprite = love.graphics.newImage('images/cats-spritesheet.png')
     groundLine = {0, RENDER_HEIGHT - 20, RENDER_WIDTH, RENDER_HEIGHT - 20}
 
     sounds = {

@@ -39,10 +39,12 @@ TitleScreenState = {
         ))
 
         selectedButton = selection or 1
+
+        TitleScreenAnimation:load()
     end,
 
-    update = function(dt)
-        if love.keyboard.wasPressed('down') then
+    update = function(__self, dt)
+        if love.keyboard.wasPressed('down') then 
             selectedButton = selectedButton < #titleScreenButtons and selectedButton + 1 or 1
             sounds['menuSelect']:stop()
             sounds['menuSelect']:play()
@@ -59,10 +61,12 @@ TitleScreenState = {
             sounds['menuSelect']:stop()
             sounds['menuEnter']:play()
         end
+        TitleScreenAnimation:update(dt)
     end,
 
     render = function()
         drawTitle('CATS INVADERS', hugeFont)
         drawButtons(titleScreenButtons, selectedButton)
+        TitleScreenAnimation:render()
     end
 }

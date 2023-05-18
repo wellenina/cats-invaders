@@ -30,7 +30,7 @@ Invaders = {
         horizontalTile, verticalTile = catWidth + COLUMN_GAP, catHeight + ROW_GAP
         catFrame = 1
 
-        catSprite = love.graphics.newImage('images/cats-spritesheet.png')
+        --catSprite = love.graphics.newImage('images/cats-spritesheet.png')
         catsQuads = {} -- 24 cats, 2 frames each
         for i = 1, CAT_SPRITE_HEIGHT / CAT_QUAD_HEIGHT, 1 do
             for j = 1, CAT_SPRITE_WIDTH / CAT_QUAD_WIDTH, 2 do
