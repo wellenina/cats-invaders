@@ -25,10 +25,10 @@ local flickerTimer = 0
 local PLAYER_SPEED = 200
 
 -- bullets
-local PLAYER_BULLET_SPRITE_WIDTH, PLAYER_BULLET_SPRITE_HEIGHT = 112, 10
+local PLAYER_BULLET_SPRITE_WIDTH, PLAYER_BULLET_SPRITE_HEIGHT = 128, 10
 local BULLET_QUAD_WIDTH, BULLET_QUAD_HEIGHT = 8, 10
 
-playerBulletQuads = {} -- 14 bullets
+playerBulletQuads = {} -- 16 bullets
 for i = 1, PLAYER_BULLET_SPRITE_WIDTH / BULLET_QUAD_WIDTH, 1 do
     table.insert(playerBulletQuads, love.graphics.newQuad(BULLET_QUAD_WIDTH * (i-1), 0,
     BULLET_QUAD_WIDTH, BULLET_QUAD_HEIGHT, PLAYER_BULLET_SPRITE_WIDTH, PLAYER_BULLET_SPRITE_HEIGHT))
