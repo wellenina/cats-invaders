@@ -3,9 +3,11 @@ RENDER_HEIGHT = 270
 
 WHITE = {1, 1, 1}
 SOFT_WHITE = {242/255, 240/255, 229/255}
+GREY = {184/255, 181/255, 185/255}
 GREEN = {193/255, 211/255, 104/255}
 PURPLE = {207/255, 138/255, 204/255}
 YELLOW = {211/255, 159/255, 104/255}
+BRIGHT_YELLOW = {237/255, 225/255, 158/255}
 BACKGROUND_COLOR = {58/255, 56/255, 88/255}
 
 
@@ -115,19 +117,6 @@ function drawOverlayBox()
     love.graphics.setLineWidth(3)
     love.graphics.rectangle('line', 45, 24, RENDER_WIDTH-90, RENDER_HEIGHT-64)
 
-    love.graphics.setColor(184/255, 181/255, 185/255)
+    love.graphics.setColor(GREY)
     love.graphics.rectangle('line', 48, 27, RENDER_WIDTH-96, RENDER_HEIGHT-70)
-end
-
-function drawKeysAndDescriptions()
-    love.graphics.setColor(GREEN)
-    for i = 1, 3, 1 do
-        love.graphics.setLineWidth(2)
-        love.graphics.rectangle('line', 23 + 134*(i-1), 180, 119, 35)
-
-        love.graphics.draw(keysSprite, keysQuads[i], 38 + 134*(i-1), 187)
-        local y = string.find(texts.keyDescription[i], '\n') and 188 or 193
-        love.graphics.printf(texts.keyDescription[i], 77 + 134*(i-1), y, 50, 'right')
-    end
-    love.graphics.setColor(WHITE)
 end

@@ -1,12 +1,6 @@
 local optionsButtons = {}
 local selectedButton = 1
 
-keysQuads = {}
-for i = 1, 3, 1 do
-    table.insert(keysQuads, love.graphics.newQuad(37 * (i-1), 0, 37, 21, 111, 21))
-end
-
-
 OptionsState = {
 
     stateType = 'menu',
@@ -53,7 +47,6 @@ OptionsState = {
         ))
 
         selectedButton = selection or 1
-        keysSprite = love.graphics.newImage('images/keys.png')
     end,
 
     update = function(dt)

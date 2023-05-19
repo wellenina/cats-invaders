@@ -1,86 +1,86 @@
-local rows, columns = 2, 6
-local selectedRow, selectedColumn = 1, 1
+local chooseButtons
+local selectedButton
 
-local currentPlayerRow, currentPlayerColumn = 1, 1
+local playerSelected
+local playerOnScreen
 
 
 ChoosePlayerState = {
 
-    stateType = 'menu',
+    stateType = 'menu', 
 
     load = function()
-        currentPlayerRow = gameData.selectedPlayer <= columns and 1 or 2
-        currentPlayerColumn = gameData.selectedPlayer % columns
-        selectedRow, selectedColumn = currentPlayerRow, currentPlayerColumn
+        playerSelected = gameData.selectedPlayer
+        playerOnScreen = playerSelected
+
+        chooseButtons = {}
+        selectedButton = 1
+
+        table.insert(chooseButtons, createButton(
+            texts.select,
+            function()
+                playerSelected = playerOnScreen
+            end
+        ))
+        table.insert(chooseButtons, createButton(
+            texts.back,
+            function()
+                gameData.selectedPlayer = playerSelected
+                saveGameData()
+                StateMachine:changeState(OptionsState, 3)
+            end
+        ))
+
     end,
 
     update = function(dt)
-        if love.keyboard.wasPressed('down') then
-            selectedRow = selectedRow < rows and selectedRow + 1 or 1
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-
-        if love.keyboard.wasPressed('up') then
-            selectedRow = selectedRow > 1 and selectedRow - 1 or rows
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-
         if love.keyboard.wasPressed('right') then
-            selectedColumn = selectedColumn < columns and selectedColumn + 1 or 1
+            playerOnScreen = playerOnScreen == #playersQuads and 1 or playerOnScreen + 1
+            sounds['menuSelect']:stop()
+            sounds['menuSelect']:play()
+        end
+        if love.keyboard.wasPressed('left') then
+            playerOnScreen = playerOnScreen == 1 and #playersQuads or playerOnScreen - 1
             sounds['menuSelect']:stop()
             sounds['menuSelect']:play()
         end
 
-        if love.keyboard.wasPressed('left') then
-            selectedColumn = selectedColumn > 1 and selectedColumn - 1 or columns
+        if love.keyboard.wasPressed('down') then
+            selectedButton = selectedButton < #chooseButtons and selectedButton + 1 or 1
+            sounds['menuSelect']:stop()
+            sounds['menuSelect']:play()
+        end
+        if love.keyboard.wasPressed('up') then
+            selectedButton = selectedButton > 1 and selectedButton - 1 or #chooseButtons
             sounds['menuSelect']:stop()
             sounds['menuSelect']:play()
         end
 
         if love.keyboard.wasPressed('return') then
-            gameData.selectedPlayer = selectedColumn + columns * (selectedRow - 1)
-            currentPlayerRow = gameData.selectedPlayer <= columns and 1 or 2
-            currentPlayerColumn = gameData.selectedPlayer % columns == 0 and columns or gameData.selectedPlayer % columns
+            chooseButtons[selectedButton].fn()
             sounds['menuSelect']:stop()
             sounds['menuEnter']:play()
-        end
-
-        if love.keyboard.wasPressed('escape') then
-            saveGameData()
-            sounds['menuSelect']:stop()
-            sounds['menuEnter']:play()
-            StateMachine:changeState(OptionsState, 3)
-        end        
+        end      
     end,
 
     render = function()
+        drawTitle(texts.choosePlayerTitle)
+
+        love.graphics.setColor(95/255, 85/255, 106/255) -- background
+        love.graphics.rectangle('fill', (RENDER_WIDTH-84) * 0.5, 73, 84, 84)
+
+        love.graphics.setLineWidth(3)
+        love.graphics.setColor(playerOnScreen == playerSelected and BRIGHT_YELLOW or SOFT_WHITE) -- outer line
+        love.graphics.rectangle('line', (RENDER_WIDTH-90) * 0.5, 70, 90, 90)
+    
+        love.graphics.setColor(playerOnScreen == playerSelected and YELLOW or GREY) -- inner line
+        love.graphics.rectangle('line', (RENDER_WIDTH-84) * 0.5, 73, 84, 84)
+
         love.graphics.setFont(smallFont)
+        love.graphics.setColor(PURPLE)
+        love.graphics.printf(texts.playersNames[playerOnScreen], 0, 170, RENDER_WIDTH, 'center')
 
-        for row = 1, rows, 1 do
-            for column = 1, columns, 1 do
-                -- currently selected player has a yellow background
-                if row == currentPlayerRow and column == currentPlayerColumn then
-                    love.graphics.setColor(YELLOW)
-                    love.graphics.rectangle('fill', 25 + 67 * (column-1), 16 + 77 * (row-1), 46, 46)
-                end
-
-                local playerIndex = column + columns * (row-1)
-                love.graphics.setColor(WHITE)
-                love.graphics.draw(playersSprite, playersQuads[playerIndex][1], 32 + 67 * (column-1), 24 + 77 * (row-1))
-
-                if row == selectedRow and column == selectedColumn then
-                    love.graphics.setColor(WHITE)
-                else
-                    love.graphics.setColor(GREEN)
-                end
-                love.graphics.printf(texts.playersNames[playerIndex], 24 + 67 * (column-1), 68 + 77 * (row-1), 48, 'center')
-                love.graphics.setLineWidth(5)
-                love.graphics.rectangle('line', 24 + 67 * (column-1), 16 + 77 * (row-1), 48, 48)
-            end
-        end
-
-        drawKeysAndDescriptions()
+        drawButtons(chooseButtons, selectedButton, 200)
+        love.graphics.draw(playersSprite, playersQuads[playerOnScreen][1], (RENDER_WIDTH-64) * 0.5, 88, 0, 2, 2)
     end
 }
