@@ -29,8 +29,8 @@ TitleScreenAnimation = {
         frameTimer = 0
 
         titleScreenCatQuads = {
-        love.graphics.newQuad(40, 120, 20, 20, 120, 160),
-        love.graphics.newQuad(60, 120, 20, 20, 120, 160)}
+            love.graphics.newQuad(80, 40, 20, 20, 120, 160),
+            love.graphics.newQuad(100, 40, 20, 20, 120, 160)}
 
     end,
 
