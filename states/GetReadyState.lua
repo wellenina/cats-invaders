@@ -1,5 +1,7 @@
-local getReadyDuration = 3 -- seconds
-local getReadyTimer = 0
+local GET_READY_DURATION = 3 -- seconds
+local getReadyTimer
+
+local TOTAL_NUMBER_OF_LIVES = 3
 
 GetReadyState = {
 
@@ -12,7 +14,7 @@ GetReadyState = {
         Explosion.load()
 
         score = 0
-        lives = 3
+        lives = TOTAL_NUMBER_OF_LIVES
 
         heart = love.graphics.newImage('images/heart.png')
         getReadyTimer = 0
@@ -25,7 +27,7 @@ GetReadyState = {
         Invaders:getReadyUpdate(dt)
 
         getReadyTimer = getReadyTimer + dt
-        if getReadyTimer >= getReadyDuration then
+        if getReadyTimer >= GET_READY_DURATION then
             StateMachine:changeState(PlayState)
             playerScale = 1
         end

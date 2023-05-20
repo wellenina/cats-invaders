@@ -1,11 +1,10 @@
 Cat = {}
 Cat.__index = Cat
 
-function Cat.create(quads, bulletQuad, score, columnNum, x, y, sx, ox)
+function Cat.create(quads, bulletQuad, columnNum, x, y, sx, ox)
   local instance = setmetatable({}, Cat)
   instance.quads = quads
   instance.bulletQuad = bulletQuad
-  instance.score = score
   instance.columnNum = columnNum
   instance.x = x
   instance.y = y

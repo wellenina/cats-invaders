@@ -1,4 +1,5 @@
-local BULLET_SPEED = 200
+local CAT_SCORE = 5
+local LEVEL_LENGTH = 35 -- number of cats hit until difficulty is increased
 
 Bullets = {
 
@@ -7,7 +8,6 @@ Bullets = {
         playerBullets = {}
         BULLET_WIDTH = 6
         BULLET_HEIGHT = 10
-        bulletSpeed = BULLET_SPEED
     end,
 
     update = function(__self, dt)
@@ -39,9 +39,8 @@ Bullets = {
                         sounds['invaderExplosion']:play()
                         Explosion.explode(cat.x, cat.y, catWidth, catHeight, 50)
                         bottomInvaders = Invaders.getBottomInvaders()
-                        score = score + cat.score
-                        defeatedCats = defeatedCats + 1
-                        if defeatedCats >= (70 * level) then
+                        score = score + CAT_SCORE
+                        if score / CAT_SCORE >= (LEVEL_LENGTH * level) then
                             Invaders:increaseDifficulty()
                         end
                     end

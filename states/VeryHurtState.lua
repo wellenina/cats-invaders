@@ -1,4 +1,4 @@
-local veryHurtDuration = 3
+local VERY_HURT_DURATION = 3
 local veryHurtTimer = 0
 
 VeryHurtState = {
@@ -18,7 +18,7 @@ VeryHurtState = {
         Explosion.update(dt)
 
         veryHurtTimer = veryHurtTimer + dt
-        if veryHurtTimer >= veryHurtDuration then
+        if veryHurtTimer >= VERY_HURT_DURATION then
             StateMachine:changeState(GameOverState)
             playerScale = 1
         elseif veryHurtTimer >= 1.2 and veryHurtTimer <= 1.4 then
