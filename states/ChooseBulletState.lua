@@ -76,6 +76,10 @@ ChooseBulletState = {
         love.graphics.setColor(bulletOnScreen == bulletSelected and YELLOW or GREY) -- inner line
         love.graphics.rectangle('line', (RENDER_WIDTH-84) * 0.5, 73, 84, 84)
 
+        love.graphics.setColor(SOFT_WHITE)
+        love.graphics.draw(arrows, leftArrow, 145, 101, 0, 1.5, 1.5)
+        love.graphics.draw(arrows, rightArrow, 310, 101, 0, 1.5, 1.5)
+
         love.graphics.setFont(smallFont)
         love.graphics.setColor(PURPLE)
         love.graphics.printf(texts.bulletsNames[bulletOnScreen], 0, 170, RENDER_WIDTH, 'center')

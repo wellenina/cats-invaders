@@ -47,6 +47,10 @@ OptionsState = {
         ))
 
         selectedButton = selection or 1
+
+        arrows = love.graphics.newImage('images/arrows.png')
+        leftArrow = love.graphics.newQuad(0, 0, 17, 19, 34, 19)
+        rightArrow = love.graphics.newQuad(17, 0, 17, 19, 34, 19)
     end,
 
     update = function(dt)
