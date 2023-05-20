@@ -75,6 +75,6 @@ OptionsState = {
 
     render = function()
         drawTitle(texts.options)
-        drawButtons(optionsButtons, selectedButton)
+        drawButtons(optionsButtons, selectedButton, 93)
     end
 }

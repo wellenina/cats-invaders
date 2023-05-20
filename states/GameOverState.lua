@@ -1,9 +1,5 @@
 local gameOverButtons = {}
-
 local selectedButton = 1
-local buttonY = 150
-local buttonMargin = 26
-
 local comment = ''
 
 
@@ -66,8 +62,8 @@ GameOverState = {
         love.graphics.setFont(mediumFont)
         love.graphics.setColor(PURPLE)
         love.graphics.printf(comment, 0, 80, RENDER_WIDTH, 'center')
-        love.graphics.printf(texts.scoreIs .. tostring(score), 0, 110, RENDER_WIDTH, 'center')
+        love.graphics.printf(texts.scoreIs .. tostring(score), 0, 132, RENDER_WIDTH, 'center')
 
-        drawButtons(gameOverButtons, selectedButton, 150)
+        drawButtons(gameOverButtons, selectedButton, 178)
     end
 }

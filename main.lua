@@ -43,6 +43,7 @@ function love.load()
     smallFont = love.graphics.newFont('Apple-II.otf', 8)
     smallFont:setLineHeight(1.5)
     mediumFont = love.graphics.newFont('Apple-II.otf', 16)
+    mediumFont:setLineHeight(1.45)
     largeFont = love.graphics.newFont('Apple-II.otf', 32)
     hugeFont = love.graphics.newFont('Apple-II.otf', 40)
 

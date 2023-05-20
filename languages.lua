@@ -12,9 +12,9 @@ languages = {
         resume = 'RESUME',
         abort = 'ABORT MISSION',
         gameOver = 'GAME OVER',
-        gameOverComment1 = 'WOAH! NEW HIGH SCORE!',
-        gameOverComment2 = "YAY! YOU'RE IN TOP 5!",
-        gameOverComment3 = 'OOF! THOSE CATS ARE TOUGH!',
+        gameOverComment1 = 'WOAH!\nNEW HIGH SCORE!',
+        gameOverComment2 = "YAY!\nYOU'RE IN TOP 5!",
+        gameOverComment3 = 'OOF!\nTHOSE CATS ARE TOUGH!',
         scoreIs = 'YOUR SCORE IS ',
         playAgain = 'PLAY AGAIN',
         menu = 'MENU',
@@ -40,7 +40,8 @@ languages = {
         credits = 'CREDITS',
         creditsContent = "PROJECT BY GIULIA FANZAGHI\nLITERALLY MADE WITH LÖVE (THE 2D GAME FRAMEWORK)\nSKY BACKGROUND BY CANIA - ITCH.IO (EDITED BY ME)\nPIXEL ART FROM DOTOWN-MAEDA DESIGN ROOM (EDITED BY ME)\nSOUNDS EFFECTS GENERATED WITH BFXR OR FROM PIXABAY\nFONT IS APPLE II",
         creditsThanks = 'SPECIAL THANKS TO',
-        creditsThanksContent = "COOPER AND MULDER, MY LOVELY CATS\nMATTEO, MY AWESOME HUSBAND"
+        creditsThanksContent = "COOPER AND MULDER, MY LOVELY CATS\nMATTEO, MY AWESOME HUSBAND",
+        creditsDisclaimer = 'NO CATS WERE HARMED IN THE MAKING OF THIS GAME'
     },
 
     {
@@ -55,9 +56,9 @@ languages = {
         resume = 'RIPRENDI',
         abort = 'ABBANDONA MISSIONE',
         gameOver = 'GAME OVER',
-        gameOverComment1 = 'WOW! NUOVO RECORD!',
-        gameOverComment2 = 'WOW! SEI IN CLASSIFICA!',
-        gameOverComment3 = 'AHI! QUESTI GATTI SONO TOSTI!',
+        gameOverComment1 = 'WOW!\nNUOVO RECORD!',
+        gameOverComment2 = 'YAY!\nSEI IN CLASSIFICA!',
+        gameOverComment3 = 'AHI!\nQUESTI GATTI SONO TOSTI!',
         scoreIs = "IL TUO PUNTEGGIO E' ",
         playAgain = 'GIOCA ANCORA',
         menu = "MENU'",
@@ -83,7 +84,8 @@ languages = {
         credits = 'CREDITS',
         creditsContent = "UN PROGETTO DI GIULIA FANZAGHI\nFATTO CON LÖVE (FRAMEWORK PER GIOCHI 2D)\nSFONDO DI CANIA - ITCH.IO (MODIFICATO DA ME)\nPIXEL ART DA DOTOWN-MAEDA DESIGN ROOM (MODIFICATA DA ME)\nEFFETTI SONORI GENERATI CON BFXR O DA PIXABAY\nIL FONT E' APPLE II",
         creditsThanks = 'RINGRAZIAMENTI SPECIALI',
-        creditsThanksContent = "COOPER E MULDER, I MIEI ADORABILI GATTONI\nMATTEO, IL MIO FAVOLOSO MARITO"
+        creditsThanksContent = "COOPER E MULDER, I MIEI ADORABILI GATTONI\nMATTEO, IL MIO FAVOLOSO MARITO",
+        creditsDisclaimer = "NESSUN GATTO E' STATO MALTRATTATO PER LA CREAZIONE DI QUESTO GIOCO"
     }
 
 }

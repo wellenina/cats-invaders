@@ -1,7 +1,7 @@
-local width = 140
-local x = (RENDER_WIDTH - width) * 0.5
-local y = 70
-local margin = 24
+local WIDTH = 140
+local X = (RENDER_WIDTH - WIDTH) * 0.5
+local Y = 68
+local MARGIN = 22
 
 local highScoresButtons = {}
 local selectedButton = 1
@@ -53,10 +53,10 @@ HighScoresState = {
         love.graphics.setFont(mediumFont)
         love.graphics.setColor(PURPLE)
         for index,hScore in ipairs(gameData.highScores) do
-            love.graphics.printf(index .. '. ', x, y + (margin * (index-1)), width, 'left')
-            love.graphics.printf(hScore, x, y + (margin * (index-1)), width, 'right')
+            love.graphics.printf(index .. '. ', X, Y + (MARGIN * (index-1)), WIDTH, 'left')
+            love.graphics.printf(hScore, X, Y + (MARGIN * (index-1)), WIDTH, 'right')
         end
 
-        drawButtons(highScoresButtons, selectedButton, 200)
+        drawButtons(highScoresButtons, selectedButton, 189)
     end
 }

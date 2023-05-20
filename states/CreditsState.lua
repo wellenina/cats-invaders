@@ -22,21 +22,25 @@ CreditsState = {
     end,
 
     render = function()
-        drawTitle(texts.credits) -- height 28px
+        drawTitle(texts.credits)
 
         love.graphics.setFont(smallFont)
         love.graphics.setColor(PURPLE)
-        love.graphics.printf(texts.creditsContent, 0, 66, RENDER_WIDTH, 'center') -- height 61px
+        love.graphics.printf(texts.creditsContent, 0, 66, RENDER_WIDTH, 'center')
 
-        drawTitle(texts.creditsThanks, smallFont, 152) -- height 7px
+        love.graphics.setColor(GREEN)
+        love.graphics.printf(texts.creditsThanks, 0, 149, RENDER_WIDTH, 'center')
 
         love.graphics.setColor(PURPLE)
-        love.graphics.printf(texts.creditsThanksContent, 0, 169, RENDER_WIDTH, 'center') -- height 20px
+        love.graphics.printf(texts.creditsThanksContent, 0, 165, RENDER_WIDTH, 'center')
+
+        love.graphics.setColor(GREEN)
+        love.graphics.printf(texts.creditsDisclaimer, 0, 194, RENDER_WIDTH, 'center')
 
         love.graphics.setFont(mediumFont)
         love.graphics.setColor(SOFT_WHITE)
-        love.graphics.printf(backBtn.text, 0, 227, RENDER_WIDTH, 'center') -- height 14px
-        Paw.render((RENDER_WIDTH - mediumFont:getWidth(backBtn.text)) * 0.5 - 25, 230)
+        love.graphics.printf(backBtn.text, 0, 219, RENDER_WIDTH, 'center')
+        Paw.render((RENDER_WIDTH - mediumFont:getWidth(backBtn.text)) * 0.5 - 25, 222)
         love.graphics.setColor(WHITE)
     end
 }

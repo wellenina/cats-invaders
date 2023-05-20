@@ -19,8 +19,8 @@ table.insert(languageButtons, createButton(
 ))
 
 local selectedButton = 1
-local buttonY = 100
-local buttonMargin = 26
+local BUTTON_Y = 115
+local BUTTON_MARGIN = 26
 
 
 SelectLanguageState = {
@@ -59,10 +59,10 @@ SelectLanguageState = {
             if index == gameData.language then
                 love.graphics.setColor(YELLOW)
                 local width = mediumFont:getWidth(button.text) + 10
-                love.graphics.rectangle('fill', (RENDER_WIDTH - width) * 0.5, buttonY - 3 + (buttonMargin * (index-1)), width, mediumFont:getHeight() + 1)
+                love.graphics.rectangle('fill', (RENDER_WIDTH - width) * 0.5, BUTTON_Y - 3 + (BUTTON_MARGIN * (index-1)), width, mediumFont:getHeight() + 1)
             end
         end
 
-        drawButtons(languageButtons, selectedButton)
+        drawButtons(languageButtons, selectedButton, BUTTON_Y)
     end
 }

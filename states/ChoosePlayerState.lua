@@ -84,7 +84,7 @@ ChoosePlayerState = {
         love.graphics.setColor(PURPLE)
         love.graphics.printf(texts.playersNames[playerOnScreen], 0, 170, RENDER_WIDTH, 'center')
 
-        drawButtons(chooseButtons, selectedButton, 200)
+        drawButtons(chooseButtons, selectedButton, 197)
         love.graphics.draw(playersSprite, playersQuads[playerOnScreen][1], (RENDER_WIDTH-64) * 0.5, 88, 0, 2, 2)
     end
 }

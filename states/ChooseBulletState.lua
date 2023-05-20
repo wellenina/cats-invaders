@@ -84,7 +84,7 @@ ChooseBulletState = {
         love.graphics.setColor(PURPLE)
         love.graphics.printf(texts.bulletsNames[bulletOnScreen], 0, 170, RENDER_WIDTH, 'center')
 
-        drawButtons(chooseButtons, selectedButton, 200)
-        love.graphics.draw(playerBulletSprite, playerBulletQuads[bulletOnScreen], (RENDER_WIDTH-40) * 0.5, 94, 0, 5, 5)
+        drawButtons(chooseButtons, selectedButton, 197)
+        love.graphics.draw(playerBulletSprite, playerBulletQuads[bulletOnScreen], (RENDER_WIDTH-40) * 0.5, 95, 0, 5, 5)
     end
 }

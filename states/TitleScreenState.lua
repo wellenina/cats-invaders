@@ -66,7 +66,7 @@ TitleScreenState = {
 
     render = function()
         drawTitle('CATS INVADERS', hugeFont)
-        drawButtons(titleScreenButtons, selectedButton)
+        drawButtons(titleScreenButtons, selectedButton, 93)
         TitleScreenAnimation:render()
     end
 }

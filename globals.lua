@@ -78,19 +78,17 @@ function createButton(text, fn)
 end
 
 function drawButtons(buttons, selectedButton, y)
-    local buttonY = y or 100
     local buttonMargin = 26
-
     love.graphics.setFont(mediumFont)
 
     for index,button in ipairs(buttons) do
         if index == selectedButton then
             love.graphics.setColor(SOFT_WHITE)
-            Paw.render((RENDER_WIDTH - mediumFont:getWidth(button.text)) * 0.5 - 25, buttonY + (buttonMargin * (index-1)) + 3)
+            Paw.render((RENDER_WIDTH - mediumFont:getWidth(button.text)) * 0.5 - 25, y + (buttonMargin * (index-1)) + 3)
         else
             love.graphics.setColor(GREEN)
         end
-        love.graphics.printf(button.text, 0, buttonY + (buttonMargin * (index-1)), RENDER_WIDTH, 'center')
+        love.graphics.printf(button.text, 0, y + (buttonMargin * (index-1)), RENDER_WIDTH, 'center')
     end
     love.graphics.setColor(WHITE)
 end
