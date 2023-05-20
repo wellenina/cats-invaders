@@ -74,9 +74,9 @@ Invaders = {
         local firstInvaders = {}
       
         for i = 1, ROWS, 1 do -- for every row
-            local randomCat = math.random(6)
-            local randomBullet = math.random(4)
-            local sx = sxValues[math.random(2)]
+            local randomCat = love.math.random(6)
+            local randomBullet = love.math.random(4)
+            local sx = sxValues[love.math.random(2)]
             local ox = sx > 0 and 0 or catWidth
             for j = 1, COLUMNS, 1 do -- for every column
                 table.insert(firstInvaders, Cat.create(catsQuads[randomCat], catBulletQuads[randomBullet], j, FIRST_COLUMN_X + horizontalTile * (j-1), BOTTOM_ROW_Y - verticalTile * (i-1), sx, ox))
@@ -142,7 +142,7 @@ Invaders = {
         timeSinceLastBullet = timeSinceLastBullet + dt
         if timeSinceLastBullet > shootDelay then
             timeSinceLastBullet = 0
-            local shooter = bottomInvaders[math.random(#bottomInvaders)]
+            local shooter = bottomInvaders[love.math.random(#bottomInvaders)]
             if shooter.y + catHeight < 0 then return end
             shooter:shoot()
         end
@@ -177,8 +177,8 @@ Invaders = {
         local x = invaders[#invaders - COLUMNS + 1].x
         local y = invaders[#invaders].y - verticalTile
         local randomCat = love.math.random(#catsQuads)
-        local bulletIndex = math.random(#catBulletQuads)
-        local sx = sxValues[math.random(2)]
+        local bulletIndex = love.math.random(#catBulletQuads)
+        local sx = sxValues[love.math.random(2)]
         local ox = sx > 0 and 0 or catWidth
         for i = 1, COLUMNS, 1 do
             table.insert(invaders, Cat.create(catsQuads[randomCat], catBulletQuads[bulletIndex], i, x + horizontalTile * (i-1), y, sx, ox))
