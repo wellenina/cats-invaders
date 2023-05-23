@@ -19,11 +19,12 @@ gameData = {
     highScores = {0, 0, 0, 0, 0}
 }
 
-texts = languages[gameData.language]
+texts = {}
 
 function loadGameData()
 	if not love.filesystem.getInfo('gameData.txt') then
 		saveGameData()
+        texts = languages[gameData.language]
 		return
 	end
     local savedData = love.filesystem.load('gameData.txt')
