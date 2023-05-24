@@ -14,7 +14,7 @@ local moveDelay
 local timeSinceLastMove
 local catFrameDuration
 local catFrameTimer
-local CAT_LATERAL_MOVE, CAT_VERTICAL_MOVE = 10, 15
+local CAT_LATERAL_MOVE, CAT_VERTICAL_MOVE = 10, 20
 local catLateralMove
 local hasChangedDirection
 
@@ -23,7 +23,7 @@ local shootDelay
 local timeSinceLastBullet
 local BULLET_SPEED = 200
 
-local MOVE_ACCELERATION, SHOOT_ACCELERATION = 0.03, 0.06
+local MOVE_ACCELERATION, SHOOT_ACCELERATION = 0.03, 0.07
 local BULLET_SPEED_ACCELERATION = 1.05
 local MIN_MOVE_DELAY, MIN_SHOOT_DELAY = 0.1, 0.2
 
@@ -155,9 +155,9 @@ Invaders = {
             return false
         end
         for index,cat in ipairs(invaders) do
-            if cat.x >= (RENDER_WIDTH - catWidth) then
+            if cat.x >= (RENDER_WIDTH - catWidth - 8) then
                 return true
-            elseif cat.x <= 0 then
+            elseif cat.x <= 8 then
                 return true
             end
         end
