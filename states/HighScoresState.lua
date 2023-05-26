@@ -3,8 +3,9 @@ local X = (RENDER_WIDTH - WIDTH) * 0.5
 local Y = 68
 local MARGIN = 22
 
-local highScoresButtons = {}
-local selectedButton = 1
+local highScoresButtons
+local buttonsY = 189
+
 
 HighScoresState = {
 
@@ -15,7 +16,7 @@ HighScoresState = {
         table.insert(highScoresButtons, createButton(
             texts.back,
             function()
-                StateMachine:changeState(TitleScreenState, 3)
+                StateMachine:changeState(TitleScreenState)
             end
         ))
         table.insert(highScoresButtons, createButton(
@@ -24,26 +25,12 @@ HighScoresState = {
                 StateMachine:changeState(ResetScoreState)
             end
         ))
-        selectedButton = 1
+        getButtonsCoordinates(highScoresButtons, buttonsY)
     end,
 
     update = function(dt)
-        if love.keyboard.wasPressed('down') then
-            selectedButton = selectedButton < #highScoresButtons and selectedButton + 1 or 1
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-
-        if love.keyboard.wasPressed('up') then
-            selectedButton = selectedButton > 1 and selectedButton - 1 or #highScoresButtons
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-
-        if love.keyboard.wasPressed('return') then
-            highScoresButtons[selectedButton].fn()
-            sounds['menuSelect']:stop()
-            sounds['menuEnter']:play()
+        if next(touches) ~= nil then
+            touchButton(highScoresButtons)
         end
     end,
 
@@ -57,6 +44,6 @@ HighScoresState = {
             love.graphics.printf(hScore, X, Y + (MARGIN * (index-1)), WIDTH, 'right')
         end
 
-        drawButtons(highScoresButtons, selectedButton, 189)
+        drawButtons(highScoresButtons, buttonsY)
     end
 }

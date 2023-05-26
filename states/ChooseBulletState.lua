@@ -1,5 +1,5 @@
 local chooseButtons
-local selectedButton
+local buttonsY = 197
 
 local bulletSelected
 local bulletOnScreen
@@ -14,7 +14,6 @@ ChooseBulletState = {
         bulletOnScreen = bulletSelected
 
         chooseButtons = {}
-        selectedButton = 1
 
         table.insert(chooseButtons, createButton(
             texts.select,
@@ -27,40 +26,27 @@ ChooseBulletState = {
             function()
                 gameData.selectedBullet = bulletSelected
                 saveGameData()
-                StateMachine:changeState(OptionsState, 4)
+                StateMachine:changeState(OptionsState)
             end
         ))
 
+        getButtonsCoordinates(chooseButtons, buttonsY)
     end,
 
     update = function(dt)
-        if love.keyboard.wasPressed('right') then
-            bulletOnScreen = bulletOnScreen == #playerBulletQuads and 1 or bulletOnScreen + 1
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
+        if next(touches) ~= nil then
+            if isTouched(307, 100, 32, 30) then --right arrow
+                bulletOnScreen = bulletOnScreen == #playerBulletQuads and 1 or bulletOnScreen + 1
+                sounds['menuSelect']:stop()
+                sounds['menuSelect']:play()
+            elseif isTouched(142, 100, 32, 30) then --left arrow
+                bulletOnScreen = bulletOnScreen == 1 and #playerBulletQuads or bulletOnScreen - 1
+                sounds['menuSelect']:stop()
+                sounds['menuSelect']:play()
+            else
+                touchButton(chooseButtons)
+            end
         end
-        if love.keyboard.wasPressed('left') then
-            bulletOnScreen = bulletOnScreen == 1 and #playerBulletQuads or bulletOnScreen - 1
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-
-        if love.keyboard.wasPressed('down') then
-            selectedButton = selectedButton < #chooseButtons and selectedButton + 1 or 1
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-        if love.keyboard.wasPressed('up') then
-            selectedButton = selectedButton > 1 and selectedButton - 1 or #chooseButtons
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-
-        if love.keyboard.wasPressed('return') then
-            chooseButtons[selectedButton].fn()
-            sounds['menuSelect']:stop()
-            sounds['menuEnter']:play()
-        end      
     end,
 
     render = function()
@@ -84,7 +70,7 @@ ChooseBulletState = {
         love.graphics.setColor(PURPLE)
         love.graphics.printf(texts.bulletsNames[bulletOnScreen], 0, 170, RENDER_WIDTH, 'center')
 
-        drawButtons(chooseButtons, selectedButton, 197)
+        drawButtons(chooseButtons, buttonsY)
         love.graphics.draw(playerBulletSprite, playerBulletQuads[bulletOnScreen], (RENDER_WIDTH-40) * 0.5, 95, 0, 5, 5)
     end
 }

@@ -1,11 +1,11 @@
-local optionsButtons = {}
-local selectedButton = 1
+local optionsButtons
+local buttonsY = 93
 
 OptionsState = {
 
     stateType = 'menu',
 
-    load = function(__self, selection)
+    load = function(__self)
         optionsButtons = {}
         table.insert(optionsButtons, createButton(
             texts.sound[gameData.soundVolume],
@@ -42,39 +42,21 @@ OptionsState = {
         table.insert(optionsButtons, createButton(
             texts.back,
             function()
-                StateMachine:changeState(TitleScreenState, 2)
+                StateMachine:changeState(TitleScreenState)
             end
         ))
 
-        selectedButton = selection or 1
-
-        arrows = love.graphics.newImage('images/arrows.png')
-        leftArrow = love.graphics.newQuad(0, 0, 17, 19, 34, 19)
-        rightArrow = love.graphics.newQuad(17, 0, 17, 19, 34, 19)
+        getButtonsCoordinates(optionsButtons, buttonsY)
     end,
 
     update = function(dt)
-        if love.keyboard.wasPressed('down') then
-            selectedButton = selectedButton < #optionsButtons and selectedButton + 1 or 1
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-
-        if love.keyboard.wasPressed('up') then
-            selectedButton = selectedButton > 1 and selectedButton - 1 or #optionsButtons
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-
-        if love.keyboard.wasPressed('return') then
-            optionsButtons[selectedButton].fn()
-            sounds['menuSelect']:stop()
-            sounds['menuEnter']:play()
+        if next(touches) ~= nil then
+            touchButton(optionsButtons)
         end
     end,
 
     render = function()
         drawTitle(texts.options)
-        drawButtons(optionsButtons, selectedButton, 93)
+        drawButtons(optionsButtons, buttonsY)
     end
 }

@@ -1,11 +1,11 @@
-local titleScreenButtons = {}
-local selectedButton = 1
+local titleScreenButtons
+local buttonsY = 93
 
 TitleScreenState = {
 
     stateType = 'menu',
 
-    load = function(__self, selection)
+    load = function(__self)
         titleScreenButtons = {}
         table.insert(titleScreenButtons, createButton(
             texts.newGame,
@@ -38,35 +38,22 @@ TitleScreenState = {
             end
         ))
 
-        selectedButton = selection or 1
+        getButtonsCoordinates(titleScreenButtons, buttonsY)
 
         TitleScreenAnimation:load()
     end,
 
     update = function(__self, dt)
-        if love.keyboard.wasPressed('down') then 
-            selectedButton = selectedButton < #titleScreenButtons and selectedButton + 1 or 1
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
+        if next(touches) ~= nil then
+            touchButton(titleScreenButtons)
         end
 
-        if love.keyboard.wasPressed('up') then
-            selectedButton = selectedButton > 1 and selectedButton - 1 or #titleScreenButtons
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-
-        if love.keyboard.wasPressed('return') then
-            titleScreenButtons[selectedButton].fn()
-            sounds['menuSelect']:stop()
-            sounds['menuEnter']:play()
-        end
         TitleScreenAnimation:update(dt)
     end,
 
     render = function()
         drawTitle('CATS INVADERS', hugeFont)
-        drawButtons(titleScreenButtons, selectedButton, 93)
+        drawButtons(titleScreenButtons, buttonsY)
         TitleScreenAnimation:render()
     end
 }

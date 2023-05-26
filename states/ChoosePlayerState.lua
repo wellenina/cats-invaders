@@ -1,5 +1,5 @@
 local chooseButtons
-local selectedButton
+local buttonsY = 197
 
 local playerSelected
 local playerOnScreen
@@ -14,7 +14,6 @@ ChoosePlayerState = {
         playerOnScreen = playerSelected
 
         chooseButtons = {}
-        selectedButton = 1
 
         table.insert(chooseButtons, createButton(
             texts.select,
@@ -27,40 +26,27 @@ ChoosePlayerState = {
             function()
                 gameData.selectedPlayer = playerSelected
                 saveGameData()
-                StateMachine:changeState(OptionsState, 3)
+                StateMachine:changeState(OptionsState)
             end
         ))
 
+        getButtonsCoordinates(chooseButtons, buttonsY)
     end,
 
     update = function(dt)
-        if love.keyboard.wasPressed('right') then
-            playerOnScreen = playerOnScreen == #playersQuads and 1 or playerOnScreen + 1
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
+        if next(touches) ~= nil then
+            if isTouched(307, 100, 32, 30) then --right arrow
+                bulletOnScreen = bulletOnScreen == #playerBulletQuads and 1 or bulletOnScreen + 1
+                sounds['menuSelect']:stop()
+                sounds['menuSelect']:play()
+            elseif isTouched(142, 100, 32, 30) then --left arrow
+                bulletOnScreen = bulletOnScreen == 1 and #playerBulletQuads or bulletOnScreen - 1
+                sounds['menuSelect']:stop()
+                sounds['menuSelect']:play()
+            else
+                touchButton(chooseButtons)
+            end
         end
-        if love.keyboard.wasPressed('left') then
-            playerOnScreen = playerOnScreen == 1 and #playersQuads or playerOnScreen - 1
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-
-        if love.keyboard.wasPressed('down') then
-            selectedButton = selectedButton < #chooseButtons and selectedButton + 1 or 1
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-        if love.keyboard.wasPressed('up') then
-            selectedButton = selectedButton > 1 and selectedButton - 1 or #chooseButtons
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-
-        if love.keyboard.wasPressed('return') then
-            chooseButtons[selectedButton].fn()
-            sounds['menuSelect']:stop()
-            sounds['menuEnter']:play()
-        end      
     end,
 
     render = function()
@@ -84,7 +70,7 @@ ChoosePlayerState = {
         love.graphics.setColor(PURPLE)
         love.graphics.printf(texts.playersNames[playerOnScreen], 0, 170, RENDER_WIDTH, 'center')
 
-        drawButtons(chooseButtons, selectedButton, 197)
+        drawButtons(chooseButtons, buttonsY)
         love.graphics.draw(playersSprite, playersQuads[playerOnScreen][1], (RENDER_WIDTH-64) * 0.5, 88, 0, 2, 2)
     end
 }

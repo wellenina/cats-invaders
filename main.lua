@@ -6,7 +6,6 @@ require 'objects/Invaders'
 require 'objects/Bullet'
 require 'objects/Bullets'
 require 'objects/Explosion'
-require 'objects/Paw'
 require 'objects/TitleScreenAnimation'
 require 'states/StateMachine'
 require 'states/TitleScreenState' 
@@ -37,9 +36,6 @@ function love.load()
 
     loadGameData()
 
-    -- input table
-    love.keyboard.keysPressed = {}
-
     smallFont = love.graphics.newFont('Apple-II.otf', 8)
     smallFont:setLineHeight(1.5)
     mediumFont = love.graphics.newFont('Apple-II.otf', 16)
@@ -47,7 +43,6 @@ function love.load()
     largeFont = love.graphics.newFont('Apple-II.otf', 32)
     hugeFont = love.graphics.newFont('Apple-II.otf', 40)
 
-    paw = love.graphics.newImage('images/paw.png')
     background = love.graphics.newImage('images/background.png')
     stars = love.graphics.newImage('images/stars.png')
     playersSprite = love.graphics.newImage('images/players-spritesheet.png')
@@ -55,8 +50,11 @@ function love.load()
     catSprite = love.graphics.newImage('images/cats-spritesheet.png')
     groundLine = {0, RENDER_HEIGHT - 20, RENDER_WIDTH, RENDER_HEIGHT - 20}
 
+    arrows = love.graphics.newImage('images/arrows.png')
+    leftArrow = love.graphics.newQuad(0, 0, 17, 19, 34, 19)
+    rightArrow = love.graphics.newQuad(17, 0, 17, 19, 34, 19)
+
     sounds = {
-        ['menuSelect'] = love.audio.newSource('sounds/menuSelect.wav', 'static'),
         ['menuEnter'] = love.audio.newSource('sounds/menuEnter.wav', 'static'),
         ['playerShoot'] = love.audio.newSource('sounds/player-shoot.wav', 'static'),
         ['playerHurt'] = love.audio.newSource('sounds/player-hurt.wav', 'static'),
@@ -66,25 +64,14 @@ function love.load()
         ['invadersShiftDown'] = love.audio.newSource('sounds/ominously-shift-down.wav', 'static'),
     }
 
-    StateMachine:changeState(TitleScreenState)
-end
-
-
-function love.keypressed(key)
-    love.keyboard.keysPressed[key] = true
-end
-
-function love.keyboard.wasPressed(key)
-    return love.keyboard.keysPressed[key]
+    --StateMachine:changeState(TitleScreenState)
+    StateMachine:changeState(ChooseBulletState)
 end
 
 
 function love.update(dt)
+    touches = love.touch.getTouches()
     StateMachine:update(dt)
-    love.keyboard.keysPressed = {}
-    if StateMachine.currentState.stateType == 'menu' then
-        Paw:updatePosition(dt)
-    end
 end
 
 

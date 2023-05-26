@@ -1,4 +1,5 @@
 local languageButtons = {}
+local BUTTON_Y = 115
 
 for index,language in ipairs(languages) do
 	table.insert(languageButtons, createButton(
@@ -14,41 +15,23 @@ end
 table.insert(languageButtons, createButton(
     '',
     function()
-        StateMachine:changeState(OptionsState, 2)
+        StateMachine:changeState(OptionsState)
     end
 ))
-
-local selectedButton = 1
-local BUTTON_Y = 115
-local BUTTON_MARGIN = 26
 
 
 SelectLanguageState = {
 
     stateType = 'menu',
 
-    load = function(__self, selection)
-        selectedButton = gameData.language
+    load = function(__self)
         languageButtons[#languageButtons].text = texts.back
+        getButtonsCoordinates(languageButtons, BUTTON_Y)
     end,
 
     update = function(dt)
-        if love.keyboard.wasPressed('down') then
-            selectedButton = selectedButton < #languageButtons and selectedButton + 1 or 1
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-
-        if love.keyboard.wasPressed('up') then
-            selectedButton = selectedButton > 1 and selectedButton - 1 or #languageButtons
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-
-        if love.keyboard.wasPressed('return') then
-            languageButtons[selectedButton].fn()
-            sounds['menuSelect']:stop()
-            sounds['menuEnter']:play()
+        if next(touches) ~= nil then
+            touchButton(languageButtons)
         end
     end,
 
@@ -63,6 +46,6 @@ SelectLanguageState = {
             end
         end
 
-        drawButtons(languageButtons, selectedButton, BUTTON_Y)
+        drawButtons(languageButtons, BUTTON_Y)
     end
 }

@@ -78,17 +78,11 @@ function createButton(text, fn)
     }
 end
 
-function drawButtons(buttons, selectedButton, y)
+function drawButtons(buttons, y)
     local buttonMargin = 26
     love.graphics.setFont(mediumFont)
-
+    love.graphics.setColor(GREEN)
     for index,button in ipairs(buttons) do
-        if index == selectedButton then
-            love.graphics.setColor(SOFT_WHITE)
-            Paw.render((RENDER_WIDTH - mediumFont:getWidth(button.text)) * 0.5 - 25, y + (buttonMargin * (index-1)) + 3)
-        else
-            love.graphics.setColor(GREEN)
-        end
         love.graphics.printf(button.text, 0, y + (buttonMargin * (index-1)), RENDER_WIDTH, 'center')
     end
     love.graphics.setColor(WHITE)
@@ -118,4 +112,36 @@ function drawOverlayBox()
 
     love.graphics.setColor(GREY)
     love.graphics.rectangle('line', 48, 27, RENDER_WIDTH-96, RENDER_HEIGHT-70)
+end
+
+-- for mobile devices
+
+function isTouched(elementX, elementY, width, height)
+	for index, id in ipairs(touches) do
+		local touchX, touchY = love.touch.getPosition(id)
+		if touchX >= elementX and touchX <= elementX + width
+			and touchY >= elementY and touchY <= elementY + height then
+				return true
+		end
+	end
+	return false
+end
+
+function getButtonsCoordinates(buttons, buttonsY)
+	for index,button in ipairs(buttons) do
+		button.width = mediumFont:getWidth(button.text) + 12
+		button.height = 26
+		button.x = (RENDER_WIDTH - button.width) * 0.5
+		button.y = buttonsY - 6 + (26 * (index-1))
+	end
+end
+
+function touchButton(buttons)
+	for index,button in ipairs(buttons) do
+		if isTouched(button.x, button.y, button.width, button.height) then
+			botton.fn()
+			sounds['menuEnter']:play()
+			break
+		end
+	end
 end

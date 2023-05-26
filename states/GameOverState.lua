@@ -1,5 +1,5 @@
-local gameOverButtons = {}
-local selectedButton = 1
+local gameOverButtons
+local buttonsY = 178
 local comment = ''
 
 
@@ -21,8 +21,8 @@ GameOverState = {
                 StateMachine:changeState(TitleScreenState)
             end
         ))
+        getButtonsCoordinates(gameOverButtons, buttonsY)
 
-        selectedButton = 1
         comment = texts.gameOverComment3
 
         for index,hScore in ipairs(gameData.highScores) do
@@ -37,22 +37,8 @@ GameOverState = {
     end,
 
     update = function(dt)
-        if love.keyboard.wasPressed('down') then
-            selectedButton = selectedButton < #gameOverButtons and selectedButton + 1 or 1
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-
-        if love.keyboard.wasPressed('up') then
-            selectedButton = selectedButton > 1 and selectedButton - 1 or #gameOverButtons
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-
-        if love.keyboard.wasPressed('return') then
-            gameOverButtons[selectedButton].fn()
-            sounds['menuSelect']:stop()
-            sounds['menuEnter']:play()
+        if next(touches) ~= nil then
+            touchButton(gameOverButtons)
         end
     end,
 
@@ -64,6 +50,6 @@ GameOverState = {
         love.graphics.printf(comment, 0, 80, RENDER_WIDTH, 'center')
         love.graphics.printf(texts.scoreIs .. tostring(score), 0, 132, RENDER_WIDTH, 'center')
 
-        drawButtons(gameOverButtons, selectedButton, 178)
+        drawButtons(gameOverButtons, buttonsY)
     end
 }

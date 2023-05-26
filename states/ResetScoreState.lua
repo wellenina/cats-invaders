@@ -3,8 +3,8 @@ local X = (RENDER_WIDTH - WIDTH) * 0.5
 local Y = 68
 local MARGIN = 22
 
-local resetButtons = {}
-local selectedButton = 2
+local resetButtons
+local resetButtonsY = 150
 
 ResetScoreState = {
 
@@ -26,26 +26,13 @@ ResetScoreState = {
                 StateMachine:changeState(HighScoresState)
             end
         ))
-        selectedButton = 2
+
+        getButtonsCoordinates(resetButtons, resetButtonsY)
     end,
 
     update = function(dt)
-        if love.keyboard.wasPressed('down') then
-            selectedButton = selectedButton < #resetButtons and selectedButton + 1 or 1
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-
-        if love.keyboard.wasPressed('up') then
-            selectedButton = selectedButton > 1 and selectedButton - 1 or #resetButtons
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-
-        if love.keyboard.wasPressed('return') then
-            resetButtons[selectedButton].fn()
-            sounds['menuSelect']:stop()
-            sounds['menuEnter']:play()
+        if next(touches) ~= nil then
+            touchButton(resetButtons)
         end
     end,
 
@@ -59,6 +46,6 @@ ResetScoreState = {
 
         drawOverlayBox()
         drawTitle(texts.resetConfirmTitle, largeFont, 50)
-        drawButtons(resetButtons, selectedButton, 150)
+        drawButtons(resetButtons, resetButtonsY)
     end
 }

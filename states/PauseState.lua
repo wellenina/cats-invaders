@@ -1,5 +1,5 @@
-local pauseButtons = {}
-local selectedButton = 1
+local pauseButtons
+local buttonsY = 110
 
 PauseState = {
 
@@ -40,28 +40,13 @@ PauseState = {
             end
         ))
 
-        selectedButton = 1
+        getButtonsCoordinates(pauseButtons, buttonsY)
     end,
 
     update = function(__self, dt)
-        if love.keyboard.wasPressed('down') then
-            selectedButton = selectedButton < #pauseButtons and selectedButton + 1 or 1
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
+        if next(touches) ~= nil then
+            touchButton(pauseButtons)
         end
-
-        if love.keyboard.wasPressed('up') then
-            selectedButton = selectedButton > 1 and selectedButton - 1 or #pauseButtons
-            sounds['menuSelect']:stop()
-            sounds['menuSelect']:play()
-        end
-
-        if love.keyboard.wasPressed('return') then
-            pauseButtons[selectedButton].fn()
-            sounds['menuSelect']:stop()
-            sounds['menuEnter']:play()
-        end
-        Paw:updatePosition(dt)
     end,
 
     render = function()
@@ -74,6 +59,6 @@ PauseState = {
 
         drawOverlayBox()
         drawTitle(texts.paused, largeFont, 50)
-        drawButtons(pauseButtons, selectedButton, 110)
+        drawButtons(pauseButtons, buttonsY)
     end
 }
