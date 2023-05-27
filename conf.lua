@@ -7,4 +7,7 @@ function love.conf(t)
     t.modules.joystick = false
     t.modules.mouse = false
     t.modules.physics = false
+    t.externalstorage = true
+    t.window.width = 480
+    t.window.height = 270
 end
