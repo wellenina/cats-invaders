@@ -34,6 +34,8 @@ GetReadyState = {
     end,
 
     render = function()
+        drawUI()
+
         Player.render()
         Invaders.getReadyRender()
 

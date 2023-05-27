@@ -57,14 +57,14 @@ Player = {
     end,
 
     walk = function(__self, dt)
-        if love.keyboard.isDown('left') then
+        if isTouched(0, 70, 100, 180) then
             playerX = math.max(0, playerX + -PLAYER_SPEED * dt)
             frameTimer = frameTimer + dt
             if frameTimer > FRAME_DURATION then
                 playerFrame = playerFrame == 1 and 2 or 1
                 frameTimer = 0
             end
-        elseif love.keyboard.isDown('right') then
+        elseif isTouched(380, 70, 100, 180) then
             playerX = math.min(RENDER_WIDTH - playerWidth, playerX + PLAYER_SPEED * dt)
             frameTimer = frameTimer + dt
             if frameTimer > FRAME_DURATION then
@@ -75,7 +75,7 @@ Player = {
     end,
 
     shoot = function(__self, dt)
-        if love.keyboard.wasPressed('space') then
+        if isTouched(115, 210, 250, 60) then
             if #playerBullets >= PLAYER_BULLETS_LIMIT then return end
             table.insert(playerBullets, Bullet.create(playerBulletSprite, playerBulletQuads[gameData.selectedBullet], playerX, playerY, -1))
             sounds['playerShoot']:play()

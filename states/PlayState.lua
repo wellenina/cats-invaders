@@ -7,7 +7,7 @@ PlayState = {
 
     update = function(__self, dt)
 
-        if love.keyboard.wasPressed('escape') then
+        if isTouched(0, 0, 60, 58) then -- pause
             StateMachine:changeState(PauseState)
         end
 
@@ -23,6 +23,8 @@ PlayState = {
     end,
 
     render = function()
+        drawUI()
+
         Bullets.render()
         Player.render()
         Invaders.render()

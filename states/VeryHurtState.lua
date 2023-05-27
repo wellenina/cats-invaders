@@ -29,6 +29,8 @@ VeryHurtState = {
     end,
 
     render = function()
+        drawUI()
+        
         Bullets.render()
         Player.render()
         Invaders.render()

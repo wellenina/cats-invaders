@@ -1,5 +1,6 @@
 local languageButtons = {}
 local BUTTON_Y = 115
+local BUTTON_MARGIN = 26
 
 for index,language in ipairs(languages) do
 	table.insert(languageButtons, createButton(

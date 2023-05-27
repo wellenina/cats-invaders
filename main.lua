@@ -54,6 +54,8 @@ function love.load()
     leftArrow = love.graphics.newQuad(0, 0, 17, 19, 34, 19)
     rightArrow = love.graphics.newQuad(17, 0, 17, 19, 34, 19)
 
+    pauseButton = love.graphics.newImage('images/pause.png')
+
     sounds = {
         ['menuEnter'] = love.audio.newSource('sounds/menuEnter.wav', 'static'),
         ['playerShoot'] = love.audio.newSource('sounds/player-shoot.wav', 'static'),
@@ -65,7 +67,7 @@ function love.load()
     }
 
     --StateMachine:changeState(TitleScreenState)
-    StateMachine:changeState(ChooseBulletState)
+    StateMachine:changeState(GetReadyState)
 end
 
 

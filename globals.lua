@@ -145,3 +145,30 @@ function touchButton(buttons)
 		end
 	end
 end
+
+function drawUI()
+
+    -- testing the touch areas for mobile
+--    love.graphics.setColor(PURPLE)
+    --pausa:
+--    love.graphics.rectangle('fill', 0, 0, 60, 58)
+    --left:
+--    love.graphics.rectangle('fill', 0, 70, 100, 180)
+    --right:
+--    love.graphics.rectangle('fill', 380, 70, 100, 180)
+    --shoot:
+--    love.graphics.rectangle('fill', 115, 210, 250, 60)
+
+
+    love.graphics.setColor(GREEN)
+
+    love.graphics.draw(pauseButton, 20, 20)
+
+    love.graphics.draw(arrows, leftArrow, 20, 192, 0, 1.5, 1.5)
+    love.graphics.draw(arrows, rightArrow, 433, 192, 0, 1.5, 1.5)
+
+    love.graphics.setFont(smallFont)
+    love.graphics.printf(texts.shoot, 0, 257, RENDER_WIDTH, 'center')
+
+    love.graphics.setColor(WHITE)
+end
